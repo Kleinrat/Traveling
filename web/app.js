@@ -163,11 +163,15 @@ function savePending(){try{localStorage.setItem('moontrip.pending.v1',JSON.strin
 function renderPending(){
   $('pending-count').textContent=String(pendingPlaces.length);$('pending-places').replaceChildren();
   for(const p of pendingPlaces){
-    const card=e('article',undefined,'pending-card');card.append(e('h3',`${p.name} · ${p.city}`),e('p',`${p.kind==='food'?'餐厅':'景点'} · ${p.district} · ${p.address||'地址待核对'}`),e('p',`高德费用线索：${p.cost_hint||'未提供'}；营业时间线索：${p.open_hint||'未提供'}`,'hint'),e('p',`查询日期：${new Date(p.fetched_at).toLocaleString("zh-CN",{timeZone:"Asia/Shanghai"})} · 待核对`,'hint'));
+    const card=e('article',undefined,'pending-card');card.append(e('h3',`${p.name} · ${p.city}`),e('p',`${p.kind==='food'?'餐厅':'景点'} · ${p.district} · ${p.address||'地址待核对'}`),e('p',`高德人均消费线索：${p.cost_hint||'未提供'}（不等于门票报价）；营业时间线索：${p.open_hint||'未提供'}`,'hint'),e('p',`查询日期：${new Date(p.fetched_at).toLocaleString("zh-CN",{timeZone:"Asia/Shanghai"})} · 待核对`,'hint'));
     const source=e('a','查看高德地点 ↗');source.href=p.url;source.target='_blank';source.rel='noopener noreferrer';card.append(source);
     const button=e('button','填写并核对');button.type='button';button.addEventListener('click',()=>{
       reviewPoi=p;document.querySelector('.add-place').open=true;
       for(const [id,value] of Object.entries({'place-kind':p.kind,'place-name':p.name,'place-city':p.city,'place-district':p.district,'place-cost':'','place-duration':p.kind==='food'?'60':'90','place-open':'','place-close':'','place-tags':p.kind==='food'?'美食':'','place-urls':p.url,'place-note':`高德地点 ID：${p.id}；地址：${p.address}；坐标（GCJ-02）：${p.location}；查询时间：${p.fetched_at}。\n费用线索：${p.cost_hint||'未提供'}；时间线索：${p.open_hint||'未提供'}。\n请补充你的核对依据和推荐理由。`}))$(id).value=value;
+      // Only explicit restaurant consumption and one same-day interval can be prefilled.
+      if(p.kind==='food' && /^\d+(\.\d+)?$/.test(p.cost_hint||''))$('place-cost').value=String(Math.ceil(Number(p.cost_hint)));
+      const hours=(p.open_hint||'').match(/^(?:周一至周日\s*)?([01]\d|2[0-3]):([0-5]\d)\s*[-–]\s*([01]\d|2[0-3]):([0-5]\d)$/);
+      if(hours && `${hours[1]}:${hours[2]}` < `${hours[3]}:${hours[4]}`){$('place-open').value=`${hours[1]}:${hours[2]}`;$('place-close').value=`${hours[3]}:${hours[4]}`;}
       $('place-indoor').checked=false;$('place-family').checked=false;$('review-confirm-wrap').hidden=false;$('review-confirm').checked=false;
       $('add-place').scrollIntoView({behavior:'smooth',block:'start'});
     });card.append(button);$('pending-places').append(card);

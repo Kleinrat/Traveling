@@ -54,7 +54,8 @@ def search_places(query):
             'name': string(poi.get('name')), 'city': query['city'],
             'district': string(poi.get('adname')), 'address': string(poi.get('address')),
             'location': string(poi.get('location')), 'kind': query['kind'],
-            'cost_hint': string(extra.get('cost')), 'open_hint': string(extra.get('opentime')),
+            'cost_hint': string(extra.get('cost')),
+            'open_hint': string(extra.get('opentime2')) or string(extra.get('open_time')) or string(extra.get('opentime')),
             'fetched_at': timestamp, 'url': 'https://www.amap.com/place/' + urllib.parse.quote(poi_id, safe='')})
     return bridge({'action': 'pending-places', 'items': items})
 
