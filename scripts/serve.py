@@ -10,6 +10,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / 'web'
+# Read a narrow local configuration format without executing shell expressions.
+if (ROOT / '.env').exists():
+    allowed = {'AI_API_KEY', 'AI_BASE_URL', 'AI_MODEL', 'PORT', 'MOONTRIP_NODE'}
+    for line in (ROOT / '.env').read_text().splitlines():
+        if '=' not in line or line.strip().startswith('#'):
+            continue
+        name, value = line.split('=', 1)
+        if name.strip() in allowed:
+            os.environ.setdefault(name.strip(), value.strip().strip('"').strip("'"))
 NODE = os.environ.get('MOONTRIP_NODE', 'node')
 PORT = int(os.environ.get('PORT', '8787'))
 KEY = os.environ.get('AI_API_KEY', '')
@@ -25,10 +34,13 @@ def bridge(payload):
 
 
 def ask_provider(prompt, current):
-    body = json.dumps({'model': MODEL, 'messages': [
+    payload = {'model': MODEL, 'messages': [
         {'role': 'system', 'content': prompt['system']},
         {'role': 'user', 'content': prompt['user']}],
-        'response_format': {'type': 'json_object'}, 'temperature': 0.2}).encode()
+        'response_format': {'type': 'json_object'}, 'max_tokens': 2048}
+    if MODEL == 'kimi-k2.6':
+        payload['thinking'] = {'type': 'disabled'}
+    body = json.dumps(payload).encode()
     request = urllib.request.Request(BASE + '/chat/completions', data=body,
                                      headers={'Content-Type': 'application/json',
                                               'Authorization': 'Bearer ' + KEY})
@@ -58,7 +70,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/api/status':
-            return self.reply(200, {'configured': bool(KEY)})
+            return self.reply(200, {'configured': bool(KEY), 'model': MODEL if KEY else None})
         super().do_GET()
 
     def do_POST(self):
@@ -90,8 +102,9 @@ class Handler(SimpleHTTPRequestHandler):
             prompt = bridge({'action': 'prompt', 'current': current, 'message': message})
             result = ask_provider(prompt, current)
             return self.reply(200 if result['ok'] else 422, result)
-        except urllib.error.HTTPError:
-            return self.reply(502, {'ok': False, 'errors': ['AI 服务拒绝请求，请检查服务地址、模型和密钥']})
+        except urllib.error.HTTPError as error:
+            message = {401: 'AI 密钥无效或已过期', 403: 'AI 服务访问被拒绝', 402: 'AI 服务余额不足', 429: 'AI 服务限流或余额不足，请稍后重试', 400: 'AI 请求参数或模型名称不被服务接受'}.get(error.code, 'AI 服务拒绝请求，请检查服务地址、模型和密钥')
+            return self.reply(502, {'ok': False, 'errors': [message]})
         except (TimeoutError, subprocess.TimeoutExpired):
             return self.reply(504, {'ok': False, 'errors': ['AI 请求超时，请稍后重试']})
         except (urllib.error.URLError, OSError, subprocess.CalledProcessError):

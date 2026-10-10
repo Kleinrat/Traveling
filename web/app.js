@@ -87,7 +87,7 @@ $('ask').addEventListener('click',async()=>{
   }catch(err){feedback(err.message);}finally{$('ask').disabled=false;}
 });
 $('apply').addEventListener('click',()=>{if(proposal){setRequest(proposal);$('proposal').hidden=true;generate();}});
-fetch('/api/status').then(r=>r.json()).then(data=>{configured=data.configured;$('ai-status').textContent=configured?'AI 已连接配置':'无密钥演示';}).catch(()=>{$('ai-status').textContent='AI 服务不可用';});
+fetch('/api/status').then(r=>r.json()).then(data=>{configured=data.configured;$('ai-status').textContent=configured?`${data.model} · 已配置`:'无密钥演示';}).catch(()=>{$('ai-status').textContent='AI 服务不可用';});
 try{const saved=JSON.parse(localStorage.getItem('moontrip.v1')||'null');if(saved){const check=JSON.parse(plan_json(JSON.stringify({request:saved.request,places:saved.places})));if(check.ok){places=saved.places;setRequest(saved.request);$('message').value=saved.message||'';}}}catch{}
 generate();
 

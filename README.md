@@ -23,7 +23,7 @@ MoonTrip 是以 **MoonBit 为主要实现语言** 的开源旅行规划应用和
 MoonBit 安装见 [官方工具链页面](https://www.moonbitlang.com/download/)。
 
 ```sh
-git clone https://github.com/Kleinrat/Traveling.git
+git clone --branch codex/moontrip https://github.com/Kleinrat/Traveling.git
 cd Traveling
 sh scripts/build.sh
 python3 scripts/serve.py
@@ -53,7 +53,7 @@ moon run src/main --target js
 
 ## AI 服务
 
-服务商尚未固定。连接支持 `/chat/completions` 和 JSON 输出的 OpenAI 兼容服务即可。
+已支持 Kimi K2.6；也可连接支持 `/chat/completions` 和 JSON 输出的 OpenAI 兼容服务即可。
 密钥只由本地 Python 传输层读取，不进入浏览器、公开仓库或日志。
 
 ```sh
@@ -63,13 +63,16 @@ export AI_MODEL='你的模型名称'
 python3 scripts/serve.py
 ```
 
-`.env.example` 是配置说明，服务不会自动读取 `.env`。
+复制 `.env.example` 到 `.env` 填入本机配置即可；环境变量优先于 `.env`。
+`.env` 被 Git 忽略，不应上传。Kimi 使用 `https://api.moonshot.cn/v1` 与 `kimi-k2.6`，
+按 [官方参数文档](https://platform.kimi.com/docs/api/models-overview) 使用非思考模式，
+不强制设置 temperature，避免模型固定参数导致请求失败。
 在“旅行风格与习惯”中输入需求，点击“整理我的需求”，核对建议后确认。
 请求会把当前偏好和这段文本发送给你配置的 AI 服务；餐厅来源资料不会随此请求发送。
 AI 输出不能修改用户选定 / 排除的地点，也不能绕过 MoonBit 的范围校验。
 
-真实服务需要自行配置；已用本地模拟服务验证完整 HTTP → 模型输出 → MoonBit 校验链路，
-这不等同于已测试所有商业服务商或保证语义理解准确。
+已在 2026-10-11 配置 Kimi K2.6 并验证真实需求提取；公开仓库不包含密钥，其他使用者需自行配置。
+本地模拟服务验证 HTTP → 模型输出 → MoonBit 校验链路。用户须确认提议，语义理解可能有偏差。
 
 ## 餐厅与平台资料
 
