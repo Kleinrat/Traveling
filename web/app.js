@@ -1,4 +1,4 @@
-import { plan_json, catalogue_json, alternatives_json, cities_json } from './engine.js';
+import { plan_json, catalogue_json, alternatives_json, cities_json, pending_places_json } from './engine.js';
 const $ = id => document.getElementById(id);
 const staticDemo = document.querySelector('meta[name="moontrip-mode"]')?.content === 'static';
 const tags = ['自然','文化','历史','摄影','科技','亲子','美食','艺术','运动'];
@@ -6,7 +6,10 @@ let places = JSON.parse(catalogue_json()), currentPlan, plannedRequest, proposal
 let selected=[], avoided=[];
 let reviewPoi, mapsConfigured=false, libraryBusy=false, stopBatch=false;
 let pendingPlaces=[];
-try{pendingPlaces=JSON.parse(localStorage.getItem("moontrip.pending.v1")||"[]");if(!Array.isArray(pendingPlaces))pendingPlaces=[];}catch{}
+try{
+  const stored=JSON.parse(localStorage.getItem("moontrip.pending.v1")||"[]");
+  if(Array.isArray(stored))for(let i=0;i<stored.length;i+=40){const checked=JSON.parse(pending_places_json(JSON.stringify(stored.slice(i,i+40))));if(checked.ok)pendingPlaces.push(...checked.items);}
+}catch{}
 const e = (tag, text, cls) => { const node = document.createElement(tag); if(text !== undefined) node.textContent = text; if(cls) node.className = cls; return node; };
 const clock = n => `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
 const minutes = s => { const [h,m] = s.split(':').map(Number); return h*60+m; };

@@ -20,7 +20,13 @@ test "demo input passes JSON round trip" {
 test "city query rejects unknown cities and categories" {
   assert_true(
     @json.parse(place_query_json("{\"city\":\"杭州\",\"kind\":\"food\"}"))
-    is { "ok": true, "code": "330100", "types": "050000", .. },
+    is {
+      "ok": true,
+      "code": "330100",
+      "types": "050100",
+      "keywords": "杭帮菜|杭州菜|浙菜|浙江菜",
+      ..
+    },
   )
   assert_true(
     @json.parse(place_query_json("{\"city\":\"不存在\",\"kind\":\"food\"}"))
@@ -30,6 +36,17 @@ test "city query rejects unknown cities and categories" {
     @json.parse(place_query_json("{\"city\":\"杭州\",\"kind\":\"hotel\"}"))
     is { "ok": false, .. },
   )
+}
+
+///|
+test "restaurant intake excludes lodging names but keeps local restaurants" {
+  for
+    name in ["明日宾馆", "某某大酒店", "湖畔民宿", "游客客栈"] {
+    assert_true(lodging_name(name))
+  }
+  assert_false(lodging_name("杭帮菜馆"))
+  assert_false(lodging_name("本地酒楼"))
+  assert_eq(local_food_keywords("成都"), "川菜|成都小吃|四川火锅")
 }
 
 ///|

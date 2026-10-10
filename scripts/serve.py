@@ -31,8 +31,9 @@ AMAP_KEY = os.environ.get('AMAP_API_KEY', '')
 
 def search_places(query):
     params = urllib.parse.urlencode({'key': AMAP_KEY, 'city': query['code'],
-        'citylimit': 'true', 'types': query['types'], 'offset': 20,
-        'page': 1, 'extensions': 'all', 'output': 'JSON'})
+        'citylimit': 'true', 'types': '' if query['kind'] == 'food' and query.get('keywords') else query['types'], 'offset': 20,
+        'page': 1, 'extensions': 'all', 'output': 'JSON',
+        'keywords': query.get('keywords', '')})
     with urllib.request.urlopen('https://restapi.amap.com/v3/place/text?' + params,
                                 timeout=15) as response:
         raw = response.read(1000001)
@@ -46,9 +47,19 @@ def search_places(query):
         return value if isinstance(value, str) else ''
     items = []
     for poi in data.get('pois', [])[:20]:
+        # Provider category metadata must describe dining, without a lodging category.
+        if query['kind'] == 'food':
+            codes = str(poi.get('typecode', '')).split('|')
+            if not any(code.startswith('05') for code in codes) or any(code.startswith('10') for code in codes):
+                continue
         extra = poi.get('biz_ext')
         if not isinstance(extra, dict):
             extra = {}
+        if query['kind'] == 'food' and query.get('keywords'):
+            evidence = ' '.join(string(value) for value in
+                [poi.get('name'), poi.get('type'), extra.get('tag')])
+            if not any(word in evidence for word in query['keywords'].split('|') if word):
+                continue
         poi_id = string(poi.get('id'))
         items.append({'id': 'amap-' + poi_id if poi_id else '',
             'name': string(poi.get('name')), 'city': query['city'],
