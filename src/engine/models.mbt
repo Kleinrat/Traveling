@@ -72,6 +72,9 @@ pub(all) struct Exclusion {
 ///|
 pub(all) struct Plan {
   days : Array[Day]
+  activity_cost : Int
+  food_cost : Int
+  transfer_cost : Int
   total_cost : Int
   remaining_budget : Int
   exclusions : Array[Exclusion]

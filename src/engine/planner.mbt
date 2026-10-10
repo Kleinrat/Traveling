@@ -165,8 +165,24 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
       "没有可行景点，请放宽条件或导入更多有效数据。",
     )
   }
+  let mut activity_cost = 0
+  let mut food_cost = 0
+  let mut transfer_cost = 0
+  for day in days {
+    for stop in day.stops {
+      if stop.place.kind == "food" {
+        food_cost += stop.place.cost
+      } else {
+        activity_cost += stop.place.cost
+      }
+      transfer_cost += stop.transfer_cost
+    }
+  }
   Ok({
     days,
+    activity_cost,
+    food_cost,
+    transfer_cost,
     total_cost: total,
     remaining_budget: r.budget - total,
     exclusions,

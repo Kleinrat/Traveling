@@ -10,10 +10,12 @@ options(
     "js": {
       "exports": [
         "plan_json",
+        "alternatives_json",
         "catalogue_json",
         "assistant_system",
         "assistant_context",
         "validate_proposal",
+        "validate_for_current",
       ],
       "format": "esm",
     },

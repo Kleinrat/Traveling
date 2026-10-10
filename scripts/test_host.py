@@ -12,7 +12,7 @@ spec = importlib.util.spec_from_file_location('moontrip_server', Path(__file__).
 server_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(server_module)
 VALID = {'city': '成都', 'days': 2, 'budget': 250, 'start': 600, 'end': 990,
-         'interests': ['亲子', '科技'], 'family': True, 'rain': False, 'relaxed': True}
+         'interests': ['亲子', '科技'], 'family': True, 'rain': False, 'relaxed': True, 'must_visit': [], 'avoid': [], 'priority': 'balanced', 'include_food': False, 'diet': '不限', 'max_visits': 4}
 
 class Provider(BaseHTTPRequestHandler):
     content = json.dumps(VALID)

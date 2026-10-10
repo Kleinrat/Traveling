@@ -37,3 +37,37 @@ pub fn assistant_context(current : String, message : String) -> String {
 pub fn validate_proposal(text : String) -> String {
   @assistant.validate_proposal(text)
 }
+
+///|
+pub fn validate_for_current(text : String, current : String) -> String {
+  @assistant.validate_for_current(text, current)
+}
+
+///|
+/// Compare strategies while keeping all user constraints and selections.
+pub fn alternatives_json(text : String) -> String {
+  let input : @engine.Input = @json.from_json(@json.parse(text)) catch {
+    _ =>
+      return ({ "ok": false, "errors": ["条件格式无效"] } : Json).stringify()
+  }
+  let alternatives : Array[Json] = []
+  for
+    (priority, label) in [
+      ("balanced", "均衡体验"),
+      ("budget", "预算优先"),
+      ("interest", "兴趣优先"),
+    ] {
+    let request = { ..input.request, priority, }
+    match @engine.plan({ request, places: input.places, }) {
+      Ok(plan) =>
+        alternatives.push({
+          "label": label,
+          "request": @json.to_json(request),
+          "plan": @json.to_json(plan),
+        })
+      Err(errors) =>
+        return ({ "ok": false, "errors": @json.to_json(errors) } : Json).stringify()
+    }
+  }
+  ({ "ok": true, "alternatives": @json.to_json(alternatives) } : Json).stringify()
+}

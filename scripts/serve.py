@@ -24,7 +24,7 @@ def bridge(payload):
     return json.loads(result.stdout)
 
 
-def ask_provider(prompt):
+def ask_provider(prompt, current):
     body = json.dumps({'model': MODEL, 'messages': [
         {'role': 'system', 'content': prompt['system']},
         {'role': 'user', 'content': prompt['user']}],
@@ -40,7 +40,7 @@ def ask_provider(prompt):
     content = data['choices'][0]['message']['content']
     if not isinstance(content, str):
         raise ValueError('provider content must be text')
-    return bridge({'action': 'validate', 'content': content})
+    return bridge({'action': 'validate', 'content': content, 'current': current})
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -88,7 +88,7 @@ class Handler(SimpleHTTPRequestHandler):
             if not isinstance(current, dict):
                 raise ValueError('invalid current settings')
             prompt = bridge({'action': 'prompt', 'current': current, 'message': message})
-            result = ask_provider(prompt)
+            result = ask_provider(prompt, current)
             return self.reply(200 if result['ok'] else 422, result)
         except urllib.error.HTTPError:
             return self.reply(502, {'ok': False, 'errors': ['AI 服务拒绝请求，请检查服务地址、模型和密钥']})

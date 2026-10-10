@@ -33,8 +33,9 @@ pub fn score(p : Place, r : Request) -> (Int, Array[String]) {
   let mut value = 10
   for tag in r.interests {
     if !seen.contains(tag) && p.tags.contains(tag) {
-      value += if r.priority == "interest" { 50 } else { 30 }
-      reasons.push("匹配兴趣：\{tag}（兴趣优先 +50，否则 +30）")
+      let points = if r.priority == "interest" { 50 } else { 30 }
+      value += points
+      reasons.push("匹配兴趣：\{tag}（+\{points}）")
     }
     seen[tag] = true
   }
@@ -43,7 +44,7 @@ pub fn score(p : Place, r : Request) -> (Int, Array[String]) {
     reasons.push("免费活动（+12）")
   } else if p.cost <= 50 {
     value += 6
-    reasons.push("门票费用不超过 50 元（+6）")
+    reasons.push("人均费用不超过 50 元（+6）")
   }
   if r.family && p.family {
     value += 15
