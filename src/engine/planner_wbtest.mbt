@@ -358,3 +358,23 @@ test "different branch IDs cannot repeat a restaurant across days" {
   }
   assert_eq(meals, 2)
 }
+
+///|
+test "brand punctuation and cuisine suffix variants share identity" {
+  assert_eq(
+    restaurant_identity("天津", "老天津·天津菜(鼓楼店)"),
+    restaurant_identity("天津", "老天津天津菜（和平店）"),
+  )
+  assert_eq(
+    restaurant_identity("杭州", "外婆家·杭帮菜【西湖店】"),
+    restaurant_identity("杭州", "外婆家(城东店)"),
+  )
+  assert_true(
+    restaurant_identity("天津", "老天津·天津菜(鼓楼店)") !=
+    restaurant_identity("天津", "老津门天津菜"),
+  )
+  assert_true(
+    restaurant_identity("杭州", "川菜小馆") !=
+    restaurant_identity("杭州", "湘菜小馆"),
+  )
+}

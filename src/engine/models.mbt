@@ -1,12 +1,27 @@
 ///|
 pub fn restaurant_identity(city : String, name : String) -> String {
   let mut base = name.trim().to_owned()
-  for separator in ["(", "（"] {
+  for separator in ["(", "（", "·", "•", "|", "｜", "【", "["] {
     if base.split_once(separator) is Some((head, _)) {
-      base = head.to_owned()
+      if head.trim().length() >= 2 {
+        base = head.to_owned()
+      }
     }
   }
-  city + ":" + base.replace_all(old=" ", new="").trim().to_owned()
+  base = base.replace_all(old=" ", new="").trim().to_owned()
+  // Cuisine and advertising suffixes are not the restaurant brand.
+  for
+    descriptor in [
+      "天津菜", "杭帮菜", "浙江菜", "本帮菜", "北京菜", "私房菜",
+      "川湘菜", "地道川菜", "湘菜", "粤菜",
+    ] {
+    if base.split_once(descriptor) is Some((head, _)) {
+      if head.length() >= 2 && head != city {
+        base = head.to_owned()
+      }
+    }
+  }
+  city + ":" + base
 }
 
 ///|
