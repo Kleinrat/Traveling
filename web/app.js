@@ -1,9 +1,12 @@
-import { plan_json, catalogue_json, alternatives_json } from './engine.js';
+import { plan_json, catalogue_json, alternatives_json, cities_json } from './engine.js';
 const $ = id => document.getElementById(id);
 const staticDemo = document.querySelector('meta[name="moontrip-mode"]')?.content === 'static';
 const tags = ['自然','文化','历史','摄影','科技','亲子','美食','艺术','运动'];
 let places = JSON.parse(catalogue_json()), currentPlan, plannedRequest, proposal, configured = false;
 let selected=[], avoided=[];
+let reviewPoi, mapsConfigured=false, libraryBusy=false, stopBatch=false;
+let pendingPlaces=[];
+try{pendingPlaces=JSON.parse(localStorage.getItem("moontrip.pending.v1")||"[]");if(!Array.isArray(pendingPlaces))pendingPlaces=[];}catch{}
 const e = (tag, text, cls) => { const node = document.createElement(tag); if(text !== undefined) node.textContent = text; if(cls) node.className = cls; return node; };
 const clock = n => `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
 const minutes = s => { const [h,m] = s.split(':').map(Number); return h*60+m; };
@@ -58,6 +61,7 @@ function render(){
 const presets={weekend:{city:'杭州',days:2,budget:150,start:540,end:1020,interests:['自然','文化'],family:false,rain:false,relaxed:false},family:{city:'成都',days:2,budget:250,start:600,end:990,interests:['亲子','科技'],family:true,rain:false,relaxed:true},rain:{city:'杭州',days:1,budget:180,start:540,end:1020,interests:['文化','历史'],family:false,rain:true,relaxed:true}};
 $('planner').addEventListener('submit',ev=>{ev.preventDefault();generate();});
 document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{setRequest(presets[b.dataset.preset]);generate();}));
+$('remove-demo').addEventListener('click',()=>{const demoIds=new Set(JSON.parse(catalogue_json()).map(p=>p.id));const real=places.filter(p=>!demoIds.has(p.id));if(!real.length){feedback('请先核对并加入至少一个真实地点。');return;}places=real;selected=[];avoided=[];if(!real.some(p=>p.city===$('city').value))$('city').value=real[0].city;generate();});
 $('reset').addEventListener('click',()=>{places=JSON.parse(catalogue_json());selected=[];avoided=[];generate();});
 $('import').addEventListener('change',async ev=>{
   const file=ev.target.files[0];if(!file)return;
@@ -94,7 +98,7 @@ if(staticDemo){
   $('ask').textContent='在线演示未启用 AI';
   $('message').placeholder='在线演示请调整下方条件；AI 需求理解可在本地配置服务后使用。';
 }else{
-  fetch('/api/status').then(r=>r.json()).then(data=>{configured=data.configured;$('ai-status').textContent=configured?`${data.model} · 已配置`:'无密钥演示';}).catch(()=>{$('ai-status').textContent='AI 服务不可用';});
+  fetch('/api/status').then(r=>r.json()).then(data=>{configured=data.configured;mapsConfigured=Boolean(data.maps_configured);updateMapsStatus();$('ai-status').textContent=configured?`${data.model} · 已配置`:'无密钥演示';}).catch(()=>{$('ai-status').textContent='AI 服务不可用';updateMapsStatus();});
 }
 try{const saved=JSON.parse(localStorage.getItem('moontrip.v1')||'null');if(saved){const check=JSON.parse(plan_json(JSON.stringify({request:saved.request,places:saved.places})));if(check.ok){places=saved.places;setRequest(saved.request);$('message').value=saved.message||'';}}}catch{}
 generate();
@@ -126,11 +130,14 @@ function renderAlternatives(){
 }
 $('add-place').addEventListener('submit',ev=>{
   ev.preventDefault();
+  if(reviewPoi&&!$('review-confirm').checked){feedback('请先核对资料，再勾选确认。');return;}
   const urls=$('place-urls').value.trim().split(/\s+/);
   if(urls.some(url=>!/^https?:\/\//.test(url))){feedback('请填写 HTTP(S) 来源链接，每行一个。');return;}
-  const p={id:'user-'+Date.now(),name:$('place-name').value.trim(),city:$('place-city').value.trim(),district:$('place-district').value.trim(),kind:$('place-kind').value,cost:Number($('place-cost').value),duration:Number($('place-duration').value),open:minutes($('place-open').value),close:minutes($('place-close').value),tags:$('place-tags').value.split(/[,，]/).map(t=>t.trim()).filter(Boolean),indoor:$('place-indoor').checked,family:$('place-family').checked,url:urls[0],source:`用户整理，未自动核实：${$('place-note').value.trim()}\n${urls.join('\n')}`};
-  const check=JSON.parse(plan_json(JSON.stringify({request:{...request(),must_visit:[],avoid:[]},places:[...places,p]})));if(!check.ok){feedback(check.errors.join('；'));return;}
-  places.push(p);if(![...$('city').options].some(o=>o.value===p.city))$('city').add(new Option(p.city,p.city));if(p.city===$('city').value&&p.kind==='food')$('include_food').checked=true;generate();feedback('已加入候选列表，可勾选后安排进计划。');
+  const p={id:reviewPoi?.id||'user-'+Date.now(),name:$('place-name').value.trim(),city:$('place-city').value.trim(),district:$('place-district').value.trim(),kind:$('place-kind').value,cost:Number($('place-cost').value),duration:Number($('place-duration').value),open:minutes($('place-open').value),close:minutes($('place-close').value),tags:$('place-tags').value.split(/[,，]/).map(t=>t.trim()).filter(Boolean),indoor:$('place-indoor').checked,family:$('place-family').checked,url:urls[0],source:`${reviewPoi?'用户核对':'用户整理，未自动核实'}：${$('place-note').value.trim()}\n${urls.join('\n')}`};
+  const check=JSON.parse(plan_json(JSON.stringify({request:{...request(),must_visit:[],avoid:[]},places:[...places.filter(item=>item.id!==p.id),p]})));if(!check.ok){feedback(check.errors.join('；'));return;}
+  places=places.filter(item=>item.id!==p.id);places.push(p);
+  if(reviewPoi){pendingPlaces=pendingPlaces.filter(item=>item.id!==reviewPoi.id);reviewPoi=undefined;$("review-confirm-wrap").hidden=true;$("review-confirm").checked=false;savePending();renderPending();}
+if(![...$('city').options].some(o=>o.value===p.city))$('city').add(new Option(p.city,p.city));if(p.city===$('city').value&&p.kind==='food')$('include_food').checked=true;generate();feedback('已加入候选列表，可勾选后安排进计划。');
 });
 $('planner').addEventListener('input',()=>feedback('条件已修改，点击“生成我的行程”更新方案与预算。'));
 $('city').addEventListener('change',()=>{selected=[];avoided=[];generate();});
@@ -143,3 +150,51 @@ $('export-html').addEventListener('click',()=>{
 
 $('add-city').addEventListener('click',()=>{$('city-entry').hidden=!$('city-entry').hidden;});
 $('confirm-city').addEventListener('click',()=>{const city=$('new-city').value.trim();if(!city){feedback('请输入城市名称。');return;}if(![...$('city').options].some(o=>o.value===city))$('city').add(new Option(city,city));$('city').value=city;$('place-city').value=city;selected=[];avoided=[];$('city-entry').hidden=true;generate();});
+
+
+// The host transports map data; MoonBit validates city queries and candidate records.
+const seedCities=JSON.parse(cities_json());
+for(const city of seedCities){const label=e('label'),input=e('input');input.type='checkbox';input.value=city.city;input.checked=city.city==='杭州';label.append(input,document.createTextNode(`${city.province} · ${city.city}`));$('seed-cities').append(label);}
+function updateMapsStatus(){
+  $('maps-status').textContent=staticDemo?'在线版未启用地点查询':mapsConfigured?'高德 Web 服务 · 本机已连接':'本机尚未连接高德';
+  for(const id of ['query-city','query-batch'])$(id).disabled=staticDemo||!mapsConfigured||libraryBusy;
+}
+function savePending(){try{localStorage.setItem('moontrip.pending.v1',JSON.stringify(pendingPlaces));}catch{$('maps-progress').textContent='浏览器无法保存资料；当前页仍可核对，请避免刷新。';}}
+function renderPending(){
+  $('pending-count').textContent=String(pendingPlaces.length);$('pending-places').replaceChildren();
+  for(const p of pendingPlaces){
+    const card=e('article',undefined,'pending-card');card.append(e('h3',`${p.name} · ${p.city}`),e('p',`${p.kind==='food'?'餐厅':'景点'} · ${p.district} · ${p.address||'地址待核对'}`),e('p',`高德费用线索：${p.cost_hint||'未提供'}；营业时间线索：${p.open_hint||'未提供'}`,'hint'),e('p',`查询日期：${new Date(p.fetched_at).toLocaleString("zh-CN",{timeZone:"Asia/Shanghai"})} · 待核对`,'hint'));
+    const source=e('a','查看高德地点 ↗');source.href=p.url;source.target='_blank';source.rel='noopener noreferrer';card.append(source);
+    const button=e('button','填写并核对');button.type='button';button.addEventListener('click',()=>{
+      reviewPoi=p;document.querySelector('.add-place').open=true;
+      for(const [id,value] of Object.entries({'place-kind':p.kind,'place-name':p.name,'place-city':p.city,'place-district':p.district,'place-cost':'','place-duration':p.kind==='food'?'60':'90','place-open':'','place-close':'','place-tags':p.kind==='food'?'美食':'','place-urls':p.url,'place-note':`高德地点 ID：${p.id}；地址：${p.address}；坐标（GCJ-02）：${p.location}；查询时间：${p.fetched_at}。\n费用线索：${p.cost_hint||'未提供'}；时间线索：${p.open_hint||'未提供'}。\n请补充你的核对依据和推荐理由。`}))$(id).value=value;
+      $('place-indoor').checked=false;$('place-family').checked=false;$('review-confirm-wrap').hidden=false;$('review-confirm').checked=false;
+      $('add-place').scrollIntoView({behavior:'smooth',block:'start'});
+    });card.append(button);$('pending-places').append(card);
+  }
+}
+async function queryCities(cities){
+  if(libraryBusy)return;if(!mapsConfigured||staticDemo){$('maps-progress').textContent='地点查询需要打开本机服务 http://127.0.0.1:8787/。';return;}
+  if(!cities.length||cities.length>5){$('maps-progress').textContent='请选择 1–5 个城市，可分批查询。';return;}
+  libraryBusy=true;stopBatch=false;updateMapsStatus();$('stop-batch').hidden=false;
+  try{
+    for(let i=0;i<cities.length;i++){
+      if(stopBatch)break;
+      for(const kind of ['sight','food']){
+        $('maps-progress').textContent=`${i+1}/${cities.length} · 正在查询${cities[i]}${kind==='food'?'餐厅':'景点'}…`;
+        const response=await fetch('/api/places',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({city:cities[i],kind})});const result=await response.json();
+        if(!result.ok)throw Error(result.errors.join('；'));
+        const existing=new Set([...places,...pendingPlaces].map(p=>p.id));
+        for(const item of result.items)if(!existing.has(item.id)){pendingPlaces.push(item);existing.add(item.id);}
+        savePending();renderPending();$('review-list').open=true;
+      }
+    }
+    $('maps-progress').textContent=`${stopBatch?'查询已停止':'查询完成'}，共 ${pendingPlaces.length} 条待核对。选少量合适的地点填写费用和时间即可，未核对资料不会进入行程。`;
+  }catch(err){$('maps-progress').textContent=`查询中止：${err.message}。已成功查询的资料仍保留。`;}
+  finally{libraryBusy=false;$('stop-batch').hidden=true;updateMapsStatus();}
+}
+$('query-city').addEventListener('click',()=>queryCities([$('city').value]));
+$('query-batch').addEventListener('click',()=>queryCities([...$('seed-cities').querySelectorAll('input:checked')].map(i=>i.value)));
+$('stop-batch').addEventListener('click',()=>{stopBatch=true;$('maps-progress').textContent='将在当前城市查询结束后停止。';});
+$('clear-pending').addEventListener('click',()=>{if(libraryBusy)return;pendingPlaces=[];savePending();renderPending();$('maps-progress').textContent='待核对资料已清空，已加入行程的地点不受影响。';});
+updateMapsStatus();renderPending();

@@ -10,6 +10,9 @@ options(
     "js": {
       "exports": [
         "plan_json",
+        "cities_json",
+        "place_query_json",
+        "pending_places_json",
         "alternatives_json",
         "catalogue_json",
         "assistant_system",
