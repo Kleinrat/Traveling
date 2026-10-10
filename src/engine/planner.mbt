@@ -14,6 +14,8 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
     let mut cursor = r.start
     let mut previous : Place? = None
     let mut day_cost = 0
+    let mut visits = 0
+    let mut meals = 0
     while true {
       let mut best : Place? = None
       let mut best_score = -1
@@ -22,6 +24,22 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
       let mut best_reasons : Array[String] = []
       for p in input.places {
         if used.contains(p.id) || exclusion_reason(p, r) is Some(_) {
+          continue
+        }
+        if p.kind == "sight" && visits >= r.max_visits {
+          continue
+        }
+        if p.kind == "food" && meals >= 1 {
+          continue
+        }
+        let mut next_required : String? = None
+        for id in r.must_visit {
+          if !used.contains(id) {
+            next_required = Some(id)
+            break
+          }
+        }
+        if r.must_visit.contains(p.id) && next_required != Some(p.id) {
           continue
         }
         let (minutes, fare) = transfer(previous, p)
@@ -47,7 +65,18 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
           Some(prev) => prev.district == p.district
           None => false
         }
-        let value = base + (if nearby { 8 } else { 0 })
+        let chosen = r.must_visit.contains(p.id)
+        let meal_due = p.kind == "food" && cursor >= 630
+        let value = base +
+          (if nearby { 8 } else { 0 }) +
+          (if chosen { 10000 } else { 0 }) +
+          (if meal_due { 200 } else { 0 })
+        if chosen {
+          reasons.push("用户选定地点，优先安排")
+        }
+        if meal_due {
+          reasons.push("已接近午餐时段，优先安排用餐")
+        }
         if nearby {
           reasons.push("与上一站同片区（+8）")
         }
@@ -83,6 +112,11 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
           cursor = best_start + p.duration
           total += p.cost + fare
           day_cost += p.cost + fare
+          if p.kind == "sight" {
+            visits += 1
+          } else {
+            meals += 1
+          }
           previous = Some(p)
           used[p.id] = true
         }
@@ -94,6 +128,14 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
       cost: day_cost,
       used_minutes: cursor - r.start,
     })
+  }
+  let missing = r.must_visit.filter(id => !used.contains(id))
+  if !missing.is_empty() {
+    return Err([
+      "无法安排全部心仪地点：" +
+      missing.join(", ") +
+      "。请调整预算、时间、地点顺序或筛选条件。",
+    ])
   }
   let exclusions : Array[Exclusion] = []
   for p in input.places {
@@ -108,10 +150,16 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
   }
   let warnings = [
     "示例数据与交通估算不代表实时信息，出行前请核实费用和开放时间。",
-    "预算仅含活动和估算市内交通，不含酒店、餐饮、往返大交通。",
+    "预算含已安排的活动、餐饮人均估算和市内接驳，不含酒店与往返大交通。",
     "每天第一站不计接驳；同片区 15 分钟/8 元，跨片区 35 分钟/15 元。",
     "算法使用可解释的贪心策略，不保证全局最优；每日餐饮时间需自行预留。",
   ]
+  if r.include_food &&
+    days.any(day => !day.stops.any(stop => stop.place.kind == "food")) {
+    warnings.push(
+      "部分日期没有可行餐厅；请导入符合城市、时间、预算和饮食条件的餐厅。",
+    )
+  }
   if used.is_empty() {
     warnings.push(
       "没有可行景点，请放宽条件或导入更多有效数据。",

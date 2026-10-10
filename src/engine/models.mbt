@@ -13,6 +13,8 @@ pub(all) struct Place {
   indoor : Bool
   family : Bool
   source : String
+  url : String
+  kind : String
 } derive(Debug, ToJson, @json.FromJson)
 
 ///|
@@ -27,6 +29,12 @@ pub(all) struct Request {
   family : Bool
   rain : Bool
   relaxed : Bool
+  must_visit : Array[String]
+  avoid : Array[String]
+  priority : String
+  include_food : Bool
+  diet : String
+  max_visits : Int
 } derive(Debug, ToJson, @json.FromJson)
 
 ///|
@@ -112,6 +120,41 @@ pub fn validate(input : Input) -> Array[String] {
     }
     if p.tags.length() > 20 {
       errors.push("景点标签最多 20 个: \{p.id}")
+    }
+  }
+  if !["balanced", "budget", "interest"].contains(r.priority) {
+    errors.push("未知推荐策略")
+  }
+  if r.max_visits < 1 || r.max_visits > 8 {
+    errors.push("每天景点数必须为 1–8")
+  }
+  if !["不限", "素食", "不辣"].contains(r.diet) {
+    errors.push("未知饮食条件")
+  }
+  if r.must_visit.length() > 56 || r.avoid.length() > 500 {
+    errors.push("地点选择数量超出范围")
+  }
+  let required : Map[String, Bool] = Map([])
+  for id in r.must_visit {
+    if !ids.contains(id) {
+      errors.push("心仪地点不存在: \{id}")
+    }
+    if required.contains(id) {
+      errors.push("心仪地点重复: \{id}")
+    }
+    required[id] = true
+    if r.avoid.contains(id) {
+      errors.push("同一地点不能同时选中和排除: \{id}")
+    }
+  }
+  for p in input.places {
+    if !["sight", "food"].contains(p.kind) {
+      errors.push("地点类型必须为 sight 或 food: \{p.id}")
+    }
+    if p.url != "" &&
+      !p.url.has_prefix("https://") &&
+      !p.url.has_prefix("http://") {
+      errors.push("来源链接必须使用 HTTP(S): \{p.id}")
     }
   }
   errors

@@ -26,6 +26,8 @@ fn place(
     open,
     close,
     source: "MoonTrip 原创虚构演示数据 v1；非真实景点报价/营业时间",
+    url: "",
+    kind: "sight",
   }
 }
 
@@ -269,6 +271,12 @@ pub fn sample() -> @engine.Input {
       family: false,
       rain: false,
       relaxed: true,
+      must_visit: [],
+      avoid: [],
+      priority: "balanced",
+      include_food: false,
+      diet: "不限",
+      max_visits: 4,
     },
     places: catalogue(),
   }

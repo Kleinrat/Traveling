@@ -10,6 +10,12 @@ fn fixture_request() -> Request {
     family: false,
     rain: false,
     relaxed: false,
+    must_visit: [],
+    avoid: [],
+    priority: "balanced",
+    include_food: false,
+    diet: "不限",
+    max_visits: 4,
   }
 }
 
@@ -28,6 +34,8 @@ fn fixture_place(id : String, cost : Int, duration : Int) -> Place {
     indoor: true,
     family: true,
     source: "原创测试数据",
+    url: "",
+    kind: "sight",
   }
 }
 
@@ -112,7 +120,16 @@ test "rain and family are hard filters" {
 ///|
 test "relaxed mode rejects long activities" {
   let p = checked({
-    request: { ..fixture_request(), relaxed: true, },
+    request: {
+      ..fixture_request(),
+      relaxed: true,
+      must_visit: [],
+      avoid: [],
+      priority: "balanced",
+      include_food: false,
+      diet: "不限",
+      max_visits: 4,
+    },
     places: [fixture_place("a", 0, 180)],
   })
   assert_eq(p.days[0].stops.length(), 0)
@@ -228,4 +245,98 @@ test "invariants over 168 combinations of budgets days and durations" {
       }
     }
   }
+}
+
+///|
+test "selected sights are mandatory and preserve chosen order" {
+  let r = { ..fixture_request(), must_visit: ["b", "a"], }
+  let p = checked({
+    request: r,
+    places: [fixture_place("a", 0, 60), fixture_place("b", 20, 60)],
+  })
+  assert_eq(p.days[0].stops[0].place.id, "b")
+  assert_eq(p.days[0].stops[1].place.id, "a")
+}
+
+///|
+test "impossible selected sight reports conflict instead of dropping it" {
+  let input = {
+    request: { ..fixture_request(), budget: 0, must_visit: ["a"], },
+    places: [fixture_place("a", 20, 60)],
+  }
+  assert_true(plan(input) is Err(_))
+}
+
+///|
+test "selection conflict and missing IDs rejected" {
+  let p = fixture_place("a", 0, 60)
+  let r = fixture_request()
+  assert_true(
+    !validate({ request: { ..r, must_visit: ["missing"], }, places: [p], }).is_empty(),
+  )
+  assert_true(
+    !validate({
+      request: { ..r, must_visit: ["a"], avoid: ["a"], },
+      places: [p],
+    }).is_empty(),
+  )
+}
+
+///|
+test "excluded sights never appear" {
+  let p = checked({
+    request: { ..fixture_request(), avoid: ["a"], },
+    places: [fixture_place("a", 0, 60)],
+  })
+  assert_eq(p.days[0].stops.length(), 0)
+}
+
+///|
+test "restaurant obeys diet window and is included in budget" {
+  let food = {
+    ..fixture_place("food", 40, 60),
+    kind: "food",
+    tags: ["素食"],
+    open: 660,
+    close: 840,
+  }
+  let r = {
+    ..fixture_request(),
+    include_food: true,
+    diet: "素食",
+    must_visit: ["food"],
+  }
+  let p = checked({ request: r, places: [food], })
+  assert_eq(p.total_cost, 40)
+  assert_eq(p.days[0].stops[0].start, 660)
+  assert_true(
+    plan({ request: { ..r, diet: "不辣", }, places: [food], }) is Err(_),
+  )
+}
+
+///|
+test "daily visit cap leaves time for a meal" {
+  let places = [
+    fixture_place("a", 0, 60),
+    fixture_place("b", 0, 60),
+    { ..fixture_place("food", 30, 60), kind: "food", open: 660, close: 840, },
+  ]
+  let p = checked({
+    request: {
+      ..fixture_request(),
+      days: 1,
+      max_visits: 1,
+      include_food: true,
+    },
+    places,
+  })
+  assert_eq(p.days[0].stops.length(), 2)
+}
+
+///|
+test "reject unsafe source URL" {
+  let p = { ..fixture_place("a", 0, 60), url: "javascript:alert(1)", }
+  assert_true(
+    !validate({ request: fixture_request(), places: [p], }).is_empty(),
+  )
 }

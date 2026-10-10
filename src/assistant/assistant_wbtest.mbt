@@ -15,6 +15,12 @@ test "reject out of range extracted fields" {
     family: false,
     rain: false,
     relaxed: false,
+    must_visit: [],
+    avoid: [],
+    priority: "balanced",
+    include_food: false,
+    diet: "不限",
+    max_visits: 4,
   }
   assert_true(
     @json.parse(validate_proposal(@json.to_json(request).stringify()))
@@ -34,6 +40,12 @@ test "accept complete valid extraction" {
     family: true,
     rain: true,
     relaxed: true,
+    must_visit: [],
+    avoid: [],
+    priority: "balanced",
+    include_food: false,
+    diet: "不限",
+    max_visits: 4,
   }
   assert_true(
     @json.parse(validate_proposal(@json.to_json(request).stringify()))
