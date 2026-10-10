@@ -1,0 +1,5 @@
+import {
+  "Kleinrat/moontrip/src/engine" @engine,
+  "moonbitlang/core/json",
+}
+options(link: { "js": { "exports": ["plan_json"], "format": "esm" } })
