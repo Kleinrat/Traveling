@@ -23,7 +23,7 @@ MoonTrip 是以 **MoonBit 为主要实现语言** 的开源旅行规划应用和
 MoonBit 安装见 [官方工具链页面](https://www.moonbitlang.com/download/)。
 
 ```sh
-git clone --branch feature/moontrip https://github.com/Kleinrat/Traveling.git
+git clone https://github.com/Kleinrat/Traveling.git
 cd Traveling
 sh scripts/build.sh
 python3 scripts/serve.py
@@ -50,6 +50,21 @@ moon run src/main --target js
    开启午餐并选择不辣；选择餐厅，调整地点优先级，观察路线和预算变化。
 3. **雨天调整**：选择“雨天也精彩”，改为室内行程；导入更多室内地点，
    保留心仪地点、替换户外活动，导出离线路书在手机或电脑上查看。
+
+## 分享在线测试版
+
+仓库提供 GitHub Pages 发布流程。启用仓库 Settings → Pages → Source → GitHub Actions 后，
+main 分支更新自动编译 MoonBit 并发布浏览器演示。发布产物仅包含四个公开页面资源，
+不包含服务器、密钥或本机配置。在线演示支持手动规划、方案比较、调整和导出，未启用 AI。
+首次部署成功后以 Pages 设置页显示的实际网址为准。
+
+本地预览公开产物：
+
+```sh
+sh scripts/build.sh
+python3 scripts/build_pages.py
+python3 -m http.server 8788 --directory _site
+```
 
 ## AI 服务
 

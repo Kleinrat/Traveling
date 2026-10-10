@@ -1,5 +1,6 @@
 import { plan_json, catalogue_json, alternatives_json } from './engine.js';
 const $ = id => document.getElementById(id);
+const staticDemo = document.querySelector('meta[name="moontrip-mode"]')?.content === 'static';
 const tags = ['自然','文化','历史','摄影','科技','亲子','美食','艺术','运动'];
 let places = JSON.parse(catalogue_json()), currentPlan, plannedRequest, proposal, configured = false;
 let selected=[], avoided=[];
@@ -87,7 +88,14 @@ $('ask').addEventListener('click',async()=>{
   }catch(err){feedback(err.message);}finally{$('ask').disabled=false;}
 });
 $('apply').addEventListener('click',()=>{if(proposal){setRequest(proposal);$('proposal').hidden=true;generate();}});
-fetch('/api/status').then(r=>r.json()).then(data=>{configured=data.configured;$('ai-status').textContent=configured?`${data.model} · 已配置`:'无密钥演示';}).catch(()=>{$('ai-status').textContent='AI 服务不可用';});
+if(staticDemo){
+  $('ai-status').textContent='在线演示 · 使用手动条件规划';
+  $('ask').disabled=true;
+  $('ask').textContent='在线演示未启用 AI';
+  $('message').placeholder='在线演示请调整下方条件；AI 需求理解可在本地配置服务后使用。';
+}else{
+  fetch('/api/status').then(r=>r.json()).then(data=>{configured=data.configured;$('ai-status').textContent=configured?`${data.model} · 已配置`:'无密钥演示';}).catch(()=>{$('ai-status').textContent='AI 服务不可用';});
+}
 try{const saved=JSON.parse(localStorage.getItem('moontrip.v1')||'null');if(saved){const check=JSON.parse(plan_json(JSON.stringify({request:saved.request,places:saved.places})));if(check.ok){places=saved.places;setRequest(saved.request);$('message').value=saved.message||'';}}}catch{}
 generate();
 
