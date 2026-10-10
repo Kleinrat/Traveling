@@ -6,9 +6,9 @@
 <main>
 <section class="hero"><div class="eyebrow">LESS RUSH. MORE JOURNEY.</div><h1>把旅行安排得<br><em>刚刚好。</em></h1><p>说说你的旅行风格，比较几种走法，再选出心仪的地方。</p><div class="hero-note">内置资料为虚构示例 · 自定义资料请核实</div><div class="orb">途<span>有据可循<br>每一站，都有理由</span></div></section>
 <section class="panel place-library"><div class="section-head"><h2>真实地点资料</h2><span id="maps-status">检查本机连接…</span></div>
-<p class="hint">① 勾选城市 → ② 批量查询 → ③ 填写并核对地点资料 → ④ 加入行程候选。每次最多选 5 城，每城查询至多 20 个景点和 20 家餐厅；不是热门榜单或完整城市库。</p>
+<p class="hint">① 勾选城市 → ② 批量查询 → ③ 填写并核对地点资料 → ④ 加入行程候选。每次最多选 5 城，每城查询至多 20 个景点和 20 家餐厅；餐厅兼顾地方菜和其他菜系，优先保留查询结果中评分较高的候选；不是热门榜单或完整城市库。</p>
 <details><summary>首发城市清单 · 31 个省级地区</summary><p class="hint">每个大陆省、自治区、直辖市选一个代表城市，可取消勾选；不代表热度排名。港澳台暂不包含在本期清单。</p><div id="seed-cities" class="seed-cities"></div></details>
-<label>查询和核对的城市<select id="review-city"></select></label><p class="hint">待核对列表只显示所选城市；其他城市资料保留。同名菜馆及同品牌分店只保留一个候选。</p><div class="library-actions"><button id="query-city" type="button">查询当前城市资料</button><button id="query-batch" type="button">批量查询勾选城市</button><button id="stop-batch" type="button" hidden>完成当前城市后停止</button><button id="clear-pending" type="button">清空待核对资料</button></div>
+<label>查询和核对的城市<select id="review-city"></select></label><p class="hint">待核对列表只显示所选城市；其他城市资料保留。同品牌分店及短品牌名高度相似的菜馆只保留一个候选；相似名字不代表同一企业。</p><div class="library-actions"><button id="query-city" type="button">查询当前城市资料</button><button id="query-batch" type="button">批量查询勾选城市</button><button id="stop-batch" type="button" hidden>完成当前城市后停止</button><button id="clear-pending" type="button">清空待核对资料</button></div>
 <p id="maps-progress" role="status" class="hint">查询结果保存在本机浏览器，不会自动加入行程。</p><details id="review-list"><summary>待核对地点 <span id="pending-count">0</span></summary><div id="pending-places" class="pending-places"></div></details></section>
 <section class="workspace">
 <aside>

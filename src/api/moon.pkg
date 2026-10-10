@@ -12,6 +12,7 @@ options(
         "plan_json",
         "cities_json",
         "restaurant_identity",
+        "restaurants_similar",
         "place_query_json",
         "pending_places_json",
         "alternatives_json",

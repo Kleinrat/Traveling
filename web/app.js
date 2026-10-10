@@ -1,4 +1,4 @@
-import { plan_json, catalogue_json, alternatives_json, cities_json, pending_places_json, restaurant_identity } from './engine.js';
+import { plan_json, catalogue_json, alternatives_json, cities_json, pending_places_json, restaurants_similar } from './engine.js';
 const $ = id => document.getElementById(id);
 const staticDemo = document.querySelector('meta[name="moontrip-mode"]')?.content === 'static';
 const tags = ['自然','文化','历史','摄影','科技','亲子','美食','艺术','运动'];
@@ -110,9 +110,9 @@ function moveStop(id,delta){const ids=currentPlan.days.flatMap(day=>day.stops.ma
 function sourceLinks(place){return [...new Set([place.url,...(place.source.match(/https?:\/\/[^\s]+/g)||[])].filter(Boolean))];}
 function renderCandidates(){
   $('candidates').replaceChildren();
-  const restaurants=new Set();
+  const restaurants=[];
   for(const p of places.filter(p=>p.city===request().city)){
-    if(p.kind==='food'){const key=restaurant_identity(p.city,p.name);if(restaurants.has(key))continue;restaurants.add(key);}
+    if(p.kind==='food'){if(restaurants.some(old=>restaurants_similar(p.city,p.name,old.city,old.name)))continue;restaurants.push(p);}
     const card=e('div',undefined,'candidate');card.append(e('strong',p.name),e('p',`${p.kind==='food'?'餐厅':'景点'} · ${p.district} · ¥${p.cost}/人 · ${p.duration} 分钟`));
     const choices=e('div',undefined,'choices');
     for(const [label,checked,kind] of [['想去',selected.includes(p.id),'select'],['排除',avoided.includes(p.id),'avoid']]){
@@ -169,7 +169,7 @@ function updateMapsStatus(){
 }
 function savePending(){try{localStorage.setItem('moontrip.pending.v1',JSON.stringify(pendingPlaces));}catch{$('maps-progress').textContent='浏览器无法保存资料；当前页仍可核对，请避免刷新。';}}
 function renderPending(){
-  const seen=new Set();pendingPlaces=pendingPlaces.filter(p=>{const key=p.kind==='food'?restaurant_identity(p.city,p.name):p.id;if(seen.has(key))return false;seen.add(key);return true;});
+  const accepted=[];pendingPlaces=pendingPlaces.filter(p=>{if(accepted.some(old=>old.id===p.id || (old.kind==='food'&&p.kind==='food'&&restaurants_similar(p.city,p.name,old.city,old.name))))return false;accepted.push(p);return true;});
   const visible=pendingPlaces.filter(p=>p.city===$('review-city').value);
   $('pending-count').textContent=`${$('review-city').value} · ${visible.length}`;$('pending-places').replaceChildren();
   for(const p of visible){
@@ -200,9 +200,8 @@ async function queryCities(cities){
         $('maps-progress').textContent=`${i+1}/${cities.length} · 正在查询${cities[i]}${kind==='food'?'餐厅':'景点'}…`;
         const response=await fetch('/api/places',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({city:cities[i],kind})});const result=await response.json();
         if(!result.ok)throw Error(result.errors.join('；'));
-        const key=p=>p.kind==='food'?restaurant_identity(p.city,p.name):p.id;
-        const existing=new Set([...places,...pendingPlaces].map(key));
-        for(const item of result.items)if(!existing.has(key(item))){pendingPlaces.push(item);existing.add(key(item));}
+        const existing=[...places,...pendingPlaces];
+        for(const item of result.items)if(!existing.some(old=>old.id===item.id||(old.kind==='food'&&item.kind==='food'&&restaurants_similar(item.city,item.name,old.city,old.name)))){pendingPlaces.push(item);existing.push(item);}
         savePending();renderPending();$('review-list').open=true;
       }
     }

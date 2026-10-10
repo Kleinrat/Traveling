@@ -53,6 +53,16 @@ pub fn restaurant_identity(city : String, name : String) -> String {
 }
 
 ///|
+pub fn restaurants_similar(
+  city_a : String,
+  name_a : String,
+  city_b : String,
+  name_b : String,
+) -> Bool {
+  @engine.restaurants_similar(city_a, name_a, city_b, name_b)
+}
+
+///|
 priv struct SearchInput {
   city : String
   kind : String
@@ -119,6 +129,7 @@ pub fn place_query_json(text : String) -> String {
           "city": entry.city,
           "code": entry.code,
           "kind": input.kind,
+          "diverse": input.kind == "food",
           "keywords": if input.kind == "food" {
             local_food_keywords(entry.city)
           } else {
@@ -162,7 +173,6 @@ pub fn pending_places_json(text : String) -> String {
       { "ok": false, "errors": ["单次查询最多 40 条资料"] } : Json).stringify()
   }
   let seen : Map[String, Bool] = Map([])
-  let restaurants : Map[String, Bool] = Map([])
   let clean : Array[PendingPoi] = []
   for poi in raw {
     if poi.id == "" ||
@@ -178,11 +188,12 @@ pub fn pending_places_json(text : String) -> String {
       continue
     }
     if poi.kind == "food" {
-      let identity = restaurant_identity(poi.city, poi.name)
-      if restaurants.contains(identity) {
+      if clean.any(old => {
+          old.kind == "food" &&
+          restaurants_similar(poi.city, poi.name, old.city, old.name)
+        }) {
         continue
       }
-      restaurants[identity] = true
     }
     if !seen.contains(poi.id) {
       clean.push(poi)

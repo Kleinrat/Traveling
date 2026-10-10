@@ -9,6 +9,12 @@ from pathlib import Path
 spec=importlib.util.spec_from_file_location('map_host',Path(__file__).with_name('serve.py'))
 host=importlib.util.module_from_spec(spec);spec.loader.exec_module(host)
 class MapTests(unittest.TestCase):
+    def test_diverse_search_keeps_other_cuisines_and_deduplicates_similar_names(self):
+        local={'status':'1','pois':[{'id':'a','name':'老天津·天津菜(鼓楼店)','typecode':'050100','biz_ext':{'rating':'4.8'}}]}
+        broad={'status':'1','pois':[{'id':'b','name':'老津门天津菜','typecode':'050100','biz_ext':{'rating':'4.2'}},{'id':'c','name':'北京烤鸭店','typecode':'050100','biz_ext':{'rating':'4.6'}}]}
+        with patch.object(host.urllib.request,'urlopen',side_effect=[io.BytesIO(json.dumps(local).encode()),io.BytesIO(json.dumps(broad).encode())]):
+            result=host.search_places({'city':'天津','code':'120000','kind':'food','types':'050100','keywords':'天津菜','diverse':True})
+        self.assertEqual([p['id'] for p in result['items']],['amap-a','amap-c'])
     def test_local_cuisine_requires_provider_evidence(self):
         raw={'status':'1','pois':[{'id':'local','name':'菜馆','typecode':'050100','type':'餐饮服务;中餐厅;浙江菜'}, {'id':'other','name':'北京小吃','typecode':'050100','type':'餐饮服务;中餐厅;北京菜'}]}
         with patch.object(host.urllib.request,'urlopen',return_value=io.BytesIO(json.dumps(raw).encode())):

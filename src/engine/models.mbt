@@ -13,7 +13,7 @@ pub fn restaurant_identity(city : String, name : String) -> String {
   for
     descriptor in [
       "天津菜", "杭帮菜", "浙江菜", "本帮菜", "北京菜", "私房菜",
-      "川湘菜", "地道川菜", "湘菜", "粤菜",
+      "川湘菜", "地道川菜", "湘菜", "粤菜", "津菜馆", "津味家常菜",
     ] {
     if base.split_once(descriptor) is Some((head, _)) {
       if head.length() >= 2 && head != city {
@@ -22,6 +22,41 @@ pub fn restaurant_identity(city : String, name : String) -> String {
     }
   }
   city + ":" + base
+}
+
+///|
+pub fn restaurants_similar(
+  city_a : String,
+  name_a : String,
+  city_b : String,
+  name_b : String,
+) -> Bool {
+  if city_a != city_b {
+    return false
+  }
+  let a = restaurant_identity("", name_a)
+  let b = restaurant_identity("", name_b)
+  if a == b {
+    return true
+  }
+  let aa = a[1:].to_owned().iter().to_array()
+  let bb = b[1:].to_owned().iter().to_array()
+  if aa.length() < 3 ||
+    bb.length() < 3 ||
+    aa.length() > 5 ||
+    bb.length() > 5 ||
+    aa[0] != bb[0] {
+    return false
+  }
+  let mut common = 0
+  let counted : Map[Char, Bool] = Map([])
+  for ch in aa {
+    if !counted.contains(ch) && bb.contains(ch) {
+      common += 1
+      counted[ch] = true
+    }
+  }
+  common * 3 >= aa.length() * 2 && common * 3 >= bb.length() * 2
 }
 
 ///|

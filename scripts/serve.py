@@ -42,11 +42,26 @@ def search_places(query):
     data = json.loads(raw)
     if data.get('status') != '1':
         return {'ok': False, 'errors': ['高德查询未成功，错误码 ' + str(data.get('infocode', '未知')) + '；请检查额度和密钥权限']}
+    diverse = query['kind'] == 'food' and query.get('diverse', False)
+    if diverse:
+        broad = urllib.parse.urlencode({'key': AMAP_KEY, 'city': query['code'],
+            'citylimit': 'true', 'types': '050100|050200|050300', 'offset': 20,
+            'page': 1, 'extensions': 'all', 'output': 'JSON'})
+        with urllib.request.urlopen('https://restapi.amap.com/v3/place/text?' + broad, timeout=15) as response:
+            extra_raw = response.read(1000001)
+        if len(extra_raw) > 1000000: raise ValueError('response too large')
+        broad_data = json.loads(extra_raw)
+        if broad_data.get('status') == '1':
+            data['pois'] = data.get('pois', []) + broad_data.get('pois', [])
+        def rating(poi):
+            try: return float((poi.get('biz_ext') or {}).get('rating', 0))
+            except (ValueError, TypeError, AttributeError): return 0
+        data['pois'] = sorted(data.get('pois', []), key=rating, reverse=True)
     timestamp = datetime.now(timezone.utc).isoformat()
     def string(value):
         return value if isinstance(value, str) else ''
     items = []
-    for poi in data.get('pois', [])[:20]:
+    for poi in data.get('pois', [])[:40 if diverse else 20]:
         city_name = poi.get('cityname')
         if isinstance(city_name, str) and city_name and city_name not in (query['city'], query['city'] + '市'):
             continue
@@ -55,10 +70,14 @@ def search_places(query):
             codes = str(poi.get('typecode', '')).split('|')
             if not any(code.startswith('05') for code in codes) or any(code.startswith('10') for code in codes):
                 continue
+            if diverse and not any(code.startswith(('0501', '0502', '0503')) for code in codes):
+                continue
+            if '有限公司' in str(poi.get('name', '')):
+                continue
         extra = poi.get('biz_ext')
         if not isinstance(extra, dict):
             extra = {}
-        if query['kind'] == 'food' and query.get('keywords'):
+        if query['kind'] == 'food' and query.get('keywords') and not diverse:
             evidence = ' '.join(string(value) for value in
                 [poi.get('name'), poi.get('type'), extra.get('tag')])
             if not any(word in evidence for word in query['keywords'].split('|') if word):
@@ -71,7 +90,9 @@ def search_places(query):
             'cost_hint': string(extra.get('cost')),
             'open_hint': string(extra.get('opentime2')) or string(extra.get('open_time')) or string(extra.get('opentime')),
             'fetched_at': timestamp, 'url': 'https://www.amap.com/place/' + urllib.parse.quote(poi_id, safe='')})
-    return bridge({'action': 'pending-places', 'items': items})
+    result = bridge({'action': 'pending-places', 'items': items})
+    if result.get('ok'): result['items'] = result['items'][:20]
+    return result
 
 
 def bridge(payload):
