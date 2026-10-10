@@ -1,6 +1,21 @@
 import {
-  "Kleinrat/moontrip/src/demo" @demo,
-  "Kleinrat/moontrip/src/engine" @engine,
+  "Kleinrat/moontrip/src/assistant",
+  "Kleinrat/moontrip/src/demo",
+  "Kleinrat/moontrip/src/engine",
   "moonbitlang/core/json",
 }
-options(link: { "js": { "exports": ["plan_json", "catalogue_json"], "format": "esm" } })
+
+options(
+  link: {
+    "js": {
+      "exports": [
+        "plan_json",
+        "catalogue_json",
+        "assistant_system",
+        "assistant_context",
+        "validate_proposal",
+      ],
+      "format": "esm",
+    },
+  },
+)

@@ -1,13 +1,23 @@
-///| Hard eligibility rules are kept separate from soft preference scores.
+///|
+/// Hard eligibility rules are kept separate from soft preference scores.
 pub fn exclusion_reason(p : Place, r : Request) -> String? {
-  if p.city != r.city { return Some("不在目标城市") }
-  if r.rain && !p.indoor { return Some("雨天只安排室内景点") }
-  if r.family && !p.family { return Some("未标注为亲子适合") }
-  if r.relaxed && p.duration > 120 { return Some("慢节奏模式单次游览不超过 120 分钟") }
+  if p.city != r.city {
+    return Some("不在目标城市")
+  }
+  if r.rain && !p.indoor {
+    return Some("雨天只安排室内景点")
+  }
+  if r.family && !p.family {
+    return Some("未标注为亲子适合")
+  }
+  if r.relaxed && p.duration > 120 {
+    return Some("慢节奏模式单次游览不超过 120 分钟")
+  }
   None
 }
 
-///| Duplicate interests do not increase the score.
+///|
+/// Duplicate interests do not increase the score.
 pub fn score(p : Place, r : Request) -> (Int, Array[String]) {
   let reasons : Array[String] = []
   let seen : Map[String, Bool] = Map([])
@@ -38,7 +48,8 @@ pub fn score(p : Place, r : Request) -> (Int, Array[String]) {
   (value, reasons)
 }
 
-///| Estimates, not map routing. Zero for the first stop of each day.
+///|
+/// Estimates, not map routing. Zero for the first stop of each day.
 pub fn transfer(previous : Place?, next : Place) -> (Int, Int) {
   match previous {
     None => (0, 0)
