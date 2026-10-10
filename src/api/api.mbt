@@ -11,3 +11,8 @@ pub fn plan_json(text : String) -> String {
   }
   response.stringify()
 }
+
+///|
+pub fn catalogue_json() -> String {
+  @json.to_json(@demo.catalogue()).stringify()
+}

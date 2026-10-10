@@ -1,6 +1,6 @@
 ///|
 /// All money is in whole CNY per person; times are minutes after midnight.
-pub struct Place {
+pub(all) struct Place {
   id : String
   name : String
   city : String
@@ -17,7 +17,7 @@ pub struct Place {
 
 ///|
 /// Budget covers activities and estimated local transfers only.
-pub struct Request {
+pub(all) struct Request {
   city : String
   days : Int
   budget : Int
@@ -30,13 +30,13 @@ pub struct Request {
 } derive(Debug, ToJson, @json.FromJson)
 
 ///|
-pub struct Input {
+pub(all) struct Input {
   request : Request
   places : Array[Place]
 } derive(Debug, ToJson, @json.FromJson)
 
 ///|
-pub struct Stop {
+pub(all) struct Stop {
   place : Place
   start : Int
   end : Int
@@ -47,7 +47,7 @@ pub struct Stop {
 } derive(Debug, ToJson)
 
 ///|
-pub struct Day {
+pub(all) struct Day {
   day : Int
   stops : Array[Stop]
   cost : Int
@@ -55,14 +55,14 @@ pub struct Day {
 } derive(Debug, ToJson)
 
 ///|
-pub struct Exclusion {
+pub(all) struct Exclusion {
   id : String
   name : String
   reason : String
 } derive(Debug, ToJson)
 
 ///|
-pub struct Plan {
+pub(all) struct Plan {
   days : Array[Day]
   total_cost : Int
   remaining_budget : Int
