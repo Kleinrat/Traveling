@@ -7,6 +7,7 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
   }
   let r = input.request
   let used : Map[String, Bool] = Map([])
+  let used_restaurants : Map[String, Bool] = Map([])
   let days : Array[Day] = []
   let mut total = 0
   for day_number in 1..<(r.days + 1) {
@@ -30,6 +31,10 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
           continue
         }
         if p.kind == "food" && meals >= 1 {
+          continue
+        }
+        if p.kind == "food" &&
+          used_restaurants.contains(restaurant_identity(p.city, p.name)) {
           continue
         }
         let mut next_required : String? = None
@@ -116,6 +121,7 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
             visits += 1
           } else {
             meals += 1
+            used_restaurants[restaurant_identity(p.city, p.name)] = true
           }
           previous = Some(p)
           used[p.id] = true

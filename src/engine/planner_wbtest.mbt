@@ -340,3 +340,21 @@ test "reject unsafe source URL" {
     !validate({ request: fixture_request(), places: [p], }).is_empty(),
   )
 }
+
+///|
+test "different branch IDs cannot repeat a restaurant across days" {
+  let r = { ..fixture_request(), include_food: true, days: 3, }
+  let a = {
+    ..fixture_place("a", 10, 60),
+    kind: "food",
+    name: "杭帮菜馆(西湖店)",
+  }
+  let b = { ..a, id: "b", name: "杭帮菜馆（城东店）", }
+  let c = { ..a, id: "c", name: "另一家菜馆", }
+  let result = checked({ request: r, places: [a, b, c], })
+  let mut meals = 0
+  for day in result.days {
+    meals += day.stops.length()
+  }
+  assert_eq(meals, 2)
+}

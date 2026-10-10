@@ -11,6 +11,7 @@ options(
       "exports": [
         "plan_json",
         "cities_json",
+        "restaurant_identity",
         "place_query_json",
         "pending_places_json",
         "alternatives_json",

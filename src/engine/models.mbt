@@ -1,4 +1,15 @@
 ///|
+pub fn restaurant_identity(city : String, name : String) -> String {
+  let mut base = name.trim().to_owned()
+  for separator in ["(", "（"] {
+    if base.split_once(separator) is Some((head, _)) {
+      base = head.to_owned()
+    }
+  }
+  city + ":" + base.replace_all(old=" ", new="").trim().to_owned()
+}
+
+///|
 /// All money is in whole CNY per person; times are minutes after midnight.
 pub(all) struct Place {
   id : String

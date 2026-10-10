@@ -47,6 +47,9 @@ def search_places(query):
         return value if isinstance(value, str) else ''
     items = []
     for poi in data.get('pois', [])[:20]:
+        city_name = poi.get('cityname')
+        if isinstance(city_name, str) and city_name and city_name not in (query['city'], query['city'] + '市'):
+            continue
         # Provider category metadata must describe dining, without a lodging category.
         if query['kind'] == 'food':
             codes = str(poi.get('typecode', '')).split('|')

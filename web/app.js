@@ -1,4 +1,4 @@
-import { plan_json, catalogue_json, alternatives_json, cities_json, pending_places_json } from './engine.js';
+import { plan_json, catalogue_json, alternatives_json, cities_json, pending_places_json, restaurant_identity } from './engine.js';
 const $ = id => document.getElementById(id);
 const staticDemo = document.querySelector('meta[name="moontrip-mode"]')?.content === 'static';
 const tags = ['自然','文化','历史','摄影','科技','亲子','美食','艺术','运动'];
@@ -110,7 +110,9 @@ function moveStop(id,delta){const ids=currentPlan.days.flatMap(day=>day.stops.ma
 function sourceLinks(place){return [...new Set([place.url,...(place.source.match(/https?:\/\/[^\s]+/g)||[])].filter(Boolean))];}
 function renderCandidates(){
   $('candidates').replaceChildren();
+  const restaurants=new Set();
   for(const p of places.filter(p=>p.city===request().city)){
+    if(p.kind==='food'){const key=restaurant_identity(p.city,p.name);if(restaurants.has(key))continue;restaurants.add(key);}
     const card=e('div',undefined,'candidate');card.append(e('strong',p.name),e('p',`${p.kind==='food'?'餐厅':'景点'} · ${p.district} · ¥${p.cost}/人 · ${p.duration} 分钟`));
     const choices=e('div',undefined,'choices');
     for(const [label,checked,kind] of [['想去',selected.includes(p.id),'select'],['排除',avoided.includes(p.id),'avoid']]){
@@ -143,7 +145,7 @@ $('add-place').addEventListener('submit',ev=>{
 if(![...$('city').options].some(o=>o.value===p.city))$('city').add(new Option(p.city,p.city));if(p.city===$('city').value&&p.kind==='food')$('include_food').checked=true;generate();feedback('已加入候选列表，可勾选后安排进计划。');
 });
 $('planner').addEventListener('input',()=>feedback('条件已修改，点击“生成我的行程”更新方案与预算。'));
-$('city').addEventListener('change',()=>{selected=[];avoided=[];generate();});
+$('city').addEventListener('change',()=>{selected=[];avoided=[];generate();if([...$('review-city').options].some(o=>o.value===$('city').value)){$('review-city').value=$('city').value;renderPending();}});
 $('export-html').addEventListener('click',()=>{
   if(!currentPlan)return;const page=document.implementation.createHTMLDocument(`${plannedRequest.city} · MoonTrip 离线路书`);
   const style=e('style','body{font:16px/1.8 system-ui;max-width:900px;margin:30px auto;padding:20px;color:#223b36}article{padding:20px;border:1px solid #ddd;border-radius:12px;margin:15px 0}small{color:#687b72}button,.stop-controls{display:none}h1{font-size:32px}a{color:#285a47}');page.documentElement.lang='zh-CN';page.head.append(style);
@@ -157,6 +159,9 @@ $('confirm-city').addEventListener('click',()=>{const city=$('new-city').value.t
 
 // The host transports map data; MoonBit validates city queries and candidate records.
 const seedCities=JSON.parse(cities_json());
+for(const city of seedCities)$('review-city').add(new Option(city.city,city.city));
+$('review-city').value=seedCities.some(c=>c.city===$('city').value)?$('city').value:'杭州';
+$('review-city').addEventListener('change',()=>renderPending());
 for(const city of seedCities){const label=e('label'),input=e('input');input.type='checkbox';input.value=city.city;input.checked=city.city==='杭州';label.append(input,document.createTextNode(`${city.province} · ${city.city}`));$('seed-cities').append(label);}
 function updateMapsStatus(){
   $('maps-status').textContent=staticDemo?'在线版未启用地点查询':mapsConfigured?'高德 Web 服务 · 本机已连接':'本机尚未连接高德';
@@ -164,8 +169,10 @@ function updateMapsStatus(){
 }
 function savePending(){try{localStorage.setItem('moontrip.pending.v1',JSON.stringify(pendingPlaces));}catch{$('maps-progress').textContent='浏览器无法保存资料；当前页仍可核对，请避免刷新。';}}
 function renderPending(){
-  $('pending-count').textContent=String(pendingPlaces.length);$('pending-places').replaceChildren();
-  for(const p of pendingPlaces){
+  const seen=new Set();pendingPlaces=pendingPlaces.filter(p=>{const key=p.kind==='food'?restaurant_identity(p.city,p.name):p.id;if(seen.has(key))return false;seen.add(key);return true;});
+  const visible=pendingPlaces.filter(p=>p.city===$('review-city').value);
+  $('pending-count').textContent=`${$('review-city').value} · ${visible.length}`;$('pending-places').replaceChildren();
+  for(const p of visible){
     const card=e('article',undefined,'pending-card');card.append(e('h3',`${p.name} · ${p.city}`),e('p',`${p.kind==='food'?'餐厅':'景点'} · ${p.district} · ${p.address||'地址待核对'}`),e('p',`高德人均消费线索：${p.cost_hint||'未提供'}（不等于门票报价）；营业时间线索：${p.open_hint||'未提供'}`,'hint'),e('p',`查询日期：${new Date(p.fetched_at).toLocaleString("zh-CN",{timeZone:"Asia/Shanghai"})} · 待核对`,'hint'));
     const source=e('a','查看高德地点 ↗');source.href=p.url;source.target='_blank';source.rel='noopener noreferrer';card.append(source);
     const button=e('button','填写并核对');button.type='button';button.addEventListener('click',()=>{
@@ -183,6 +190,8 @@ function renderPending(){
 async function queryCities(cities){
   if(libraryBusy)return;if(!mapsConfigured||staticDemo){$('maps-progress').textContent='地点查询需要打开本机服务 http://127.0.0.1:8787/。';return;}
   if(!cities.length||cities.length>5){$('maps-progress').textContent='请选择 1–5 个城市，可分批查询。';return;}
+  $('review-city').value=cities[0];renderPending();
+  if(cities.length===1){if(![...$('city').options].some(o=>o.value===cities[0]))$('city').add(new Option(cities[0],cities[0]));$('city').value=cities[0];selected=[];avoided=[];generate();}
   libraryBusy=true;stopBatch=false;updateMapsStatus();$('stop-batch').hidden=false;
   try{
     for(let i=0;i<cities.length;i++){
@@ -191,8 +200,9 @@ async function queryCities(cities){
         $('maps-progress').textContent=`${i+1}/${cities.length} · 正在查询${cities[i]}${kind==='food'?'餐厅':'景点'}…`;
         const response=await fetch('/api/places',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({city:cities[i],kind})});const result=await response.json();
         if(!result.ok)throw Error(result.errors.join('；'));
-        const existing=new Set([...places,...pendingPlaces].map(p=>p.id));
-        for(const item of result.items)if(!existing.has(item.id)){pendingPlaces.push(item);existing.add(item.id);}
+        const key=p=>p.kind==='food'?restaurant_identity(p.city,p.name):p.id;
+        const existing=new Set([...places,...pendingPlaces].map(key));
+        for(const item of result.items)if(!existing.has(key(item))){pendingPlaces.push(item);existing.add(key(item));}
         savePending();renderPending();$('review-list').open=true;
       }
     }
@@ -200,7 +210,7 @@ async function queryCities(cities){
   }catch(err){$('maps-progress').textContent=`查询中止：${err.message}。已成功查询的资料仍保留。`;}
   finally{libraryBusy=false;$('stop-batch').hidden=true;updateMapsStatus();}
 }
-$('query-city').addEventListener('click',()=>queryCities([$('city').value]));
+$('query-city').addEventListener('click',()=>queryCities([$('review-city').value]));
 $('query-batch').addEventListener('click',()=>queryCities([...$('seed-cities').querySelectorAll('input:checked')].map(i=>i.value)));
 $('stop-batch').addEventListener('click',()=>{stopBatch=true;$('maps-progress').textContent='将在当前城市查询结束后停止。';});
 $('clear-pending').addEventListener('click',()=>{if(libraryBusy)return;pendingPlaces=[];savePending();renderPending();$('maps-progress').textContent='待核对资料已清空，已加入行程的地点不受影响。';});

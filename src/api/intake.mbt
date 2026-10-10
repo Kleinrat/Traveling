@@ -48,6 +48,11 @@ pub fn cities_json() -> String {
 }
 
 ///|
+pub fn restaurant_identity(city : String, name : String) -> String {
+  @engine.restaurant_identity(city, name)
+}
+
+///|
 priv struct SearchInput {
   city : String
   kind : String
@@ -157,6 +162,7 @@ pub fn pending_places_json(text : String) -> String {
       { "ok": false, "errors": ["单次查询最多 40 条资料"] } : Json).stringify()
   }
   let seen : Map[String, Bool] = Map([])
+  let restaurants : Map[String, Bool] = Map([])
   let clean : Array[PendingPoi] = []
   for poi in raw {
     if poi.id == "" ||
@@ -170,6 +176,13 @@ pub fn pending_places_json(text : String) -> String {
     }
     if poi.kind == "food" && lodging_name(poi.name) {
       continue
+    }
+    if poi.kind == "food" {
+      let identity = restaurant_identity(poi.city, poi.name)
+      if restaurants.contains(identity) {
+        continue
+      }
+      restaurants[identity] = true
     }
     if !seen.contains(poi.id) {
       clean.push(poi)
