@@ -1,0 +1,1 @@
+{"name":"moontrip-host","private":true,"type":"module","scripts":{"build":"sh scripts/build.sh","test":"moon test --target js","start":"python3 scripts/serve.py"}}

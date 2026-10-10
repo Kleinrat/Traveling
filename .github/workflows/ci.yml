@@ -1,0 +1,35 @@
+name: MoonTrip checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install official MoonBit toolchain
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh -o /tmp/moonbit-install.sh
+          bash /tmp/moonbit-install.sh
+          echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+      - name: Check and build MoonBit engine
+        run: |
+          moon version
+          sh scripts/build.sh
+          git diff --exit-code
+      - name: MoonBit unit and invariant tests
+        run: moon test --target js
+      - name: HTTP provider integration tests
+        run: python3 scripts/test_host.py
+      - name: Travel scenario and dining smoke checks
+        run: node scripts/smoke.mjs
+      - name: Runnable MoonBit example
+        run: moon run src/main --target js

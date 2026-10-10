@@ -1,0 +1,10 @@
+_build/
+_site/
+target/
+.mooncakes/
+web/engine.js
+.env
+*.log
+.DS_Store
+__pycache__/
+*.pyc

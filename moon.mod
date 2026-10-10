@@ -1,0 +1,13 @@
+name = "Kleinrat/moontrip"
+
+version = "0.1.0"
+
+readme = "README.md"
+
+license = "MIT"
+
+keywords = [ "travel", "planning", "ai" ]
+
+description = "Explainable constraint-based travel planning in MoonBit"
+
+preferred_target = "js"

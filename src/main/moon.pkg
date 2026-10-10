@@ -1,0 +1,7 @@
+import {
+  "Kleinrat/moontrip/src/demo",
+  "Kleinrat/moontrip/src/engine",
+  "moonbitlang/core/json",
+}
+
+pkgtype(kind: "executable")

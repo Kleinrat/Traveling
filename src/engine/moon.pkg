@@ -1,0 +1,7 @@
+import {
+  "moonbitlang/core/json",
+}
+
+options(
+  warn_list: "-79",
+)
