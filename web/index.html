@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>旅衡 MoonTrip · 把旅行安排得刚刚好</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><a class="brand" href="/">◒ <span>旅衡 <small>MoonTrip</small></span></a><span class="badge">开源旅行规划 · MoonBit 驱动</span></header>
+<main>
+<section class="hero"><div class="eyebrow">LESS RUSH. MORE JOURNEY.</div><h1>把旅行安排得<br><em>刚刚好。</em></h1><p>从你的兴趣出发，在时间与预算之间，找到合适的下一站。</p><div class="hero-note">当前为示例数据演示 · 支持导入自己的景点</div><div class="orb">途<span>有据可循<br>每一站，都有理由</span></div></section>
+<section class="workspace">
+<aside>
+<div class="panel"><div class="section-head"><h2>这次，想怎么走？</h2><span>01 / 条件</span></div>
+<div class="presets"><button type="button" data-preset="weekend">周末轻旅行</button><button type="button" data-preset="family">亲子慢游</button><button type="button" data-preset="rain">雨天也精彩</button></div>
+<form id="planner">
+<div class="fields"><label>目的地<select id="city"><option>杭州</option><option>成都</option></select></label><label>旅行天数<input id="days" type="number" min="1" max="7" value="2" required></label></div>
+<label>每人活动 + 市内交通预算（元）<input id="budget" type="number" min="0" max="100000" value="200" required></label>
+<div class="fields"><label>每天开始<input id="start" type="time" value="09:00" required></label><label>每天结束<input id="end" type="time" value="17:00" required></label></div>
+<fieldset><legend>你想遇见什么</legend><div id="interests" class="chips"></div></fieldset>
+<div class="toggles"><label><input type="checkbox" id="family"> 亲子适合</label><label><input type="checkbox" id="rain"> 雨天室内</label><label><input type="checkbox" id="relaxed" checked> 慢一点走</label></div>
+<button class="primary" type="submit">生成我的行程 <span>↗</span></button>
+</form><p class="hint">预算不含餐饮、住宿和往返交通；开放时间、费用及接驳均需在出行前核实。</p></div>
+<div class="panel assistant"><div class="section-head"><h2>和旅行助手聊聊</h2><span id="ai-status">检查连接…</span></div><p class="hint">描述想调整的条件，助手会生成建议，由你确认后应用。</p><label class="sr" for="message">旅行需求</label><textarea id="message" maxlength="3000" placeholder="例如：想去成都两天，喜欢文化和美食，每人活动预算 300 元，带孩子慢慢走。"></textarea><button type="button" id="ask">整理我的需求 →</button><div id="proposal" hidden><pre id="proposal-text"></pre><button id="apply" class="primary" type="button">确认条件并生成行程</button></div><p class="hint">助手仅支持表单中的条件；酒店、餐饮安排等需求需另行规划。</p></div>
+<div class="panel data"><h2>带上自己的景点</h2><p class="hint">导入景点 JSON 数组，包含来源、费用与开放时间。</p><label class="file">导入数据<input id="import" type="file" accept="application/json,.json"></label><button id="reset" type="button">恢复示例</button><small id="data-status"></small></div>
+</aside>
+<section class="results" aria-live="polite"><div class="section-head"><h2>你的旅行草案</h2><div class="exports"><button id="export-md" type="button">导出 Markdown</button><button id="export-json" type="button">导出 JSON</button></div></div><div id="feedback" role="status" hidden></div><div id="summary" class="summary"></div><div id="itinerary"></div><details class="panel"><summary>看看未被安排的景点</summary><div id="exclusions"></div></details><details class="panel"><summary>规划依据与边界</summary><ul id="warnings"></ul></details></section>
+</section>
+<footer>MoonTrip / 旅衡 · 用可解释的选择，留出旅行的余地。<a href="https://github.com/Kleinrat/Traveling">开源代码 ↗</a></footer>
+</main><script type="module" src="app.js"></script>
+</body></html>
