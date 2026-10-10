@@ -10,6 +10,10 @@ options(
     "js": {
       "exports": [
         "plan_json",
+        "plan_with_preferences_json",
+        "alternatives_with_preferences_json",
+        "edit_plan_json",
+        "trip_cost_json",
         "cities_json",
         "restaurant_identity",
         "restaurants_similar",

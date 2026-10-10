@@ -1,7 +1,16 @@
 ///|
 /// Greedy feasible scheduler. This is deterministic, not globally optimal.
 pub fn plan(input : Input) -> Result[Plan, Array[String]] {
+  plan_with_preferences(input, default_preferences())
+}
+
+///|
+pub fn plan_with_preferences(
+  input : Input,
+  preferences : Preferences,
+) -> Result[Plan, Array[String]] {
   let errors = validate(input)
+  errors.append(validate_preferences(preferences))
   if !errors.is_empty() {
     return Err(errors)
   }
@@ -17,6 +26,7 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
     let mut day_cost = 0
     let mut visits = 0
     let mut meals = 0
+    let mut transfer_total = 0
     while true {
       let mut best : Place? = None
       let mut best_score = -1
@@ -50,12 +60,12 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
           continue
         }
         let (minutes, fare) = transfer(previous, p)
+        if transfer_total + minutes > preferences.transfer_limit ||
+          (preferences.walking && minutes > 15) {
+          continue
+        }
         let rest = if previous is Some(_) {
-          if r.relaxed {
-            45
-          } else {
-            20
-          }
+          rest_minutes(r, preferences)
         } else {
           0
         }
@@ -68,6 +78,10 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
           continue
         }
         let (base, reasons) = score(p, r)
+        let (preference_bonus, preference_reasons) = preference_score(
+          p, previous, preferences,
+        )
+        reasons.append(preference_reasons)
         let nearby = match previous {
           Some(prev) => prev.district == p.district
           None => false
@@ -75,6 +89,7 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
         let chosen = r.must_visit.contains(p.id)
         let meal_due = p.kind == "food" && cursor >= 630
         let value = base +
+          preference_bonus +
           (if nearby { 8 } else { 0 }) +
           (if chosen { 10000 } else { 0 }) +
           (if meal_due { 200 } else { 0 })
@@ -119,6 +134,7 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
           cursor = best_start + p.duration
           total += p.cost + fare
           day_cost += p.cost + fare
+          transfer_total += minutes
           if p.kind == "sight" {
             visits += 1
           } else {
@@ -162,6 +178,11 @@ pub fn plan(input : Input) -> Result[Plan, Array[String]] {
     "每天第一站不计接驳；同片区 15 分钟/8 元，跨片区 35 分钟/15 元。",
     "算法使用可解释的贪心策略，不保证全局最优；每日餐饮时间需自行预留。",
   ]
+  if preferences.mode != "custom" || preferences.walking {
+    warnings.push(
+      "转场限制使用同片区 15 分钟、跨片区 35 分钟估算；不代表实测距离或步行路线。",
+    )
+  }
   if r.include_food &&
     days.any(day => !day.stops.any(stop => stop.place.kind == "food")) {
     warnings.push(
