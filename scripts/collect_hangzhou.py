@@ -23,6 +23,10 @@ JIANG_SOURCE = 'https://westlake.hangzhou.gov.cn/art/2023/5/17/art_1639430_59042
 def daily_windows(hint):
     # Reject schedules with seasons, weekday variations or narrative exceptions.
     text = hint.strip().removeprefix('周一至周日 ').strip()
+    text = text.removesuffix('；具体营业状态以当天开放情况为准')
+    last_entry = re.search(r' 最晚进入(\d{1,2}:\d{2})$', text)
+    if last_entry: text = text[:last_entry.start()]
+    if text in ('24小时营业', '全天开放'): text = '00:00-24:00'
     if not re.fullmatch(r'\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2}(?:\s*[,，;；]\s*\d{1,2}:\d{2}\s*[-–]\s*\d{1,2}:\d{2})*', text): return None
     windows = []
     for a, b in re.findall(r'(\d{1,2}:\d{2})\s*[-–]\s*(\d{1,2}:\d{2})', text):
@@ -36,24 +40,30 @@ def daily_windows(hint):
         if end < start:
             windows.extend([{'open': 0, 'close': end}, {'open': start, 'close': 1440}])
         else: windows.append({'open': start, 'close': end})
+    if last_entry:
+        try: limit = minute(last_entry.group(1))
+        except ValueError: return None
+        # Conservatively end the entire visit before last admission.
+        windows = [{**w, 'close':min(w['close'],limit)} for w in windows]
     return sorted([w for w in windows if w['open'] < w['close']], key=lambda w: w['open']) or None
 
-def find(keyword, kind):
+def find(keyword, kind, *, city='杭州', code='330100', districts=None,
+         center=(120.165, 30.247), free_keywords=FREE):
     params = urllib.parse.urlencode({'key': serve.AMAP_KEY, 'keywords': keyword,
-        'city': '330100', 'citylimit': 'true', 'extensions': 'all', 'offset': 20,
-        'types': '050000' if kind == 'food' else '110000|140100', 'children': 1, 'output': 'JSON'})
+        'city': code, 'citylimit': 'true', 'extensions': 'all', 'offset': 20,
+        'types': '050000' if kind == 'food' else '', 'children': 1, 'output': 'JSON'})
     with urllib.request.urlopen('https://restapi.amap.com/v3/place/text?' + params, timeout=15) as response:
         data = json.loads(response.read(1000000))
     if data.get('status') != '1': raise ValueError('高德错误码 ' + str(data.get('infocode', '未知')))
     candidates = data.get('pois', [])
-    if keyword in FREE:
+    if keyword in free_keywords and city == '杭州':
         candidates = [p for p in candidates if p.get('adname') in ('西湖区', '上城区')]
     if kind == 'food':
-        candidates = [p for p in candidates if p.get('adname') in ('西湖区','上城区','拱墅区','滨江区')]
+        candidates = [p for p in candidates if p.get('adname') in (districts or ('西湖区','上城区','拱墅区','滨江区'))]
     def proximity(p):
         try:
             lon, lat = map(float, p['location'].split(','))
-            return (lon - 120.165) ** 2 + (lat - 30.247) ** 2
+            return (lon - center[0]) ** 2 + (lat - center[1]) ** 2
         except (ValueError, KeyError, TypeError): return 100
     def main_score(p):
         name = str(p.get('name', ''))
@@ -66,12 +76,15 @@ def find(keyword, kind):
     for p in candidates:
         name = str(p.get('name', ''))
         if keyword not in name or any(x in name for x in ['酒店', '宾馆', '汤泉', '售票', '停车', '出入口', '游客中心', '有限公司', '分店公司', '大字墙', '机场', '售票处', '熟食店', '请香处', '咨询中心']): continue
-        if p.get('cityname') not in ('杭州市', '杭州'): continue
+        if p.get('cityname') not in (city+'市', city): continue
+        codes = str(p.get('typecode','')).split('|')
+        if kind == 'sight' and p.get('typecode') and not any(c.startswith('11') or c == '140100' for c in codes): continue
+        if kind == 'food' and p.get('typecode') and (not any(c.startswith('05') for c in codes) or any(c.startswith('10') for c in codes)): continue
         # Prefer main POIs; avoid a restaurant branch posing as a museum.
-        if kind == 'sight' and ('餐饮' in str(p.get('type', '')) or (p.get('parent') and main_score(p) != 0) or '(打卡点)' in name or name.endswith('店')): continue
+        if kind == 'sight' and ('餐饮' in str(p.get('type', '')) or (p.get('parent') and main_score(p) != 0) or '(打卡点)' in name or name.endswith('店') or re.search(r'[（(][^()（）]*门[）)]',name)): continue
         extra = p.get('biz_ext') or {}
         def string(v): return v if isinstance(v, str) else ''
-        return {'id': 'amap-' + p['id'], 'name': name, 'city': '杭州',
+        return {'id': 'amap-' + p['id'], 'name': name, 'city': city,
             'district': string(p.get('adname')), 'address': string(p.get('address')),
             'location': string(p.get('location')), 'kind': kind,
             'cost_hint': string(extra.get('cost')),

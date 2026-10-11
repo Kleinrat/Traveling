@@ -4,12 +4,12 @@
 <body>
 <header><a class="brand" href="./">◒ <span>旅衡 <small>MoonTrip</small></span></a><span class="badge">开源旅行规划 · MoonBit 驱动</span></header>
 <main>
-<section class="hero"><div class="eyebrow">LESS RUSH. MORE JOURNEY.</div><h1>把旅行安排得<br><em>刚刚好。</em></h1><p>说说你的旅行风格，比较几种走法，再选出心仪的地方。</p><div class="hero-note">可载入杭州真实资料 · 消费与路线均为估算</div><div class="orb">途<span>有据可循<br>每一站，都有理由</span></div></section>
+<section class="hero"><div class="eyebrow">LESS RUSH. MORE JOURNEY.</div><h1>把旅行安排得<br><em>刚刚好。</em></h1><p>说说你的旅行风格，比较几种走法，再选出心仪的地方。</p><div class="hero-note">杭州 / 成都 · 真实地点资料 · 消费与路线均为估算</div><div class="orb">途<span>有据可循<br>每一站，都有理由</span></div></section>
 <section class="panel place-library"><div class="section-head"><h2>真实地点资料</h2><span id="maps-status">检查本机连接…</span></div>
-<p class="hint">① 勾选城市 → ② 批量查询 → ③ 填写并核对地点资料 → ④ 加入行程候选。每次最多选 5 城，每城查询至多 20 个景点和 20 家餐厅；餐厅兼顾地方菜和其他菜系，优先保留查询结果中评分较高的候选；不是热门榜单或完整城市库。</p>
-<details><summary>首发城市清单 · 31 个省级地区</summary><p class="hint">每个大陆省、自治区、直辖市选一个代表城市，可取消勾选；不代表热度排名。港澳台暂不包含在本期清单。</p><div id="seed-cities" class="seed-cities"></div></details>
+<p class="hint">① 勾选城市 → ② 批量查询 → ③ 填写并核对地点资料 → ④ 加入行程候选。首版支持杭州、成都，每城查询至多 20 个景点和 20 家餐厅；餐厅兼顾地方菜和其他菜系，优先保留查询结果中评分较高的候选；不是热门榜单或完整城市库。</p>
+<details><summary>首版城市 · 杭州、成都</summary><p class="hint">首版专注这两座城市的行程体验，先选一城试用，也可以在本机更新资料。</p><div id="seed-cities" class="seed-cities"></div></details>
 <label>查询和核对的城市<select id="review-city"></select></label><p class="hint">待核对列表只显示所选城市；其他城市资料保留。同品牌分店及短品牌名高度相似的菜馆只保留一个候选；相似名字不代表同一企业。</p><div class="library-actions"><button id="query-city" type="button">查询当前城市资料</button><button id="query-batch" type="button">批量查询勾选城市</button><button id="stop-batch" type="button" hidden>完成当前城市后停止</button><button id="clear-pending" type="button">清空待核对资料</button></div>
-<div class="library-actions"><button id="load-hangzhou" type="button">载入杭州真实资料 · 替换杭州虚构示例</button><button id="export-library" type="button">导出我的地点资料</button></div><p class="hint">杭州资料含来源、坐标和查询日期。消费为估算；缺失费用、复杂营业时段的地点留在待补充列表，不会自动进入行程。</p><p id="maps-progress" role="status" class="hint">查询结果保存在本机浏览器，不会自动加入行程。</p><details id="review-list"><summary>待核对地点 <span id="pending-count">0</span></summary><div id="pending-places" class="pending-places"></div></details></section>
+<div class="library-actions"><button id="load-hangzhou" type="button">载入杭州真实资料</button><button id="load-chengdu" type="button">载入成都真实资料</button><button id="export-library" type="button">导出我的地点资料</button></div><p class="hint">首次打开自动使用两城来源资料；已有保存的计划可用城市按钮替换虚构示例，保留自定义地点。资料含来源、坐标和查询日期。消费为估算；缺失费用、复杂营业时段的地点留在待补充列表，不会自动进入行程。</p><p id="maps-progress" role="status" class="hint">查询结果保存在本机浏览器，不会自动加入行程。</p><details id="review-list"><summary>待核对地点 <span id="pending-count">0</span></summary><div id="pending-places" class="pending-places"></div></details></section>
 <section class="workspace">
 <aside>
 <div class="panel"><div class="section-head"><h2>这次，想怎么走？</h2><span>01 / 条件</span></div>

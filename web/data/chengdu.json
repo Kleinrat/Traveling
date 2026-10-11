@@ -1,0 +1,747 @@
+{
+  "city": "成都",
+  "updated_at": "2026-10-11T09:21:30.488471+00:00",
+  "note": "杭州、成都首版；关键词人工选取，不代表热度榜。费用和时段为来源线索，不是实时承诺；缺失资料、分时预约和季节时段保留待补充。",
+  "places": [
+    {
+      "id": "amap-B001C7X8QA",
+      "name": "人民公园",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "小南街8号(人民公园地铁站B口步行250米)",
+      "location": "104.057641,30.656990",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00；具体营业状态以当天开放情况为准",
+      "url": "https://www.amap.com/place/B001C7X8QA",
+      "fetched_at": "2026-10-11T09:20:13.777374+00:00",
+      "keyword": "人民公园",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:20:13.777374+00:00；https://m.cd.bendibao.com/tour/212760.shtm?src=amap 2026年资料，免费入园；茶饮、游船和服务另计；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7X8QA",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C7YCM4",
+      "name": "宽窄巷子景区",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "少城街道金河路口宽窄巷子",
+      "location": "104.053307,30.663869",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B001C7YCM4",
+      "fetched_at": "2026-10-11T09:20:15.997857+00:00",
+      "keyword": "宽窄巷子",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "文化",
+        "历史",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:20:15.997857+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7YCM4",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C7UM1C",
+      "name": "浣花溪公园",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "草堂街道青华路9号(近杜甫草堂)",
+      "location": "104.029022,30.657467",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 06:00-22:00 最晚进入22:00",
+      "url": "https://www.amap.com/place/B001C7UM1C",
+      "fetched_at": "2026-10-11T09:20:18.130133+00:00",
+      "keyword": "浣花溪公园",
+      "cost": 0,
+      "duration": 90,
+      "open": 360,
+      "close": 1320,
+      "windows": [
+        {
+          "open": 360,
+          "close": 1320
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:20:18.130133+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7UM1C",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C06JG0",
+      "name": "塔子山公园",
+      "city": "成都",
+      "district": "锦江区",
+      "address": "迎晖路222号(塔子山公园地铁站D口步行293米)",
+      "location": "104.124023,30.634400",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 09:00-18:00 最晚进入18:00",
+      "url": "https://www.amap.com/place/B001C06JG0",
+      "fetched_at": "2026-10-11T09:20:20.292597+00:00",
+      "keyword": "塔子山公园",
+      "cost": 0,
+      "duration": 90,
+      "open": 540,
+      "close": 1080,
+      "windows": [
+        {
+          "open": 540,
+          "close": 1080
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:20:20.292597+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C06JG0",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C7WPBD",
+      "name": "文殊院",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "文殊院街66号(文殊院地铁站K口步行400米)",
+      "location": "104.072527,30.675418",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 08:00-17:00 最晚进入16:30",
+      "url": "https://www.amap.com/place/B001C7WPBD",
+      "fetched_at": "2026-10-11T09:20:23.846044+00:00",
+      "keyword": "文殊院",
+      "cost": 0,
+      "duration": 90,
+      "open": 480,
+      "close": 990,
+      "windows": [
+        {
+          "open": 480,
+          "close": 990
+        }
+      ],
+      "tags": [
+        "文化",
+        "历史",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:20:23.846044+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7WPBD",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C05E7V",
+      "name": "昭觉寺",
+      "city": "成都",
+      "district": "成华区",
+      "address": "昭青路333号",
+      "location": "104.105956,30.708103",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 08:00-16:30",
+      "url": "https://www.amap.com/place/B001C05E7V",
+      "fetched_at": "2026-10-11T09:20:25.239366+00:00",
+      "keyword": "昭觉寺",
+      "cost": 0,
+      "duration": 90,
+      "open": 480,
+      "close": 990,
+      "windows": [
+        {
+          "open": 480,
+          "close": 990
+        }
+      ],
+      "tags": [
+        "文化",
+        "历史",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:20:25.239366+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C05E7V",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0FFGPRKKM",
+      "name": "马旺子·川小馆(成都太古里店)",
+      "city": "成都",
+      "district": "锦江区",
+      "address": "东糠市街1号(春熙路地铁站B口步行430米)",
+      "location": "104.083972,30.651319",
+      "kind": "food",
+      "cost_hint": "133.00",
+      "open_hint": "周一至周日 11:00-14:00,17:00-20:30",
+      "url": "https://www.amap.com/place/B0FFGPRKKM",
+      "fetched_at": "2026-10-11T09:21:03.660523+00:00",
+      "keyword": "马旺子",
+      "cost": 133,
+      "duration": 60,
+      "open": 660,
+      "close": 1230,
+      "windows": [
+        {
+          "open": 660,
+          "close": 840
+        },
+        {
+          "open": 1020,
+          "close": 1230
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:21:03.660523+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B0FFGPRKKM",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C8O7L7",
+      "name": "明婷饭店",
+      "city": "成都",
+      "district": "金牛区",
+      "address": "外曹家巷26号附15号(红星桥地铁站C口步行400米)",
+      "location": "104.087260,30.673283",
+      "kind": "food",
+      "cost_hint": "72.00",
+      "open_hint": "周一至周日 11:00-21:00",
+      "url": "https://www.amap.com/place/B001C8O7L7",
+      "fetched_at": "2026-10-11T09:21:05.491875+00:00",
+      "keyword": "明婷饭店",
+      "cost": 72,
+      "duration": 60,
+      "open": 660,
+      "close": 1260,
+      "windows": [
+        {
+          "open": 660,
+          "close": 1260
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:21:05.491875+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C8O7L7",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C7UMYH",
+      "name": "龙抄手(总店)",
+      "city": "成都",
+      "district": "锦江区",
+      "address": "春熙路中山广场东侧城守街63号",
+      "location": "104.077614,30.654531",
+      "kind": "food",
+      "cost_hint": "33.00",
+      "open_hint": "周一至周日 09:00-21:30",
+      "url": "https://www.amap.com/place/B001C7UMYH",
+      "fetched_at": "2026-10-11T09:21:10.573131+00:00",
+      "keyword": "龙抄手",
+      "cost": 33,
+      "duration": 60,
+      "open": 540,
+      "close": 1290,
+      "windows": [
+        {
+          "open": 540,
+          "close": 1290
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:21:10.573131+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7UMYH",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C8O6WT",
+      "name": "钟水饺(人民公园店)",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "少城路12号人民公园紫薇阁内",
+      "location": "104.059012,30.656754",
+      "kind": "food",
+      "cost_hint": "40.00",
+      "open_hint": "周一至周日 08:00-20:00",
+      "url": "https://www.amap.com/place/B001C8O6WT",
+      "fetched_at": "2026-10-11T09:21:13.013706+00:00",
+      "keyword": "钟水饺",
+      "cost": 40,
+      "duration": 60,
+      "open": 480,
+      "close": 1200,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1200
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:21:13.013706+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C8O6WT",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C8N6VD",
+      "name": "he's何师烧烤(春熙店)",
+      "city": "成都",
+      "district": "锦江区",
+      "address": "王府井后梓潼桥正街45号(正成财富ID一楼)",
+      "location": "104.081066,30.659966",
+      "kind": "food",
+      "cost_hint": "80.00",
+      "open_hint": "周一至周日 17:00-03:00",
+      "url": "https://www.amap.com/place/B001C8N6VD",
+      "fetched_at": "2026-10-11T09:21:18.797932+00:00",
+      "keyword": "何师烧烤",
+      "cost": 80,
+      "duration": 60,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 180
+        },
+        {
+          "open": 1020,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:21:18.797932+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C8N6VD",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0FFGEW4S8",
+      "name": "小龙坎火锅(盐市口店)",
+      "city": "成都",
+      "district": "锦江区",
+      "address": "大业路47号",
+      "location": "104.069499,30.653622",
+      "kind": "food",
+      "cost_hint": "91.00",
+      "open_hint": "周一至周日 11:00-23:00",
+      "url": "https://www.amap.com/place/B0FFGEW4S8",
+      "fetched_at": "2026-10-11T09:21:21.200842+00:00",
+      "keyword": "小龙坎",
+      "cost": 91,
+      "duration": 60,
+      "open": 660,
+      "close": 1380,
+      "windows": [
+        {
+          "open": 660,
+          "close": 1380
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:21:21.200842+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B0FFGEW4S8",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C8ROQL",
+      "name": "蜀九香火锅(江汉店)",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "江汉路新华宾馆斜对面千祥街34号二楼",
+      "location": "104.065415,30.673004",
+      "kind": "food",
+      "cost_hint": "86.00",
+      "open_hint": "周一至周日 11:00-23:30",
+      "url": "https://www.amap.com/place/B001C8ROQL",
+      "fetched_at": "2026-10-11T09:21:24.243874+00:00",
+      "keyword": "蜀九香",
+      "cost": 86,
+      "duration": 60,
+      "open": 660,
+      "close": 1410,
+      "windows": [
+        {
+          "open": 660,
+          "close": 1410
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:21:24.243874+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C8ROQL",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0G2X9OGNV",
+      "name": "玉林串串香(春熙店)",
+      "city": "成都",
+      "district": "锦江区",
+      "address": "茂业百货出入口西北120米",
+      "location": "104.078166,30.658524",
+      "kind": "food",
+      "cost_hint": "75.00",
+      "open_hint": "周一至周日 11:00-01:00",
+      "url": "https://www.amap.com/place/B0G2X9OGNV",
+      "fetched_at": "2026-10-11T09:21:26.391541+00:00",
+      "keyword": "玉林串串香",
+      "cost": 75,
+      "duration": 60,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 60
+        },
+        {
+          "open": 660,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:21:26.391541+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B0G2X9OGNV",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B001C7WI33",
+      "name": "皇城老妈火锅(琴台店)",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "琴台路106号(七宝楼旁边)",
+      "location": "104.045714,30.659595",
+      "kind": "food",
+      "cost_hint": "140.00",
+      "open_hint": "周一至周日 11:00-22:00",
+      "url": "https://www.amap.com/place/B001C7WI33",
+      "fetched_at": "2026-10-11T09:21:30.488358+00:00",
+      "keyword": "皇城老妈",
+      "cost": 140,
+      "duration": 60,
+      "open": 660,
+      "close": 1320,
+      "windows": [
+        {
+          "open": 660,
+          "close": 1320
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料查询于 2026-10-11T09:21:30.488358+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7WI33",
+      "data_status": "来源资料估算，出行前核实"
+    }
+  ],
+  "pending": [
+    {
+      "id": "amap-B001C07VJ2",
+      "name": "成都武侯祠博物馆",
+      "city": "成都",
+      "district": "武侯区",
+      "address": "武侯祠大街231号",
+      "location": "104.047992,30.646168",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 08:30-18:30 最晚进入17:30",
+      "url": "https://www.amap.com/place/B001C07VJ2",
+      "fetched_at": "2026-10-11T09:20:29.913336+00:00",
+      "keyword": "武侯祠"
+    },
+    {
+      "id": "amap-B001C06EMZ",
+      "name": "成都杜甫草堂博物馆",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "青华路37号",
+      "location": "104.028514,30.660153",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "01/01-06/30 09:00–18:00开放 最晚售票17:00；09/01-12/31 09:00–18:00开放 最晚售票17:00；07/01-08/31 08:30–18:30开放 最晚售票17:30；劳动节 08:30–18:30开放 最晚售票17:30",
+      "url": "https://www.amap.com/place/B001C06EMZ",
+      "fetched_at": "2026-10-11T09:20:32.572488+00:00",
+      "keyword": "杜甫草堂"
+    },
+    {
+      "id": "amap-B001C7UBX5",
+      "name": "金沙遗址博物馆(暂停开放)",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "金沙遗址路2号(金沙博物馆地铁站C口步行200米)",
+      "location": "104.012634,30.681709",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周二至周日:09:00-18:00(17:00停止售票入馆法定节假日和1、2、7、8月除外)",
+      "url": "https://www.amap.com/place/B001C7UBX5",
+      "fetched_at": "2026-10-11T09:20:34.431133+00:00",
+      "keyword": "金沙遗址博物馆"
+    },
+    {
+      "id": "amap-B001C8SBG2",
+      "name": "成都博物馆",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "小河街1号",
+      "location": "104.063749,30.657297",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周二至周四,周日 09:00-17:00 最晚进入16:30,周五至周六 09:00-20:30 最晚进入20:00,周一 全天关闭(节假日除外)",
+      "url": "https://www.amap.com/place/B001C8SBG2",
+      "fetched_at": "2026-10-11T09:20:35.796706+00:00",
+      "keyword": "成都博物馆"
+    },
+    {
+      "id": "amap-B001C7Y7I2",
+      "name": "四川博物院",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "青华路5号",
+      "location": "104.034127,30.660792",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一全天关闭(法定节假日除外),周二至周日:09:00-17:00",
+      "url": "https://www.amap.com/place/B001C7Y7I2",
+      "fetched_at": "2026-10-11T09:20:37.742750+00:00",
+      "keyword": "四川博物院"
+    },
+    {
+      "id": "amap-B001C06R0O",
+      "name": "望江楼公园",
+      "city": "成都",
+      "district": "武侯区",
+      "address": "望江路30号",
+      "location": "104.092217,30.629277",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 09:00-18:00 最晚进入17:00；望江楼公园北门入口为文物保护区，将在18:00关闭。 南门、西门为园林开放区入口，将在21:00关闭。21:00后，市民游客可从公园西面小门进入园区。",
+      "url": "https://www.amap.com/place/B001C06R0O",
+      "fetched_at": "2026-10-11T09:20:42.897389+00:00",
+      "keyword": "望江楼公园"
+    },
+    {
+      "id": "amap-B001C04CFE",
+      "name": "青羊宫",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "一环路西二段9号(青羊宫地铁站C口向后步行90米)",
+      "location": "104.042609,30.661542",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 08:00-17:20 最晚进入17:00",
+      "url": "https://www.amap.com/place/B001C04CFE",
+      "fetched_at": "2026-10-11T09:20:45.610391+00:00",
+      "keyword": "青羊宫"
+    },
+    {
+      "id": "amap-B001C8NUD2",
+      "name": "东郊记忆",
+      "city": "成都",
+      "district": "成华区",
+      "address": "跳蹬河街道建设南支路1号",
+      "location": "104.122906,30.668697",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00，2026年2月15日至2026年2月23日正常营业",
+      "url": "https://www.amap.com/place/B001C8NUD2",
+      "fetched_at": "2026-10-11T09:20:47.546628+00:00",
+      "keyword": "东郊记忆"
+    },
+    {
+      "id": "amap-B001C05SU4",
+      "name": "成都植物园",
+      "city": "成都",
+      "district": "金牛区",
+      "address": "蓉都大道天回路1116号",
+      "location": "104.128542,30.763468",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 06:30-20:00",
+      "url": "https://www.amap.com/place/B001C05SU4",
+      "fetched_at": "2026-10-11T09:20:49.890348+00:00",
+      "keyword": "成都植物园"
+    },
+    {
+      "id": "amap-B0FFG9I9IK",
+      "name": "青龙湖湿地公园",
+      "city": "成都",
+      "district": "龙泉驿区",
+      "address": "十陵风景区内",
+      "location": "104.183631,30.646345",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B0FFG9I9IK",
+      "fetched_at": "2026-10-11T09:20:51.174664+00:00",
+      "keyword": "青龙湖湿地公园"
+    },
+    {
+      "id": "amap-B0FFLFG5K5",
+      "name": "安顺廊桥",
+      "city": "成都",
+      "district": "武侯区",
+      "address": "滨江东路66号(九眼桥地铁站A口步行320米)",
+      "location": "104.085716,30.641325",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B0FFLFG5K5",
+      "fetched_at": "2026-10-11T09:20:54.311514+00:00",
+      "keyword": "安顺廊桥"
+    },
+    {
+      "id": "amap-B001C8MSP5",
+      "name": "黄龙溪古镇",
+      "city": "成都",
+      "district": "双流区",
+      "address": "黄龙溪镇黄金路70号",
+      "location": "103.970525,30.317805",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B001C8MSP5",
+      "fetched_at": "2026-10-11T09:20:56.726117+00:00",
+      "keyword": "黄龙溪古镇"
+    },
+    {
+      "id": "amap-B0FFLBBUPJ",
+      "name": "陈麻婆豆腐(总店)",
+      "city": "成都",
+      "district": "青羊区",
+      "address": "东华门街51号(骡马市地铁站E口步行440米)",
+      "location": "104.069202,30.664435",
+      "kind": "food",
+      "cost_hint": "63.00",
+      "open_hint": "11:00-14:30；17:00-21:00,2026年春节期间 11:00-14:30；17:00-21:00",
+      "url": "https://www.amap.com/place/B0FFLBBUPJ",
+      "fetched_at": "2026-10-11T09:20:58.736746+00:00",
+      "keyword": "陈麻婆豆腐"
+    },
+    {
+      "id": "amap-B0LBC7EL03",
+      "name": "陶德砂锅(盐市口店)",
+      "city": "成都",
+      "district": "锦江区",
+      "address": "顺城大街8号中环广场F2层",
+      "location": "104.071721,30.655782",
+      "kind": "food",
+      "cost_hint": "56.00",
+      "open_hint": "周二至周日 10:30-22:00；周一 10:30-21:30",
+      "url": "https://www.amap.com/place/B0LBC7EL03",
+      "fetched_at": "2026-10-11T09:21:01.206739+00:00",
+      "keyword": "陶德砂锅"
+    },
+    {
+      "id": "amap-B0FFFALD4F",
+      "name": "盘飧市",
+      "city": "成都",
+      "district": "锦江区",
+      "address": "华兴正街62号",
+      "location": "104.079623,30.659712",
+      "kind": "food",
+      "cost_hint": "63.00",
+      "open_hint": "周一至周日 11:00-14:30,17:00-21:30 2026-05-01至2026-05-05 周一至周日 11:00-15:00,17:00-21:30",
+      "url": "https://www.amap.com/place/B0FFFALD4F",
+      "fetched_at": "2026-10-11T09:21:07.725123+00:00",
+      "keyword": "盘飧市"
+    },
+    {
+      "id": "amap-B001C7UMTU",
+      "name": "夫妻肺片",
+      "city": "成都",
+      "district": "锦江区",
+      "address": "总府街23号、25号",
+      "location": "104.078161,30.658505",
+      "kind": "food",
+      "cost_hint": "58.00",
+      "open_hint": "周一至周日 07:00-21:30 10-01至10-07 周一至周日 09:30-21:30",
+      "url": "https://www.amap.com/place/B001C7UMTU",
+      "fetched_at": "2026-10-11T09:21:17.468848+00:00",
+      "keyword": "夫妻肺片"
+    },
+    {
+      "id": "amap-B0FFFD3P2C",
+      "name": "锦里古街",
+      "city": "成都",
+      "district": "武侯区",
+      "address": "武侯祠大街231号附1号",
+      "location": "104.049828,30.645994",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00；亮灯时间20:00，商户营业时间9:00～22:00（酒吧除外）",
+      "url": "https://www.amap.com/place/B0FFFD3P2C",
+      "fetched_at": "2026-10-11T09:22:48.142384+00:00",
+      "keyword": "锦里"
+    },
+    {
+      "id": "amap-B001C7WE5S",
+      "name": "成都大熊猫繁育研究基地",
+      "city": "成都",
+      "district": "成华区",
+      "address": "熊猫大道1375号",
+      "location": "104.138176,30.740573",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "03-16至10-31 周一至周日 07:30-12:00,12:00-17:00 最晚进入17:00；11-01至03-15 周一至周日 08:00-12:00,12:00-16:30 最晚进入16:30；上午场入园时间:当天开园时间-12:00，下午场入园时间:12:00-当天最晚入园时间",
+      "url": "https://www.amap.com/place/B001C7WE5S",
+      "fetched_at": "2026-10-11T09:20:27.961851+00:00",
+      "keyword": "成都大熊猫繁育研究基地"
+    }
+  ]
+}

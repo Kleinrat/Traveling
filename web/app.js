@@ -2,7 +2,13 @@ import { plan_json, catalogue_json, plan_with_preferences_json, alternatives_wit
 const $ = id => document.getElementById(id);
 const staticDemo = document.querySelector('meta[name="moontrip-mode"]')?.content === 'static';
 const tags = ['自然','文化','历史','美食','摄影','城市','海边','古镇','博物馆','亲子'];
-let places = JSON.parse(catalogue_json()), currentPlan, plannedRequest, proposal, configured = false;
+const snapshotPaths={杭州:'./data/hangzhou.json',成都:'./data/chengdu.json'};
+const sourceSnapshots={};
+await Promise.all(Object.entries(snapshotPaths).map(async([city,url])=>{
+  try{const response=await fetch(url,{signal:AbortSignal.timeout(10000)});if(!response.ok)throw Error();const data=await response.json();if(data.city===city&&Array.isArray(data.places)&&Array.isArray(data.pending))sourceSnapshots[city]=data;}catch{}
+}));
+let places = Object.values(sourceSnapshots).flatMap(data=>data.places), currentPlan, plannedRequest, proposal, configured = false;
+if(!places.length)places=JSON.parse(catalogue_json());
 let selected=[], avoided=[];
 let travelMode='custom', manualStops=[], tripLedger;
 let routeCache=[], routesBusy=false;
@@ -83,7 +89,7 @@ function render(){
   $('exclusions').replaceChildren(...p.exclusions.map(x=>{const row=e('div',x.name,'exclusion');row.append(e('small',x.reason));return row;}));
   if(!p.exclusions.length)$('exclusions').append(e('p','所有景点均已安排。'));
   $('warnings').replaceChildren(...p.warnings.map(w=>e('li',w)));
-  $('data-status').textContent=`已载入 ${places.length} 个景点 · ${[...new Set(places.map(p=>p.city))].join('、')}`;
+  $('data-status').textContent=`已载入 ${places.length} 个地点 · ${[...new Set(places.map(p=>p.city))].join('、')}${places.some(p=>p.source.includes('虚构'))?' · 含虚构示例，可点击上方城市资料按钮替换':''}`;
 }
 const presets={lazy:{days:2,start:600,end:1080,interests:['美食','自然'],relaxed:true,max_visits:2,include_food:true,transfer_limit:90,description:'10:00–18:00 · 每天最多 2 个景点 · 站间休息 45 分钟 · 美食和同片区优先'},intense:{days:2,start:420,end:1320,interests:['文化','历史','摄影'],relaxed:false,max_visits:6,include_food:true,transfer_limit:180,description:'07:00–22:00 · 每天最多 6 个景点 · 站间休息 5 分钟 · 衔接紧凑'},weekend:{days:2,start:540,end:1080,interests:['自然','文化'],relaxed:false,max_visits:3,include_food:true,transfer_limit:60,description:'09:00–18:00 · 2 天轻旅行 · 每天最多 3 个景点 · 接驳估算不超过 60 分钟'}};
 function renderMode(){document.querySelectorAll('[data-preset]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.preset===travelMode)));$('mode-description').textContent=presets[travelMode]?.description||'自定义节奏 · 可调整景点数量、作息和接驳上限。';}
@@ -199,7 +205,7 @@ $('confirm-city').addEventListener('click',()=>{const city=$('new-city').value.t
 
 
 // The host transports map data; MoonBit validates city queries and candidate records.
-const seedCities=JSON.parse(cities_json());
+const seedCities=JSON.parse(cities_json()).filter(c=>['杭州','成都'].includes(c.city));
 for(const city of seedCities)$('review-city').add(new Option(city.city,city.city));
 $('review-city').value=seedCities.some(c=>c.city===$('city').value)?$('city').value:'杭州';
 $('review-city').addEventListener('change',()=>renderPending());
@@ -261,22 +267,24 @@ function mergePending(items){
   for(const item of items)if(![...pendingPlaces,...places].some(old=>old.id===item.id||(old.kind==='food'&&item.kind==='food'&&restaurants_similar(old.city,old.name,item.city,item.name))))pendingPlaces.push(item);
   savePending();renderPending();
 }
-$('load-hangzhou').addEventListener('click',async()=>{
-  $('load-hangzhou').disabled=true;
+for(const [city,id,prefix] of [['杭州','load-hangzhou','hz-'],['成都','load-chengdu','cd-']])$(id).addEventListener('click',async()=>{
+  $(id).disabled=true;
   try{
-    const response=await fetch('./data/hangzhou.json');if(!response.ok)throw Error('杭州资料暂时无法读取');
-    const data=await response.json();
-    const next=places.filter(p=>!(p.city==='杭州'&&p.id.startsWith('hz-')));
+    let data=sourceSnapshots[city];
+    if(!data){const response=await fetch(snapshotPaths[city],{signal:AbortSignal.timeout(10000)});if(!response.ok)throw Error(`${city}资料暂时无法读取`);data=await response.json();}
+    if(data.city!==city||!Array.isArray(data.places)||data.places.some(p=>p.city!==city))throw Error('地点资料城市不匹配');
+    const next=places.filter(p=>!(p.city===city&&p.id.startsWith(prefix)));
     for(const place of data.places)if(!next.some(old=>old.id===place.id))next.push(place);
-    const check=JSON.parse(plan_json(JSON.stringify({request:{...request(),city:'杭州',must_visit:[],avoid:[]},places:next})));
+    const check=JSON.parse(plan_json(JSON.stringify({request:{...request(),city,must_visit:[],avoid:[]},places:next})));
     if(!check.ok)throw Error(check.errors.join('；'));
-    places=next;selected=[];avoided=[];$('city').value='杭州';$('review-city').value='杭州';$('place-city').value='杭州';
+    places=next;selected=[];avoided=[];$('city').value=city;$('review-city').value=city;$('place-city').value=city;
     mergePending(data.pending);$('review-list').open=true;
-    // Unknown dietary/family labels must not be invented to pass a filter.
-    generate();saveTrip();$('maps-progress').textContent=`已载入 ${data.places.length} 条杭州候选，另有 ${data.pending.length} 条待补充。来源日期 ${new Date(data.updated_at).toLocaleDateString('zh-CN')}。人均消费与游览时长均为估算；亲子、素食、不辣等未确认条件仍须核实。`;
+    generate();saveTrip();$('maps-progress').textContent=`已载入 ${data.places.length} 条${city}候选，另有 ${data.pending.length} 条待补充。来源日期 ${new Date(data.updated_at).toLocaleDateString('zh-CN')}。人均消费与游览时长均为估算；饮食、亲子、预约和临时闭园请核实。`;
   }catch(err){feedback(err.message);}
-  finally{$('load-hangzhou').disabled=false;}
+  finally{$(id).disabled=false;}
 });
+// New visitors can plan immediately from source records; old saved plans stay editable.
+for(const data of Object.values(sourceSnapshots))mergePending(data.pending);
 $('export-library').addEventListener('click',()=>download('moontrip-places.json',JSON.stringify({places,pending:pendingPlaces},null,2),'application/json'));
 function routePoint(p){
   if(!/^\d{2,3}(?:\.\d+)?,\d{1,2}(?:\.\d+)?$/.test(p.location||''))return null;

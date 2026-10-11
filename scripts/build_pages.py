@@ -16,7 +16,9 @@ def version(path):
 app = DEST / "app.js"
 app_text = app.read_text(encoding="utf-8")
 app_text = app_text.replace("'./engine.js'", "'./engine.js?v=" + version(DEST / "engine.js") + "'")
-app_text = app_text.replace("'./data/hangzhou.json'", "'./data/hangzhou.json?v=" + version(DEST / "data/hangzhou.json") + "'")
+for city in ('hangzhou','chengdu'):
+    path = 'data/'+city+'.json'
+    app_text = app_text.replace("'./"+path+"'", "'./"+path+"?v="+version(DEST / path)+"'")
 app.write_text(app_text, encoding="utf-8")
 page = DEST / "index.html"
 html = page.read_text(encoding="utf-8")
@@ -25,4 +27,4 @@ html = html.replace('src="app.js"', 'src="app.js?v=' + version(app) + '"')
 html = html.replace('href="style.css"', 'href="style.css?v=' + version(DEST / "style.css") + '"')
 page.write_text(html, encoding="utf-8")
 (DEST / ".nojekyll").touch()
-print("Public demo packaged: browser assets and Hangzhou source snapshot; no server configuration or secrets")
+print("Public demo packaged: browser assets and two-city source snapshots; no server configuration or secrets")

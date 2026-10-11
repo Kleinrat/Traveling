@@ -36,6 +36,6 @@ jobs:
       - name: Travel scenario and dining smoke checks
         run: |
           node scripts/smoke.mjs
-          node scripts/check_hangzhou.mjs
+          node scripts/check_cities.mjs
       - name: Runnable MoonBit example
         run: moon run src/main --target js
