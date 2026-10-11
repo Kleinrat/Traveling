@@ -2,6 +2,9 @@
 """Local HTTP/AI transport. Recommendation and validation are MoonBit code."""
 import json
 import os
+import math
+import time
+import threading
 import subprocess
 import urllib.request
 import urllib.error
@@ -95,6 +98,52 @@ def search_places(query):
     return result
 
 
+# Bounded server-only route cache; keys never reach browser responses.
+_ROUTE_CACHE = {}
+_ROUTE_LOCK = threading.Lock()
+
+def search_route(query):
+    def point(p): return f"{p['longitude']:.6f},{p['latitude']:.6f}"
+    origin, destination = point(query['origin']), point(query['destination'])
+    cache_key = (query['city'], query['mode'], origin, destination)
+    with _ROUTE_LOCK:
+        cached = _ROUTE_CACHE.get(cache_key)
+    if cached and time.monotonic() - cached[0] < 3600:
+        raw = dict(cached[1])
+    else:
+        params = {'key': AMAP_KEY, 'origin': origin, 'destination': destination, 'output': 'JSON'}
+        if query['mode'] == 'walking':
+            endpoint = 'walking'
+        else:
+            endpoint = 'transit/integrated'
+            params.update(city=query['city'], cityd=query['city'], strategy=0, extensions='all')
+        with urllib.request.urlopen('https://restapi.amap.com/v3/direction/' + endpoint + '?' + urllib.parse.urlencode(params), timeout=15) as response:
+            body = response.read(1000001)
+        if len(body) > 1000000: raise ValueError('route response too large')
+        data = json.loads(body)
+        if data.get('status') != '1':
+            return {'ok': False, 'errors': ['高德路线查询未成功，错误码 ' + str(data.get('infocode', '未知')) + '；请检查路线服务权限和额度']}
+        plans = (data.get('route') or {}).get('paths' if query['mode'] == 'walking' else 'transits') or []
+        valid = []
+        for path in plans:
+            try:
+                seconds, distance = float(path['duration']), float(path['distance'])
+                cost = 0 if query['mode'] == 'walking' else float(path['cost'])
+                if not all(math.isfinite(n) and n >= 0 for n in (seconds, distance, cost)): continue
+                if seconds > 86400 or distance > 1000000 or cost > 10000: continue
+                valid.append({'seconds': math.ceil(seconds), 'distance': math.ceil(distance), 'cost': math.ceil(cost)})
+            except (ValueError, KeyError, TypeError): continue
+        if not valid:
+            return {'ok': False, 'errors': ['没有包含时间、距离和费用的完整路线方案；不会按零费用处理，请换交通方式或保留估算']}
+        raw = min(valid, key=lambda p: p['seconds'])
+        raw['fetched_at'] = datetime.now(timezone.utc).isoformat()
+        with _ROUTE_LOCK:
+            if len(_ROUTE_CACHE) >= 1000: _ROUTE_CACHE.clear()
+            _ROUTE_CACHE[cache_key] = (time.monotonic(), dict(raw))
+    return bridge({'action': 'route-result', 'route': {**raw, 'mode': query['mode'],
+        'from_id': query['origin']['id'], 'to_id': query['destination']['id']}})
+
+
 def bridge(payload):
     result = subprocess.run([NODE, str(ROOT / 'scripts/bridge.mjs')],
                             input=json.dumps(payload), text=True, capture_output=True,
@@ -144,7 +193,7 @@ class Handler(SimpleHTTPRequestHandler):
         super().do_GET()
 
     def do_POST(self):
-        if self.path not in {'/api/assistant', '/api/places'}:
+        if self.path not in {'/api/assistant', '/api/places', '/api/routes'}:
             return self.reply(404, {'ok': False, 'errors': ['未知接口']})
         allowed_hosts = {f'127.0.0.1:{PORT}', f'localhost:{PORT}'}
         if self.headers.get('Host') not in allowed_hosts:
@@ -163,6 +212,13 @@ class Handler(SimpleHTTPRequestHandler):
             data = json.loads(self.rfile.read(length))
             if not isinstance(data, dict):
                 raise ValueError('invalid payload')
+            if self.path == '/api/routes':
+                if not AMAP_KEY:
+                    return self.reply(503, {'ok': False, 'errors': ['本机尚未配置高德 Web 服务密钥']})
+                checked = bridge({'action': 'route-query', 'query': data})
+                if not checked['ok']: return self.reply(422, checked)
+                result = search_route(checked['query'])
+                return self.reply(200 if result['ok'] else 502, result)
             if self.path == '/api/places':
                 if not AMAP_KEY:
                     return self.reply(503, {'ok': False, 'errors': ['本机尚未配置高德 Web 服务密钥']})
@@ -181,7 +237,7 @@ class Handler(SimpleHTTPRequestHandler):
             result = ask_provider(prompt, current)
             return self.reply(200 if result['ok'] else 422, result)
         except urllib.error.HTTPError as error:
-            if self.path == '/api/places':
+            if self.path in {'/api/places', '/api/routes'}:
                 return self.reply(502, {'ok': False, 'errors': ['高德服务拒绝查询，请检查密钥、额度或稍后重试']})
             message = {401: 'AI 密钥无效或已过期', 403: 'AI 服务访问被拒绝', 402: 'AI 服务余额不足', 429: 'AI 服务限流或余额不足，请稍后重试', 400: 'AI 请求参数或模型名称不被服务接受'}.get(error.code, 'AI 服务拒绝请求，请检查服务地址、模型和密钥')
             return self.reply(502, {'ok': False, 'errors': [message]})

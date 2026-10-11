@@ -8,3 +8,4 @@ web/engine.js
 .DS_Store
 __pycache__/
 *.pyc
+work/

@@ -1,5 +1,5 @@
 // Narrow host bridge: all extraction contracts and validation live in MoonBit.
-import { assistant_system, assistant_context, validate_for_current, place_query_json, pending_places_json } from '../web/engine.js';
+import { assistant_system, assistant_context, validate_for_current, place_query_json, pending_places_json, route_query_json, route_result_json } from '../web/engine.js';
 let input = '';
 for await (const chunk of process.stdin) input += chunk;
 const data = JSON.parse(input);
@@ -11,4 +11,8 @@ if (data.action === 'prompt') {
   process.stdout.write(place_query_json(JSON.stringify(data.query)));
 } else if (data.action === 'pending-places') {
   process.stdout.write(pending_places_json(JSON.stringify(data.items)));
+} else if (data.action === 'route-query') {
+  process.stdout.write(route_query_json(JSON.stringify(data.query)));
+} else if (data.action === 'route-result') {
+  process.stdout.write(route_result_json(JSON.stringify(data.route)));
 } else throw new Error('Unknown bridge action');

@@ -76,6 +76,7 @@ pub(all) struct Place {
   source : String
   url : String
   kind : String
+  windows : Array[OpenWindow]?
 } derive(Debug, ToJson, @json.FromJson)
 
 ///|
@@ -112,6 +113,9 @@ pub(all) struct Stop {
   transfer_minutes : Int
   transfer_cost : Int
   score : Int
+  meal : String
+  transfer_distance : Int
+  route_source : String
   reasons : Array[String]
 } derive(Debug, ToJson)
 
@@ -182,6 +186,17 @@ pub fn validate(input : Input) -> Array[String] {
     if p.open < 0 || p.close > 1440 || p.open >= p.close {
       errors.push("景点开放时间无效: \{p.id}")
     }
+    for window in p.windows.unwrap_or([]) {
+      if window.open < p.open ||
+        window.close > p.close ||
+        window.open >= window.close {
+        errors.push("分段营业时间无效: " + p.id)
+      }
+    }
+    if p.windows is Some(windows) &&
+      (windows.is_empty() || windows.length() > 10) {
+      errors.push("分段营业时间数量无效: " + p.id)
+    }
     if p.tags.length() > 20 {
       errors.push("景点标签最多 20 个: \{p.id}")
     }
@@ -223,3 +238,9 @@ pub fn validate(input : Input) -> Array[String] {
   }
   errors
 }
+
+///|
+pub(all) struct OpenWindow {
+  open : Int
+  close : Int
+} derive(Debug, ToJson, @json.FromJson)

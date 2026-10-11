@@ -9,8 +9,19 @@ pub fn plan_with_preferences(
   input : Input,
   preferences : Preferences,
 ) -> Result[Plan, Array[String]] {
+  plan_trip(input, preferences, default_routing(), default_meals(input.request))
+}
+
+///|
+pub fn plan_trip(
+  input : Input,
+  preferences : Preferences,
+  routing : Routing,
+  meals : Meals,
+) -> Result[Plan, Array[String]] {
   let errors = validate(input)
   errors.append(validate_preferences(preferences))
+  errors.append(validate_routing(routing))
   if !errors.is_empty() {
     return Err(errors)
   }
@@ -25,22 +36,24 @@ pub fn plan_with_preferences(
     let mut previous : Place? = None
     let mut day_cost = 0
     let mut visits = 0
-    let mut meals = 0
+    let mut lunch_used = false
+    let mut dinner_used = false
+    let mut distance_total = 0
     let mut transfer_total = 0
     while true {
       let mut best : Place? = None
-      let mut best_score = -1
+      let mut best_score = -1000000
       let mut best_start = 0
       let mut best_transfer = (0, 0)
       let mut best_reasons : Array[String] = []
+      let mut best_meal = ""
+      let mut best_distance = 0
+      let mut best_source = ""
       for p in input.places {
         if used.contains(p.id) || exclusion_reason(p, r) is Some(_) {
           continue
         }
         if p.kind == "sight" && visits >= r.max_visits {
-          continue
-        }
-        if p.kind == "food" && meals >= 1 {
           continue
         }
         if p.kind == "food" &&
@@ -59,9 +72,15 @@ pub fn plan_with_preferences(
         if r.must_visit.contains(p.id) && next_required != Some(p.id) {
           continue
         }
-        let (minutes, fare) = transfer(previous, p)
-        if transfer_total + minutes > preferences.transfer_limit ||
-          (preferences.walking && minutes > 15) {
+        let route = match route_transfer(previous, p, routing) {
+          Some(route) => route
+          None => continue
+        }
+        let minutes = route.minutes
+        let fare = route.cost
+        if !allowed_leg(
+            route, preferences, routing, transfer_total, distance_total,
+          ) {
           continue
         }
         let rest = if previous is Some(_) {
@@ -70,12 +89,71 @@ pub fn plan_with_preferences(
           0
         }
         let arrival = cursor + minutes + rest
-        let begin = if arrival > p.open { arrival } else { p.open }
+        let (meal, begin) = if p.kind == "food" {
+          match meal_window(p, arrival, r, meals, lunch_used, dinner_used) {
+            Some(value) => value
+            None => continue
+          }
+        } else {
+          (
+            "",
+            match available_begin(p, arrival, r.end) {
+              Some(begin) => begin
+              None => continue
+            },
+          )
+        }
         if begin + p.duration > r.end || begin + p.duration > p.close {
           continue
         }
         if total + p.cost + fare > r.budget {
           continue
+        }
+        // Avoid consuming the last feasible meal window with an optional sight.
+        if p.kind == "sight" && !r.must_visit.contains(p.id) {
+          let mut blocks_meal = false
+          for
+            (label, enabled, used_meal) in [
+              ("午餐", meals.lunch, lunch_used),
+              ("晚餐", meals.dinner, dinner_used),
+            ] {
+            if enabled &&
+              !used_meal &&
+              r.include_food &&
+              has_meal_candidate(
+                input.places,
+                r,
+                preferences,
+                routing,
+                label,
+                previous,
+                cursor,
+                total,
+                used,
+                used_restaurants,
+                transfer_total,
+                distance_total,
+              ) &&
+              !has_meal_candidate(
+                input.places,
+                r,
+                preferences,
+                routing,
+                label,
+                Some(p),
+                begin + p.duration,
+                total + p.cost + fare,
+                used,
+                used_restaurants,
+                transfer_total + minutes,
+                distance_total + route.distance,
+              ) {
+              blocks_meal = true
+            }
+          }
+          if blocks_meal {
+            continue
+          }
         }
         let (base, reasons) = score(p, r)
         let (preference_bonus, preference_reasons) = preference_score(
@@ -87,17 +165,18 @@ pub fn plan_with_preferences(
           None => false
         }
         let chosen = r.must_visit.contains(p.id)
-        let meal_due = p.kind == "food" && cursor >= 630
+        let meal_due = p.kind == "food" && begin - arrival <= 60
         let value = base +
           preference_bonus +
           (if nearby { 8 } else { 0 }) +
           (if chosen { 10000 } else { 0 }) +
-          (if meal_due { 200 } else { 0 })
+          (if meal_due { 300 } else { 0 }) -
+          (if p.kind == "food" { (begin - arrival) / 2 } else { 0 })
         if chosen {
           reasons.push("用户选定地点，优先安排")
         }
         if meal_due {
-          reasons.push("已接近午餐时段，优先安排用餐")
+          reasons.push("已接近\{meal}时段，优先安排用餐")
         }
         if nearby {
           reasons.push("与上一站同片区（+8）")
@@ -116,6 +195,9 @@ pub fn plan_with_preferences(
           best_start = begin
           best_transfer = (minutes, fare)
           best_reasons = reasons
+          best_meal = meal
+          best_distance = route.distance
+          best_source = route.source
         }
       }
       match best {
@@ -129,16 +211,24 @@ pub fn plan_with_preferences(
             transfer_minutes: minutes,
             transfer_cost: fare,
             score: best_score,
+            meal: best_meal,
+            transfer_distance: best_distance,
+            route_source: best_source,
             reasons: best_reasons,
           })
           cursor = best_start + p.duration
           total += p.cost + fare
           day_cost += p.cost + fare
           transfer_total += minutes
+          distance_total += best_distance
           if p.kind == "sight" {
             visits += 1
           } else {
-            meals += 1
+            if best_meal == "午餐" {
+              lunch_used = true
+            } else {
+              dinner_used = true
+            }
             used_restaurants.push(p)
           }
           previous = Some(p)
@@ -167,28 +257,12 @@ pub fn plan_with_preferences(
       let reason = match exclusion_reason(p, r) {
         Some(reason) => reason
         None =>
-          "在当前排序下无法同时满足剩余预算、每日时间和开放时间；可调整条件重试"
+          "在当前排序下无法满足预算、开放时间、餐饮时段或路线限制；可调整条件重试"
       }
       exclusions.push({ id: p.id, name: p.name, reason, })
     }
   }
-  let warnings = [
-    "示例数据与交通估算不代表实时信息，出行前请核实费用和开放时间。",
-    "预算含已安排的活动、餐饮人均估算和市内接驳，不含酒店与往返大交通。",
-    "每天第一站不计接驳；同片区 15 分钟/8 元，跨片区 35 分钟/15 元。",
-    "算法使用可解释的贪心策略，不保证全局最优；每日餐饮时间需自行预留。",
-  ]
-  if preferences.mode != "custom" || preferences.walking {
-    warnings.push(
-      "转场限制使用同片区 15 分钟、跨片区 35 分钟估算；不代表实测距离或步行路线。",
-    )
-  }
-  if r.include_food &&
-    days.any(day => !day.stops.any(stop => stop.place.kind == "food")) {
-    warnings.push(
-      "部分日期没有可行餐厅；请导入符合城市、时间、预算和饮食条件的餐厅。",
-    )
-  }
+  let warnings = route_warnings(days, r, meals)
   if used.is_empty() {
     warnings.push(
       "没有可行景点，请放宽条件或导入更多有效数据。",
@@ -217,4 +291,50 @@ pub fn plan_with_preferences(
     exclusions,
     warnings,
   })
+}
+
+///|
+fn has_meal_candidate(
+  places : Array[Place],
+  r : Request,
+  preferences : Preferences,
+  routing : Routing,
+  label : String,
+  previous : Place?,
+  cursor : Int,
+  total : Int,
+  used : Map[String, Bool],
+  restaurants : Array[Place],
+  transfer_total : Int,
+  distance_total : Int,
+) -> Bool {
+  let meals = { lunch: label == "午餐", dinner: label == "晚餐", }
+  for p in places {
+    if p.kind != "food" ||
+      used.contains(p.id) ||
+      exclusion_reason(p, r) is Some(_) ||
+      restaurants.any(old => {
+        restaurants_similar(old.city, old.name, p.city, p.name)
+      }) {
+      continue
+    }
+    let route = match route_transfer(previous, p, routing) {
+      Some(value) => value
+      None => continue
+    }
+    if !allowed_leg(route, preferences, routing, transfer_total, distance_total) ||
+      total + route.cost + p.cost > r.budget {
+      continue
+    }
+    let rest = if previous is Some(_) {
+      rest_minutes(r, preferences)
+    } else {
+      0
+    }
+    if meal_window(p, cursor + route.minutes + rest, r, meals, false, false)
+      is Some(_) {
+      return true
+    }
+  }
+  false
 }

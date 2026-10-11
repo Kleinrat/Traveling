@@ -30,6 +30,7 @@ jobs:
           sh scripts/build.sh
           moon test --target js
           node scripts/smoke.mjs
+          node scripts/check_hangzhou.mjs
           python3 scripts/build_pages.py
       - uses: actions/upload-pages-artifact@v4
         with:

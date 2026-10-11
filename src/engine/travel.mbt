@@ -83,13 +83,31 @@ pub fn edit_plan(
   preferences : Preferences,
   edits : Array[ManualStop],
 ) -> Result[Plan, Array[String]] {
+  edit_trip(
+    input,
+    preferences,
+    default_routing(),
+    default_meals(input.request),
+    edits,
+  )
+}
+
+///|
+pub fn edit_trip(
+  input : Input,
+  preferences : Preferences,
+  routing : Routing,
+  meals : Meals,
+  edits : Array[ManualStop],
+) -> Result[Plan, Array[String]] {
   let errors = validate(input)
   errors.append(validate_preferences(preferences))
+  errors.append(validate_routing(routing))
   if !errors.is_empty() {
     return Err(errors)
   }
-  if edits.length() > 63 {
-    return Err(["手动行程最多 63 站"])
+  if edits.length() > 70 {
+    return Err(["手动行程最多 70 站"])
   }
   let r = input.request
   let used : Map[String, Bool] = Map([])
@@ -123,7 +141,9 @@ pub fn edit_plan(
     let mut previous : Place? = None
     let mut finish = r.start
     let mut visits = 0
-    let mut meals = 0
+    let mut lunch_used = false
+    let mut dinner_used = false
+    let mut distance_total = 0
     let mut day_cost = 0
     let mut transfer_total = 0
     for edit in sorted.filter(item => item.day == day) {
@@ -134,7 +154,12 @@ pub fn edit_plan(
       if exclusion_reason(p, r) is Some(reason) {
         return Err([p.name + "：" + reason])
       }
-      let (minutes, fare) = transfer(previous, p)
+      let route = match route_transfer(previous, p, routing) {
+        Some(route) => route
+        None => return Err([p.name + "：此路段尚未查询路线"])
+      }
+      let minutes = route.minutes
+      let fare = route.cost
       let rest = if previous is Some(_) {
         rest_minutes(r, preferences)
       } else {
@@ -146,20 +171,40 @@ pub fn edit_plan(
           "：与上一站重叠，或没有留足接驳和休息时间",
         ])
       }
-      if edit.start < p.open ||
+      if available_begin(p, edit.start, r.end) != Some(edit.start) ||
+        edit.start < p.open ||
         edit.start + p.duration > p.close ||
         edit.start + p.duration > r.end {
         return Err([p.name + "：超出可用时间或每日结束时间"])
       }
-      transfer_total += minutes
-      if transfer_total > preferences.transfer_limit ||
-        (preferences.walking && minutes > 15) {
-        return Err([p.name + "：超出接驳上限或步行友好范围"])
+      if !allowed_leg(
+          route, preferences, routing, transfer_total, distance_total,
+        ) {
+        return Err([
+          p.name + "：超出接驳时间、距离上限或步行范围",
+        ])
       }
+      transfer_total += minutes
+      distance_total += route.distance
+      let mut meal = ""
       if p.kind == "food" {
-        meals += 1
-        if meals > 1 {
-          return Err(["当前版本每天最多安排一顿午餐"])
+        match meal_window(p, edit.start, r, meals, lunch_used, dinner_used) {
+          Some((label, begin)) => {
+            if begin != edit.start {
+              return Err([
+                p.name +
+                "：请在午餐 11:00–14:00 或晚餐 17:00–21:00 时段内安排，并避免重复用餐",
+              ])
+            }
+            meal = label
+            if label == "午餐" {
+              lunch_used = true
+            } else {
+              dinner_used = true
+            }
+          }
+          None =>
+            return Err([p.name + "：用餐时段无效或该顿饭已安排"])
         }
         if restaurants.any(old => {
             restaurants_similar(p.city, p.name, old.city, old.name)
@@ -188,6 +233,9 @@ pub fn edit_plan(
         transfer_minutes: minutes,
         transfer_cost: fare,
         score: 0,
+        meal,
+        transfer_distance: route.distance,
+        route_source: route.source,
         reasons,
       })
       finish = edit.start + p.duration
@@ -217,10 +265,7 @@ pub fn edit_plan(
     total_cost: total,
     remaining_budget: r.budget - total,
     exclusions,
-    warnings: [
-      "这是手动调整后的行程；开放时间、人均费用需核实。",
-      "接驳为片区估算，步行友好及短途限制不是地图实测距离。",
-    ],
+    warnings: route_warnings(days, r, meals),
   })
 }
 
