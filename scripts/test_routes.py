@@ -36,6 +36,23 @@ class RouteTests(unittest.TestCase):
         result=self.result({'status':'1','route':{'paths':[{'duration':'NaN','distance':'80'}]}})
         self.assertFalse(result['ok'])
         self.assertFalse(self.result({'status':'1','route':{'paths':[]}})['ok'])
+    def test_multiple_options_and_transfer_details_are_retained(self):
+        query={**QUERY,'mode':'transit'}
+        paths=[{'duration':'600','distance':'3000','cost':'3','walking_distance':'420',
+                'segments':[{'bus':{'buslines':[{'name':'地铁一号线'}]}},{'bus':{'buslines':[{'name':'公交三路'}]}}]},
+               {'duration':'900','distance':'3100','cost':'2','walking_distance':'80',
+                'segments':[{'bus':{'buslines':[{'name':'公交二路'}]}}]}]
+        result=self.result({'status':'1','route':{'transits':paths+[paths[0]]}},query)
+        self.assertTrue(result['ok']);self.assertEqual(len(result['options']),2)
+        self.assertEqual(result['options'][0]['walking_distance'],420)
+        self.assertEqual(result['options'][0]['transfers'],1)
+        self.assertIn('地铁一号线',result['options'][0]['summary'])
+        self.assertEqual(result['options'][1]['transfers'],0)
+        self.assertEqual(result['options'][1]['route']['cost'],2)
+    def test_missing_walking_and_transfers_are_unknown_not_zero(self):
+        result=self.result({'status':'1','route':{'transits':[{'duration':'600','distance':'3000','cost':'3'}]}},{**QUERY,'mode':'transit'})
+        self.assertTrue(result['ok']);self.assertNotIn('walking_distance',result['options'][0])
+        self.assertNotIn('transfers',result['options'][0])
     def test_provider_denial_does_not_return_secrets(self):
         result=self.result({'status':'0','infocode':'10003','info':'secret-response'})
         self.assertFalse(result['ok']);self.assertNotIn('secret-response',json.dumps(result))

@@ -9,3 +9,4 @@ web/engine.js
 __pycache__/
 *.pyc
 work/
+node_modules/

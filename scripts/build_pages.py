@@ -6,7 +6,7 @@ import hashlib
 ROOT = Path(__file__).resolve().parent.parent
 DEST = ROOT / "_site"
 DEST.mkdir(exist_ok=True)
-for name in ("index.html", "style.css", "app.js", "engine.js"):
+for name in ("index.html", "style.css", "app.js", "journey.js", "engine.js"):
     shutil.copyfile(ROOT / "web" / name, DEST / name)
 shutil.copytree(ROOT / "web" / "data", DEST / "data", dirs_exist_ok=True)
 def version(path):
@@ -16,6 +16,7 @@ def version(path):
 app = DEST / "app.js"
 app_text = app.read_text(encoding="utf-8")
 app_text = app_text.replace("'./engine.js'", "'./engine.js?v=" + version(DEST / "engine.js") + "'")
+app_text = app_text.replace("'./journey.js'", "'./journey.js?v=" + version(DEST / "journey.js") + "'")
 for city in ('hangzhou','chengdu'):
     path = 'data/'+city+'.json'
     app_text = app_text.replace("'./"+path+"'", "'./"+path+"?v="+version(DEST / path)+"'")

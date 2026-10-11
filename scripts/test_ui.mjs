@@ -1,0 +1,74 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { parseHTML } from 'linkedom';
+import {historyStore,freshRoutes,projectPoints} from '../web/journey.js';
+const template=await readFile(new URL('../web/index.html',import.meta.url),'utf8');
+const store=new Map();
+const fixture=(id,name,lon)=>({id,name,city:'杭州',district:'测试片区',tags:['文化'],cost:10,duration:40,open:480,close:1320,indoor:false,family:false,source:'交互测试合成资料',url:'https://example.org/'+id,kind:'sight',location:`${lon},30.25`});
+const places=[fixture('a','测试甲',120.10),fixture('b','测试乙',120.11),fixture('c','测试丙',120.12)];
+let requests=0;
+async function boot(staticMode=false){
+  const {window,document}=parseHTML(template.replace('<head>',staticMode?'<head><meta name="moontrip-mode" content="static">':'<head>'));
+  Object.defineProperty(window.HTMLInputElement.prototype,'checked',{get(){return this.hasAttribute('checked');},set(v){v?this.setAttribute('checked',''):this.removeAttribute('checked');},configurable:true});
+  Object.defineProperty(window.HTMLSelectElement.prototype,'value',{get(){const o=this.querySelector('option[selected]')||this.querySelector('option');return o?(o.getAttribute('value')??o.textContent):'';},set(v){for(const o of this.querySelectorAll('option'))o.selected=(o.getAttribute('value')??o.textContent)===String(v);},configurable:true});
+  Object.defineProperty(window.HTMLSelectElement.prototype,'options',{get(){return [...this.querySelectorAll('option')];},configurable:true});
+  window.HTMLSelectElement.prototype.add=function(o){this.append(o);};
+  window.HTMLElement.prototype.scrollIntoView=function(){};
+  globalThis.Option=function(text,value){const o=document.createElement('option');o.textContent=text;o.setAttribute('value',value??text);return o;};
+  globalThis.document=document;globalThis.localStorage={getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v)};
+  globalThis.fetch=async(url,options)=>{
+    if(url.includes('hangzhou.json'))return {ok:true,json:async()=>({city:'杭州',places,pending:[]})};
+    if(url.includes('chengdu.json'))return {ok:true,json:async()=>({city:'成都',places:[],pending:[]})};
+    if(url==='/api/status')return {ok:true,json:async()=>({configured:false,maps_configured:true})};
+    if(url==='/api/routes'){
+      requests++;const q=JSON.parse(options.body);const r={from_id:q.origin.id,to_id:q.destination.id,mode:q.mode,minutes:q.mode==='walking'?8:20,distance:q.mode==='walking'?600:1500,cost:q.mode==='walking'?0:3,source:'高德路线规划',fetched_at:new Date().toISOString()};
+      return {ok:true,json:async()=>({ok:true,route:r,options:[{id:q.mode+q.origin.id+q.destination.id,route:r,walking_distance:q.mode==='walking'?600:200,transfers:0,summary:q.mode==='walking'?'全程步行':'测试公交'}]})};
+    }
+    throw Error('Unexpected fetch '+url);
+  };
+  await import('../web/app.js?ui-test='+Date.now()+Math.random());await new Promise(r=>setTimeout(r,0));
+  return {document,window,$:id=>document.getElementById(id),click:(node)=>node.dispatchEvent(new window.Event('click')),change:(node)=>node.dispatchEvent(new window.Event('change'))};
+}
+const ui=await boot();const {$,click,change,document}=ui;
+assert.equal(document.querySelectorAll('.stop').length,3,'first visit generates a plan');
+assert.equal(document.querySelectorAll('#route-map circle').length,3,'map points work without external SDK');
+click(document.querySelector('#route-map g'));assert.match($('map-detail').textContent,/测试/);
+const before=$('itinerary').textContent;
+const aChoice=document.querySelector('.candidate .choices select');aChoice.value='must';change(aChoice);
+const dayChoice=document.querySelectorAll('.candidate .choices select')[1];dayChoice.value='2';change(dayChoice);
+assert.equal($('itinerary').textContent,before,'staging choices does not shuffle');
+click($('apply-choices'));
+assert.match(document.querySelectorAll('.day')[1].textContent,/测试甲/,'assigned day honored');
+click($('undo-change'));assert.equal($('itinerary').textContent,before,'undo restores plan and choices');
+click(document.querySelector('.stop-controls button:last-child'));assert.equal($('change-preview').hidden,false,'order change can be previewed');click($('accept-change'));assert.match(document.querySelector('.stop h4').textContent,/测试乙/,'order actually changes');click($('undo-change'));assert.equal($('itinerary').textContent,before,'order undo restores original');
+const placeLock=document.querySelector('.lock-controls input');placeLock.checked=true;change(placeLock);click(document.querySelector('.stop-controls button'));assert.match($('feedback').textContent,/锁定/,'locked place cannot be removed');assert.equal($('change-preview').hidden,true);click($('undo-change'));
+const second=document.querySelectorAll('.stop')[1];const originalTime=second.querySelector('.time').textContent;
+const timeLock=second.querySelectorAll('.lock-controls input')[1];timeLock.checked=true;change(timeLock);
+click($('refresh-routes'));await new Promise(r=>setTimeout(r,30));
+assert.equal(requests,4,'both modes queried for every leg');
+assert.equal(document.querySelectorAll('.stop')[1].querySelector('.time').textContent,originalTime,'query does not alter times');
+assert.equal(document.querySelectorAll('.transport-option').length,4,'per-leg candidates displayed');
+const oldPlan=$('itinerary').textContent;
+click(document.querySelector('.transport-option button'));assert.equal($('change-preview').hidden,false,'route choice opens preview');
+assert.equal($('itinerary').textContent,oldPlan,'preview leaves current plan intact');
+click($('dismiss-change'));assert.equal($('itinerary').textContent,oldPlan,'ignore keeps plan');
+click(document.querySelector('.transport-option button'));click($('accept-change'));
+assert.match($('route-choices').textContent,/已选择：步行/,'accepted leg uses chosen mode');
+assert.equal(document.querySelectorAll('.stop')[1].querySelector('.time').textContent,originalTime,'accepted route retains locked time');
+const legLock=document.querySelector('#route-choices .lock-controls input');legLock.checked=true;change(legLock);
+click(document.querySelectorAll('.transport-option button')[1]);assert.match($('feedback').textContent,/锁定路段/,'locked transport cannot be replaced');assert.equal($('change-preview').hidden,true);
+click($('undo-change'));click($('undo-change'));assert.equal($('itinerary').textContent,oldPlan,'route undo restores time and budget');
+click($('get-suggestions'));await new Promise(r=>setTimeout(r,30));assert.ok(document.querySelector('#suggestions button'),'validated improvements offered');
+click(document.querySelector('#suggestions button'));assert.equal($('change-preview').hidden,false);
+// Change a condition after preview; confirmation must reject a stale result.
+$('budget').value='600';click($('accept-change'));assert.match($('feedback').textContent,/已变化/);
+$('budget').value='200';
+const saved=JSON.parse(store.get('moontrip.v1'));assert.equal(saved.locks.times.length,1);
+const restored=await boot();assert.equal(restored.document.querySelectorAll('.lock-controls input:checked').length,1,'time lock restored after reload');
+assert.match(restored.$('itinerary').textContent,/测试甲/);
+// Pages has local selection, map and preview, but does not expose backend requests.
+store.clear();const online=await boot(true);assert.equal(online.$('refresh-routes').disabled,true);assert.equal(online.document.querySelectorAll('#route-map circle').length,3);
+const history=historyStore(2);const value={n:[1]};history.push(value);value.n[0]=9;assert.deepEqual(history.pop(),{n:[1]},'undo snapshots are immutable');
+const expired={from_id:'a',to_id:'b',origin_location:places[0].location,destination_location:places[1].location,fetched_at:new Date(Date.now()-3600001).toISOString()};assert.equal(freshRoutes([expired],places).length,0,'expired route excluded');
+const coords=projectPoints([{longitude:120,latitude:30},{longitude:120,latitude:30}]);assert.equal(coords[0].x,300);assert.equal(coords[0].y,160);
+console.log('UI interaction checks passed: staged choices, assigned days, map, locks, per-leg preview/ignore/accept, undo, stale preview, reload and static mode. No visual-browser claim.');

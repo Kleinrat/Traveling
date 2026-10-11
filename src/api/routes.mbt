@@ -77,3 +77,48 @@ pub fn route_result_json(text : String) -> String {
   }
   ({ "ok": true, "route": @json.to_json(route) } : Json).stringify()
 }
+
+///|
+priv struct RouteOption {
+  id : String
+  route : @engine.Route
+  walking_distance : Int?
+  transfers : Int?
+  summary : String
+} derive(ToJson, @json.FromJson)
+
+///|
+pub fn route_options_json(text : String) -> String {
+  let options : Array[RouteOption] = @json.from_json(@json.parse(text)) catch {
+    _ =>
+      return ({ "ok": false, "errors": ["交通候选格式无效"] } : Json).stringify()
+  }
+  if options.is_empty() || options.length() > 6 {
+    return ({ "ok": false, "errors": ["交通候选数量无效"] } : Json).stringify()
+  }
+  let seen : Map[String, Bool] = Map([])
+  for o in options {
+    let errors = @engine.validate_routing({
+      ..@engine.default_routing(),
+      routes: [o.route],
+    })
+    if !errors.is_empty() ||
+      o.id == "" ||
+      o.id.length() > 100 ||
+      seen.contains(o.id) ||
+      o.summary.length() > 300 ||
+      (o.walking_distance is Some(n) && (n < 0 || n > 1000000)) ||
+      (o.transfers is Some(n) && (n < 0 || n > 50)) ||
+      (o.route.mode == "walking" && o.transfers != Some(0)) {
+      return (
+        { "ok": false, "errors": ["交通候选资料无效或重复"] } : Json).stringify()
+    }
+    seen[o.id] = true
+  }
+  (
+    {
+      "ok": true,
+      "route": @json.to_json(options[0].route),
+      "options": @json.to_json(options),
+    } : Json).stringify()
+}

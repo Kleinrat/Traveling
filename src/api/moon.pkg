@@ -10,6 +10,9 @@ options(
     "js": {
       "exports": [
         "plan_json",
+        "choose_plan_json",
+        "arrange_plan_json",
+        "suggestions_json",
         "plan_with_preferences_json",
         "alternatives_with_preferences_json",
         "edit_plan_json",
@@ -17,6 +20,7 @@ options(
         "reflow_plan_json",
         "route_query_json",
         "route_result_json",
+        "route_options_json",
         "cities_json",
         "restaurant_identity",
         "restaurants_similar",

@@ -37,7 +37,7 @@ pub fn default_meals(r : Request) -> Meals {
 ///|
 pub fn validate_routing(r : Routing) -> Array[String] {
   let errors = []
-  if !["walking", "transit"].contains(r.mode) ||
+  if !["walking", "transit", "mixed"].contains(r.mode) ||
     r.distance_limit < 0 ||
     r.distance_limit > 1000000 ||
     r.routes.length() > 1000 {
@@ -45,7 +45,10 @@ pub fn validate_routing(r : Routing) -> Array[String] {
   }
   let seen : Map[String, Bool] = Map([])
   for route in r.routes {
-    let key = route.from_id + "|" + route.to_id + "|" + route.mode
+    let key = route.from_id +
+      "|" +
+      route.to_id +
+      (if r.mode == "mixed" { "" } else { "|" + route.mode })
     if route.from_id == "" ||
       route.to_id == "" ||
       !["walking", "transit"].contains(route.mode) ||
@@ -89,7 +92,7 @@ pub fn route_transfer(
       for route in routing.routes {
         if route.from_id == old.id &&
           route.to_id == next.id &&
-          route.mode == routing.mode {
+          (routing.mode == "mixed" || route.mode == routing.mode) {
           return Some(route)
         }
       }

@@ -1,1 +1,14 @@
-{"name":"moontrip-host","private":true,"type":"module","scripts":{"build":"sh scripts/build.sh","test":"moon test --target js","start":"python3 scripts/serve.py"}}
+{
+  "name": "moontrip-host",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "sh scripts/build.sh",
+    "test": "moon test --target js",
+    "start": "python3 scripts/serve.py",
+    "test:ui": "node scripts/test_ui.mjs"
+  },
+  "devDependencies": {
+    "linkedom": "0.18.12"
+  }
+}

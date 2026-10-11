@@ -3,6 +3,7 @@
 import json
 import os
 import math
+import hashlib
 import time
 import threading
 import subprocess
@@ -125,23 +126,58 @@ def search_route(query):
             return {'ok': False, 'errors': ['高德路线查询未成功，错误码 ' + str(data.get('infocode', '未知')) + '；请检查路线服务权限和额度']}
         plans = (data.get('route') or {}).get('paths' if query['mode'] == 'walking' else 'transits') or []
         valid = []
+        timestamp = datetime.now(timezone.utc).isoformat()
+        seen = set()
         for path in plans:
             try:
                 seconds, distance = float(path['duration']), float(path['distance'])
                 cost = 0 if query['mode'] == 'walking' else float(path['cost'])
                 if not all(math.isfinite(n) and n >= 0 for n in (seconds, distance, cost)): continue
                 if seconds > 86400 or distance > 1000000 or cost > 10000: continue
-                valid.append({'seconds': math.ceil(seconds), 'distance': math.ceil(distance), 'cost': math.ceil(cost)})
-            except (ValueError, KeyError, TypeError): continue
+                if query['mode'] == 'walking':
+                    walked, transfers, summary = math.ceil(distance), 0, '全程步行'
+                else:
+                    walked, transfers = None, None
+                    try:
+                        amount = float(path['walking_distance'])
+                        if math.isfinite(amount) and 0 <= amount <= 1000000: walked = math.ceil(amount)
+                    except (KeyError, ValueError, TypeError): pass
+                    lines = []
+                    segments = path.get('segments')
+                    if isinstance(segments, list) and segments:
+                        for segment in segments:
+                            bus = segment.get('bus') or {}
+                            buslines = bus.get('buslines') or []
+                            if buslines and isinstance(buslines[0], dict):
+                                name = buslines[0].get('name')
+                                if isinstance(name, str) and name: lines.append(name)
+                        if lines: transfers = max(0, len(lines) - 1)
+                    summary = ' → '.join(lines)[:300] or '公交 / 地铁方案（线路详情未提供）'
+                item = {'seconds': math.ceil(seconds), 'distance': math.ceil(distance),
+                        'cost': math.ceil(cost), 'fetched_at': timestamp,
+                        'walking_distance': walked, 'transfers': transfers, 'summary': summary}
+                fingerprint = (item['seconds'], item['distance'], item['cost'], walked, transfers, summary)
+                if fingerprint in seen: continue
+                seen.add(fingerprint)
+                item['id'] = query['mode'] + '-' + hashlib.sha256(repr((origin, destination, fingerprint)).encode()).hexdigest()[:16]
+                valid.append(item)
+            except (ValueError, KeyError, TypeError, AttributeError): continue
         if not valid:
             return {'ok': False, 'errors': ['没有包含时间、距离和费用的完整路线方案；不会按零费用处理，请换交通方式或保留估算']}
-        raw = min(valid, key=lambda p: p['seconds'])
-        raw['fetched_at'] = datetime.now(timezone.utc).isoformat()
+        raw = {'options': sorted(valid, key=lambda p: p['seconds'])[:5]}
         with _ROUTE_LOCK:
             if len(_ROUTE_CACHE) >= 1000: _ROUTE_CACHE.clear()
             _ROUTE_CACHE[cache_key] = (time.monotonic(), dict(raw))
-    return bridge({'action': 'route-result', 'route': {**raw, 'mode': query['mode'],
-        'from_id': query['origin']['id'], 'to_id': query['destination']['id']}})
+    options = []
+    for item in raw['options']:
+        checked = bridge({'action': 'route-result', 'route': {**item, 'mode': query['mode'],
+            'from_id': query['origin']['id'], 'to_id': query['destination']['id']}})
+        if not checked['ok']: return checked
+        option = {'id': item['id'], 'route': checked['route'], 'summary': item['summary']}
+        for field in ('walking_distance', 'transfers'):
+            if item[field] is not None: option[field] = item[field]
+        options.append(option)
+    return bridge({'action': 'route-options', 'options': options})
 
 
 def bridge(payload):
