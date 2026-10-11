@@ -14,6 +14,7 @@ options(
         "arrange_plan_json",
         "suggestions_json",
         "replacements_json",
+        "change_place_json",
         "plan_with_preferences_json",
         "alternatives_with_preferences_json",
         "edit_plan_json",

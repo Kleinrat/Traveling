@@ -32,7 +32,7 @@
 </nav></details>
 <details id="map-panel" class="panel"><summary>查看当天路线简图</summary><label>查看日期<select id="map-day"></select></label><p class="hint">基于地点坐标的顺序示意图；直线连接不代表真实道路。景点为绿色，餐厅为暖色；点击编号查看详情。只展示当天站间地点，不含出发点和住宿。</p><div id="route-map"></div><div id="map-detail"></div>
 </details>
-<details class="panel"><summary>看看未被安排的景点</summary><div id="exclusions"></div>
+<details class="panel" id="unarranged-panel"><summary>看看未安排的地点 <span id="unarranged-count"></span></summary><p class="hint">喜欢哪个，就把它加入路书，或用它替换已有的一站。</p><div id="exclusions"></div>
 </details>
 <details class="panel"><summary>规划依据与边界</summary><ul id="warnings"></ul>
 </details>
@@ -58,6 +58,11 @@
 <section hidden class="adjust-pane" id="adjust-places"><p class="hint">选一站看看替代方案，其他地点和日期会保留。</p><label>想换哪一站？<select id="replacement-stop"></select></label><div id="replacement-options" class="replacement-options"></div>
 <details id="all-place-choices" class="extra-choices"><summary>自定义必去 / 不去（可选）</summary><p class="hint">标记后再应用，指定日期的地点按必去处理。</p><label>搜索地点<input id="candidate-search" type="search" placeholder="输入地点名或片区"></label><div id="candidates" class="candidates"></div><button type="button" id="more-candidates">显示更多</button><button id="apply-choices" type="button">应用我的地点选择</button>
 </details>
+</section>
+<section hidden class="adjust-pane" id="adjust-place-action"><div id="place-action-info"></div>
+<div id="place-add-fields"><label>加入哪一天？<select id="place-add-day"></select></label><label id="place-meal-label" hidden>安排为<select id="place-add-meal"></select></label><label>放在什么位置？<select id="place-add-after"></select></label></div>
+<label id="place-replace-fields" hidden>替换路书中的哪一站？<select id="place-replace-target"></select></label>
+<p id="place-action-note" class="hint"></p><button id="preview-place-change" class="primary" type="button">预览调整后的路书</button>
 </section>
 <section hidden class="adjust-pane" id="adjust-pace"><p class="hint">先看变化，再决定。锁定安排会保留。</p><div class="pace-actions"><button type="button" data-pace="relax">再轻松一点</button><button type="button" data-pace="full">多玩一点</button><button type="button" data-pace="late">晚点出门</button></div>
 <details class="extra-choices"><summary>比较其他推荐取向</summary><div id="alternatives" class="alternatives"></div>

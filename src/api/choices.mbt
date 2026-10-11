@@ -127,3 +127,47 @@ pub fn replacements_json(text : String) -> String {
       ({ "ok": false, "errors": @json.to_json(errors) } : Json).stringify()
   }
 }
+
+///|
+priv struct PlaceChangeInput {
+  input : @engine.Input
+  preferences : @engine.Preferences
+  routing : @engine.Routing
+  meals : @engine.Meals
+  stops : Array[@engine.ManualStop]
+  locks : @engine.TripLocks
+  place_id : String
+  action : String
+  day : Int
+  target_id : String
+  after_id : String?
+  meal : String
+} derive(@json.FromJson)
+
+///|
+pub fn change_place_json(text : String) -> String {
+  let c : PlaceChangeInput = @json.from_json(@json.parse(text)) catch {
+    _ =>
+      return ({ "ok": false, "errors": ["地点调整格式无效"] } : Json).stringify()
+  }
+  match
+    @engine.change_place(
+      c.input,
+      c.preferences,
+      c.routing,
+      c.meals,
+      c.stops,
+      c.locks,
+      c.place_id,
+      c.action,
+      c.day,
+      c.target_id,
+      c.after_id,
+      c.meal,
+    ) {
+    Ok(change) =>
+      ({ "ok": true, "change": @json.to_json(change) } : Json).stringify()
+    Err(errors) =>
+      ({ "ok": false, "errors": @json.to_json(errors) } : Json).stringify()
+  }
+}
