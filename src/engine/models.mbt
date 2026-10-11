@@ -1,4 +1,65 @@
 ///|
+pub fn restaurant_identity(city : String, name : String) -> String {
+  let mut base = name.trim().to_owned()
+  for separator in ["(", "（", "·", "•", "|", "｜", "【", "["] {
+    if base.split_once(separator) is Some((head, _)) {
+      if head.trim().length() >= 2 {
+        base = head.to_owned()
+      }
+    }
+  }
+  base = base.replace_all(old=" ", new="").trim().to_owned()
+  // Cuisine and advertising suffixes are not the restaurant brand.
+  for
+    descriptor in [
+      "天津菜", "杭帮菜", "浙江菜", "本帮菜", "北京菜", "私房菜",
+      "川湘菜", "地道川菜", "湘菜", "粤菜", "津菜馆", "津味家常菜",
+    ] {
+    if base.split_once(descriptor) is Some((head, _)) {
+      if head.length() >= 2 && head != city {
+        base = head.to_owned()
+      }
+    }
+  }
+  city + ":" + base
+}
+
+///|
+pub fn restaurants_similar(
+  city_a : String,
+  name_a : String,
+  city_b : String,
+  name_b : String,
+) -> Bool {
+  if city_a != city_b {
+    return false
+  }
+  let a = restaurant_identity("", name_a)
+  let b = restaurant_identity("", name_b)
+  if a == b {
+    return true
+  }
+  let aa = a[1:].to_owned().iter().to_array()
+  let bb = b[1:].to_owned().iter().to_array()
+  if aa.length() < 3 ||
+    bb.length() < 3 ||
+    aa.length() > 5 ||
+    bb.length() > 5 ||
+    aa[0] != bb[0] {
+    return false
+  }
+  let mut common = 0
+  let counted : Map[Char, Bool] = Map([])
+  for ch in aa {
+    if !counted.contains(ch) && bb.contains(ch) {
+      common += 1
+      counted[ch] = true
+    }
+  }
+  common * 3 >= aa.length() * 2 && common * 3 >= bb.length() * 2
+}
+
+///|
 /// All money is in whole CNY per person; times are minutes after midnight.
 pub(all) struct Place {
   id : String
@@ -15,6 +76,7 @@ pub(all) struct Place {
   source : String
   url : String
   kind : String
+  windows : Array[OpenWindow]?
 } derive(Debug, ToJson, @json.FromJson)
 
 ///|
@@ -51,6 +113,9 @@ pub(all) struct Stop {
   transfer_minutes : Int
   transfer_cost : Int
   score : Int
+  meal : String
+  transfer_distance : Int
+  route_source : String
   reasons : Array[String]
 } derive(Debug, ToJson)
 
@@ -121,6 +186,17 @@ pub fn validate(input : Input) -> Array[String] {
     if p.open < 0 || p.close > 1440 || p.open >= p.close {
       errors.push("景点开放时间无效: \{p.id}")
     }
+    for window in p.windows.unwrap_or([]) {
+      if window.open < p.open ||
+        window.close > p.close ||
+        window.open >= window.close {
+        errors.push("分段营业时间无效: " + p.id)
+      }
+    }
+    if p.windows is Some(windows) &&
+      (windows.is_empty() || windows.length() > 10) {
+      errors.push("分段营业时间数量无效: " + p.id)
+    }
     if p.tags.length() > 20 {
       errors.push("景点标签最多 20 个: \{p.id}")
     }
@@ -162,3 +238,9 @@ pub fn validate(input : Input) -> Array[String] {
   }
   errors
 }
+
+///|
+pub(all) struct OpenWindow {
+  open : Int
+  close : Int
+} derive(Debug, ToJson, @json.FromJson)

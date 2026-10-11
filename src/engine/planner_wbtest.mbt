@@ -36,6 +36,7 @@ fn fixture_place(id : String, cost : Int, duration : Int) -> Place {
     source: "原创测试数据",
     url: "",
     kind: "sight",
+    windows: None,
   }
 }
 
@@ -339,4 +340,71 @@ test "reject unsafe source URL" {
   assert_true(
     !validate({ request: fixture_request(), places: [p], }).is_empty(),
   )
+}
+
+///|
+test "different branch IDs cannot repeat a restaurant across days" {
+  let r = { ..fixture_request(), include_food: true, days: 3, }
+  let a = {
+    ..fixture_place("a", 10, 60),
+    kind: "food",
+    name: "杭帮菜馆(西湖店)",
+  }
+  let b = { ..a, id: "b", name: "杭帮菜馆（城东店）", }
+  let c = { ..a, id: "c", name: "另一家菜馆", }
+  let result = checked({ request: r, places: [a, b, c], })
+  let mut meals = 0
+  for day in result.days {
+    meals += day.stops.length()
+  }
+  assert_eq(meals, 2)
+}
+
+///|
+test "brand punctuation and cuisine suffix variants share identity" {
+  assert_eq(
+    restaurant_identity("天津", "老天津·天津菜(鼓楼店)"),
+    restaurant_identity("天津", "老天津天津菜（和平店）"),
+  )
+  assert_eq(
+    restaurant_identity("杭州", "外婆家·杭帮菜【西湖店】"),
+    restaurant_identity("杭州", "外婆家(城东店)"),
+  )
+  assert_true(
+    restaurant_identity("天津", "老天津·天津菜(鼓楼店)") !=
+    restaurant_identity("天津", "老津门天津菜"),
+  )
+  assert_true(
+    restaurant_identity("杭州", "川菜小馆") !=
+    restaurant_identity("杭州", "湘菜小馆"),
+  )
+}
+
+///|
+test "similar short brands are alternatives rather than repeated meals" {
+  assert_true(
+    restaurants_similar(
+      "天津", "老天津·天津菜(鼓楼店)", "天津", "老津门天津菜",
+    ),
+  )
+  assert_false(
+    restaurants_similar("天津", "老天津", "天津", "老北京"),
+  )
+  assert_false(
+    restaurants_similar("天津", "老天津", "成都", "老天津"),
+  )
+  let r = { ..fixture_request(), include_food: true, days: 3, }
+  let a = {
+    ..fixture_place("a", 10, 60),
+    kind: "food",
+    name: "老天津·天津菜(鼓楼店)",
+  }
+  let b = { ..a, id: "b", name: "老津门天津菜", }
+  let c = { ..a, id: "c", name: "另一家菜馆", }
+  let result = checked({ request: r, places: [a, b, c], })
+  let mut meals = 0
+  for day in result.days {
+    meals += day.stops.length()
+  }
+  assert_eq(meals, 2)
 }

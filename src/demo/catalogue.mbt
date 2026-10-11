@@ -28,6 +28,7 @@ fn place(
     source: "MoonTrip 原创虚构演示数据 v1；非真实景点报价/营业时间",
     url: "",
     kind: "sight",
+    windows: None,
   }
 }
 

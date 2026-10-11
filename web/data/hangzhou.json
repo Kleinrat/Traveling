@@ -1,0 +1,889 @@
+{
+  "city": "杭州",
+  "updated_at": "2026-10-11T08:22:26.244071+00:00",
+  "note": "人工选取查询关键词，不是热度排名；高德线索不等于经营者确认。来源缺失或复杂时段保留待补充。",
+  "places": [
+    {
+      "id": "amap-B023B05MLT",
+      "name": "湖滨公园 · 公共步行区",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "龙井路1号杭州西湖风景名胜区内(东北角)",
+      "location": "120.158818,30.256583",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B023B05MLT",
+      "fetched_at": "2026-10-11T08:22:05.798761+00:00",
+      "keyword": "湖滨公园",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:05.798761+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B05MLT",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B0253E",
+      "name": "曲院风荷 · 公共步行区",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "杭州西湖风景名胜区杨公堤38号",
+      "location": "120.133333,30.249287",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B023B0253E",
+      "fetched_at": "2026-10-11T08:22:06.320120+00:00",
+      "keyword": "曲院风荷",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:06.320120+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B0253E",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B023B2",
+      "name": "花港观鱼 · 公共步行区",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "西湖街道西山路5-1号",
+      "location": "120.139095,30.230233",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B023B023B2",
+      "fetched_at": "2026-10-11T08:22:06.844135+00:00",
+      "keyword": "花港观鱼",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:06.844135+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B023B2",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B0247C",
+      "name": "柳浪闻莺 · 公共步行区",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "清波街道南山路87号",
+      "location": "120.156326,30.240389",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B023B0247C",
+      "fetched_at": "2026-10-11T08:22:07.338768+00:00",
+      "keyword": "柳浪闻莺",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:07.338768+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B0247C",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0MRMLW5RC",
+      "name": "断桥残雪 · 公共步行区",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "宝石山下一弄与保俶路交叉口西南220米",
+      "location": "120.152144,30.259153",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B0MRMLW5RC",
+      "fetched_at": "2026-10-11T08:22:08.366832+00:00",
+      "keyword": "断桥残雪",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:08.366832+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0MRMLW5RC",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B0AC72",
+      "name": "苏堤 · 公共步行区",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "龙井路1号杭州西湖风景名胜区内(东侧)",
+      "location": "120.139291,30.240338",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B023B0AC72",
+      "fetched_at": "2026-10-11T08:22:08.877987+00:00",
+      "keyword": "苏堤",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:08.877987+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B0AC72",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0FFFTYEG4",
+      "name": "白堤 · 公共步行区",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "西湖街道龙井路1号杭州西湖风景名胜区内(东北角)",
+      "location": "120.149189,30.255701",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B0FFFTYEG4",
+      "fetched_at": "2026-10-11T08:22:09.404423+00:00",
+      "keyword": "白堤",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:09.404423+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFFTYEG4",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B02074",
+      "name": "太子湾公园 · 公共步行区",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "南星街道南山路1-1号",
+      "location": "120.142177,30.225470",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B023B02074",
+      "fetched_at": "2026-10-11T08:22:09.939370+00:00",
+      "keyword": "太子湾公园",
+      "cost": 0,
+      "duration": 90,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:09.939370+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B02074",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B14CFT",
+      "name": "杭州西湖风景名胜区-江洋畈生态公园",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "虎玉路7号",
+      "location": "120.140324,30.206620",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 08:30-17:00",
+      "url": "https://www.amap.com/place/B023B14CFT",
+      "fetched_at": "2026-10-11T08:22:18.468389+00:00",
+      "keyword": "江洋畈生态公园",
+      "cost": 0,
+      "duration": 90,
+      "open": 510,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 510,
+          "close": 1020
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:18.468389+00:00；https://westlake.hangzhou.gov.cn/art/2023/5/17/art_1639430_59042393.html 页面发布于2023年，出行前复核；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B14CFT",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0FFFWQFZJ",
+      "name": "外婆家(杭州西湖银泰店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "延安路98号银泰城5层(电话错误)银泰杭州百货大楼",
+      "location": "120.164887,30.244487",
+      "kind": "food",
+      "cost_hint": "53.00",
+      "open_hint": "周一至周日 10:30-21:30",
+      "url": "https://www.amap.com/place/B0FFFWQFZJ",
+      "fetched_at": "2026-10-11T08:22:19.045153+00:00",
+      "keyword": "外婆家",
+      "cost": 53,
+      "duration": 60,
+      "open": 630,
+      "close": 1290,
+      "windows": [
+        {
+          "open": 630,
+          "close": 1290
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:19.045153+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFFWQFZJ",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0FFI927N3",
+      "name": "新白鹿(杭州湖滨in77店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "解放路238号湖滨银泰C3区3F",
+      "location": "120.164784,30.250865",
+      "kind": "food",
+      "cost_hint": "65.00",
+      "open_hint": "周一至周日 10:30-14:30,16:00-21:00",
+      "url": "https://www.amap.com/place/B0FFI927N3",
+      "fetched_at": "2026-10-11T08:22:19.603617+00:00",
+      "keyword": "新白鹿",
+      "cost": 65,
+      "duration": 60,
+      "open": 630,
+      "close": 1260,
+      "windows": [
+        {
+          "open": 630,
+          "close": 870
+        },
+        {
+          "open": 960,
+          "close": 1260
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:19.603617+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFI927N3",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B17FPA",
+      "name": "绿茶餐厅(西湖银泰店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "延安路98号银泰百货西湖店5层B区",
+      "location": "120.164947,30.244565",
+      "kind": "food",
+      "cost_hint": "60.00",
+      "open_hint": "周一至周日 11:00-21:00",
+      "url": "https://www.amap.com/place/B023B17FPA",
+      "fetched_at": "2026-10-11T08:22:20.233161+00:00",
+      "keyword": "绿茶餐厅",
+      "cost": 60,
+      "duration": 60,
+      "open": 660,
+      "close": 1260,
+      "windows": [
+        {
+          "open": 660,
+          "close": 1260
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:20.233161+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B17FPA",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0FFK21Q4T",
+      "name": "知味观(青年路店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "青年路23-2号(定安路地铁站A口步行340米)",
+      "location": "120.168303,30.248986",
+      "kind": "food",
+      "cost_hint": "28.00",
+      "open_hint": "周一至周日 07:00-20:00",
+      "url": "https://www.amap.com/place/B0FFK21Q4T",
+      "fetched_at": "2026-10-11T08:22:20.785748+00:00",
+      "keyword": "知味观",
+      "cost": 28,
+      "duration": 60,
+      "open": 420,
+      "close": 1200,
+      "windows": [
+        {
+          "open": 420,
+          "close": 1200
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:20.785748+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFK21Q4T",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B09325",
+      "name": "楼外楼(杭州西湖风景名胜区店)",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "西湖街道孤山路30号(近平湖秋月)",
+      "location": "120.140723,30.250209",
+      "kind": "food",
+      "cost_hint": "155.00",
+      "open_hint": "周一至周日 10:30-14:00,16:30-20:30",
+      "url": "https://www.amap.com/place/B023B09325",
+      "fetched_at": "2026-10-11T08:22:21.280769+00:00",
+      "keyword": "楼外楼",
+      "cost": 155,
+      "duration": 60,
+      "open": 630,
+      "close": 1230,
+      "windows": [
+        {
+          "open": 630,
+          "close": 840
+        },
+        {
+          "open": 990,
+          "close": 1230
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:21.280769+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B09325",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0HGBSORPI",
+      "name": "新周记·巷子里的江南味(平海路店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "平海路36号(龙翔桥地铁站D口步行350米)",
+      "location": "120.168323,30.254314",
+      "kind": "food",
+      "cost_hint": "103.00",
+      "open_hint": "周一至周日 10:30-23:30",
+      "url": "https://www.amap.com/place/B0HGBSORPI",
+      "fetched_at": "2026-10-11T08:22:22.332813+00:00",
+      "keyword": "新周记",
+      "cost": 103,
+      "duration": 60,
+      "open": 630,
+      "close": 1410,
+      "windows": [
+        {
+          "open": 630,
+          "close": 1410
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:22.332813+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0HGBSORPI",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0G0AZTG34",
+      "name": "四灶儿·地道杭帮菜(西湖景区·吴山广场店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "延安路22号(吴山古玩城对面)",
+      "location": "120.164931,30.241211",
+      "kind": "food",
+      "cost_hint": "79.00",
+      "open_hint": "周一至周日 10:30-22:30",
+      "url": "https://www.amap.com/place/B0G0AZTG34",
+      "fetched_at": "2026-10-11T08:22:22.838211+00:00",
+      "keyword": "四灶儿",
+      "cost": 79,
+      "duration": 60,
+      "open": 630,
+      "close": 1350,
+      "windows": [
+        {
+          "open": 630,
+          "close": 1350
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:22.838211+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0G0AZTG34",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0FFLIMLA8",
+      "name": "老头儿油爆虾(杭州湖滨in77D区店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "延安路185号湖滨银泰in77D区4楼",
+      "location": "120.163511,30.253282",
+      "kind": "food",
+      "cost_hint": "106.00",
+      "open_hint": "周一至周日 11:00-14:00,16:30-21:00",
+      "url": "https://www.amap.com/place/B0FFLIMLA8",
+      "fetched_at": "2026-10-11T08:22:23.381088+00:00",
+      "keyword": "老头儿油爆虾",
+      "cost": 106,
+      "duration": 60,
+      "open": 660,
+      "close": 1260,
+      "windows": [
+        {
+          "open": 660,
+          "close": 840
+        },
+        {
+          "open": 990,
+          "close": 1260
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:23.381088+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFLIMLA8",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0L0RZ4SBC",
+      "name": "弄堂里(建国北路店)",
+      "city": "杭州",
+      "district": "拱墅区",
+      "address": "建国北路浙江凤起农副产品交易市场",
+      "location": "120.181275,30.265375",
+      "kind": "food",
+      "cost_hint": "82.00",
+      "open_hint": "周一至周日 06:00-20:00",
+      "url": "https://www.amap.com/place/B0L0RZ4SBC",
+      "fetched_at": "2026-10-11T08:22:23.915030+00:00",
+      "keyword": "弄堂里",
+      "cost": 82,
+      "duration": 60,
+      "open": 360,
+      "close": 1200,
+      "windows": [
+        {
+          "open": 360,
+          "close": 1200
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:23.915030+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0L0RZ4SBC",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0LBRHJA63",
+      "name": "咬不得高祖生煎(滨悦城店)",
+      "city": "杭州",
+      "district": "滨江区",
+      "address": "长河街道国慷街509号英冠滨悦城4幢108室",
+      "location": "120.172342,30.192893",
+      "kind": "food",
+      "cost_hint": "21.00",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B0LBRHJA63",
+      "fetched_at": "2026-10-11T08:22:24.431017+00:00",
+      "keyword": "咬不得",
+      "cost": 21,
+      "duration": 60,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:24.431017+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0LBRHJA63",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B0K1AGUNHP",
+      "name": "兰边碗(日信国际商业中心店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "钱江路555号日信国际商业中心",
+      "location": "120.195577,30.235313",
+      "kind": "food",
+      "cost_hint": "87.00",
+      "open_hint": "周一至周日 11:00-14:00,17:00-21:00",
+      "url": "https://www.amap.com/place/B0K1AGUNHP",
+      "fetched_at": "2026-10-11T08:22:25.786777+00:00",
+      "keyword": "兰边碗",
+      "cost": 87,
+      "duration": 60,
+      "open": 660,
+      "close": 1260,
+      "windows": [
+        {
+          "open": 660,
+          "close": 840
+        },
+        {
+          "open": 1020,
+          "close": 1260
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:25.786777+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0K1AGUNHP",
+      "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B05MME",
+      "name": "慧娟面馆(望江路店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "望江路132号",
+      "location": "120.176017,30.237117",
+      "kind": "food",
+      "cost_hint": "46.00",
+      "open_hint": "周一至周日 08:00-14:30,16:00-02:30",
+      "url": "https://www.amap.com/place/B023B05MME",
+      "fetched_at": "2026-10-11T08:22:26.243928+00:00",
+      "keyword": "慧娟面馆",
+      "cost": 46,
+      "duration": 60,
+      "open": 0,
+      "close": 1440,
+      "windows": [
+        {
+          "open": 0,
+          "close": 150
+        },
+        {
+          "open": 480,
+          "close": 870
+        },
+        {
+          "open": 960,
+          "close": 1440
+        }
+      ],
+      "tags": [
+        "美食"
+      ],
+      "indoor": true,
+      "family": false,
+      "source": "资料整理于 2026-10-11T08:22:26.243928+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B05MME",
+      "data_status": "来源资料估算，出行前核实"
+    }
+  ],
+  "pending": [
+    {
+      "id": "amap-B023B09LKR",
+      "name": "雷峰塔景区",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "南山路15号",
+      "location": "120.148849,30.230934",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "03-16至04-30 周一至周日 08:00-19:00 最晚进入18:30；05-01至10-31 周一至周日 08:00-20:00 最晚进入19:30；11-01至03-15 周一至周日 08:00-17:30 最晚进入17:00",
+      "url": "https://www.amap.com/place/B023B09LKR",
+      "fetched_at": "2026-10-11T08:22:10.424398+00:00",
+      "keyword": "雷峰塔景区"
+    },
+    {
+      "id": "amap-B023B02842",
+      "name": "灵隐寺",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "法云弄1号",
+      "location": "120.101406,30.240826",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 07:30-17:30 最晚进入17:00",
+      "url": "https://www.amap.com/place/B023B02842",
+      "fetched_at": "2026-10-11T08:22:10.964462+00:00",
+      "keyword": "灵隐寺"
+    },
+    {
+      "id": "amap-B023B05MJE",
+      "name": "飞来峰",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "灵隐街道灵隐路法云弄1号",
+      "location": "120.101101,30.239119",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 07:30-17:30 最晚进入17:00",
+      "url": "https://www.amap.com/place/B023B05MJE",
+      "fetched_at": "2026-10-11T08:22:11.488409+00:00",
+      "keyword": "飞来峰"
+    },
+    {
+      "id": "amap-B023B06P06",
+      "name": "西溪国家湿地公园",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "天目山路518号",
+      "location": "120.061159,30.255079",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "10月8日至3月31日 周一至周日 08:00-17:30 门票售票时间:8:00-16:30,船票售票时间:8:00-16:15,观光车环线售票时间:8:00-16:00（节假日视乘车客流调整环线售票截止时间）,单程售票时间 8:00-17:20；4月1日至10月7日 周一至周日 07:30-18:30 门票售票时间:7:30-17:30,船票售票时间:7:30-16:45，观光车环线售票时间:7:30-17:00（节假日视乘车客流调整环线售票截止时间），单程售票时间 7:30-18:20；",
+      "url": "https://www.amap.com/place/B023B06P06",
+      "fetched_at": "2026-10-11T08:22:12.055582+00:00",
+      "keyword": "西溪国家湿地公园"
+    },
+    {
+      "id": "amap-B0I15SU50Z",
+      "name": "浙江省博物馆(之江馆区)",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "之江文化中心",
+      "location": "120.101745,30.159662",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周二至周日 09:00-17:00 最晚进入16:30；周一 全天不开放（法定节假日除外）",
+      "fetched_at": "2026-10-11T08:14:09.241697+00:00",
+      "url": "https://www.amap.com/place/B0I15SU50Z",
+      "keyword": "浙江省博物馆(之江馆区)"
+    },
+    {
+      "id": "amap-B023B07SJZ",
+      "name": "清河坊历史文化特色街区",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "河坊街180号",
+      "location": "120.169899,30.239827",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B023B07SJZ",
+      "fetched_at": "2026-10-11T08:22:13.190472+00:00",
+      "keyword": "清河坊"
+    },
+    {
+      "id": "amap-B0FFG97H9P",
+      "name": "京杭大运河杭州景区",
+      "city": "杭州",
+      "district": "拱墅区",
+      "address": "环城北路226号武林门码头",
+      "location": "120.141908,30.302955",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B0FFG97H9P",
+      "fetched_at": "2026-10-11T08:22:14.150662+00:00",
+      "keyword": "京杭大运河杭州景区"
+    },
+    {
+      "id": "amap-B0FFFFZRBD",
+      "name": "拱宸桥西历史文化街区",
+      "city": "杭州",
+      "district": "拱墅区",
+      "address": "桥西直街1号(拱宸桥西)",
+      "location": "120.137752,30.316781",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 05:00-22:00",
+      "url": "https://www.amap.com/place/B0FFFFZRBD",
+      "fetched_at": "2026-10-11T08:22:14.681079+00:00",
+      "keyword": "桥西历史文化街区"
+    },
+    {
+      "id": "amap-B023B14O96",
+      "name": "良渚古城遗址公园",
+      "city": "杭州",
+      "district": "余杭区",
+      "address": "瓶窑镇凤都路与104国道辅路交叉口西北200米",
+      "location": "119.991005,30.389549",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 09:00-17:00 最晚进入16:00",
+      "url": "https://www.amap.com/place/B023B14O96",
+      "fetched_at": "2026-10-11T08:22:15.702731+00:00",
+      "keyword": "良渚古城遗址公园"
+    },
+    {
+      "id": "amap-B023B09JLL",
+      "name": "中国丝绸博物馆",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "玉皇山路73-1号(近南山路)",
+      "location": "120.151292,30.222870",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "全年 周二–周日 09:00–17:00开放 最晚进入16:30；全年 周一 全天不开放；清明节,劳动节,端午节,中秋节,国庆节 09:00–17:00开放 最晚进入16:30",
+      "url": "https://www.amap.com/place/B023B09JLL",
+      "fetched_at": "2026-10-11T08:22:16.185213+00:00",
+      "keyword": "中国丝绸博物馆"
+    },
+    {
+      "id": "amap-B023B09LTB",
+      "name": "杭州植物园",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "桃源岭1号",
+      "location": "120.117009,30.252910",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00；售票时间:08:30-16:30",
+      "url": "https://www.amap.com/place/B023B09LTB",
+      "fetched_at": "2026-10-11T08:22:17.297015+00:00",
+      "keyword": "杭州植物园"
+    },
+    {
+      "id": "amap-B023B08Q06",
+      "name": "虎跑公园",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "虎跑路39号",
+      "location": "120.129900,30.208087",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "07:00-17:30,节假日10.1-10.7:7:00-18:00",
+      "url": "https://www.amap.com/place/B023B08Q06",
+      "fetched_at": "2026-10-11T08:22:17.799284+00:00",
+      "keyword": "虎跑公园"
+    },
+    {
+      "id": "amap-B023B08YIW",
+      "name": "奎元馆(解放路店)",
+      "city": "杭州",
+      "district": "上城区",
+      "address": "解放路154号",
+      "location": "120.170208,30.250933",
+      "kind": "food",
+      "cost_hint": "59.00",
+      "open_hint": "周一至周五 07:00-13:30,17:00-21:00；周六至周日 07:00-14:00,17:00-21:00",
+      "url": "https://www.amap.com/place/B023B08YIW",
+      "fetched_at": "2026-10-11T08:22:21.788414+00:00",
+      "keyword": "奎元馆"
+    },
+    {
+      "id": "amap-B0FFF2T4DK",
+      "name": "藏鲜工坊(朝晖店)",
+      "city": "杭州",
+      "district": "拱墅区",
+      "address": "朝辉路108号",
+      "location": "120.177092,30.279137",
+      "kind": "food",
+      "cost_hint": "120.00",
+      "open_hint": "11:00-14:00；17:00-21:00 最晚点餐 20:30-21:00",
+      "url": "https://www.amap.com/place/B0FFF2T4DK",
+      "fetched_at": "2026-10-11T08:22:24.947936+00:00",
+      "keyword": "藏鲜工坊"
+    }
+  ]
+}
