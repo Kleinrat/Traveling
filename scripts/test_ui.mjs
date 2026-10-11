@@ -7,17 +7,18 @@ const store=new Map();
 const fixture=(id,name,lon)=>({id,name,city:'杭州',district:'测试片区',tags:['文化'],cost:10,duration:40,open:480,close:1320,indoor:false,family:false,source:'交互测试合成资料',url:'https://example.org/'+id,kind:'sight',location:`${lon},30.25`});
 const places=[fixture('a','测试甲',120.10),fixture('b','测试乙',120.11),fixture('c','测试丙',120.12)];
 let requests=0;
-async function boot(staticMode=false){
+async function boot(staticMode=false,dataPlaces=places){
   const {window,document}=parseHTML(template.replace('<head>',staticMode?'<head><meta name="moontrip-mode" content="static">':'<head>'));
   Object.defineProperty(window.HTMLInputElement.prototype,'checked',{get(){return this.hasAttribute('checked');},set(v){v?this.setAttribute('checked',''):this.removeAttribute('checked');},configurable:true});
   Object.defineProperty(window.HTMLSelectElement.prototype,'value',{get(){const o=this.querySelector('option[selected]')||this.querySelector('option');return o?(o.getAttribute('value')??o.textContent):'';},set(v){for(const o of this.querySelectorAll('option'))o.selected=(o.getAttribute('value')??o.textContent)===String(v);},configurable:true});
   Object.defineProperty(window.HTMLSelectElement.prototype,'options',{get(){return [...this.querySelectorAll('option')];},configurable:true});
   window.HTMLSelectElement.prototype.add=function(o){this.append(o);};
   window.HTMLElement.prototype.scrollIntoView=function(){};
+  document.implementation={createHTMLDocument:()=>parseHTML('<!doctype html><html><head></head><body></body></html>').document};
   globalThis.Option=function(text,value){const o=document.createElement('option');o.textContent=text;o.setAttribute('value',value??text);return o;};
   globalThis.document=document;globalThis.localStorage={getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v)};
   globalThis.fetch=async(url,options)=>{
-    if(url.includes('hangzhou.json'))return {ok:true,json:async()=>({city:'杭州',places,pending:[]})};
+    if(url.includes('hangzhou.json'))return {ok:true,json:async()=>({city:'杭州',places:dataPlaces,pending:[]})};
     if(url.includes('chengdu.json'))return {ok:true,json:async()=>({city:'成都',places:[],pending:[]})};
     if(url==='/api/status')return {ok:true,json:async()=>({configured:false,maps_configured:true})};
     if(url==='/api/routes'){
@@ -31,6 +32,14 @@ async function boot(staticMode=false){
 }
 const ui=await boot();const {$,click,change,document}=ui;
 assert.equal(document.querySelectorAll('.stop').length,3,'first visit generates a plan');
+assert.equal($('adjustment-dialog').hasAttribute('open'),false,'detailed choices are hidden initially');
+for(const id of ['data-tools','advanced-preferences','roadbook-adjustments','all-place-choices'])assert.equal($(id).hasAttribute('open'),false,id+' starts collapsed');
+assert.equal(document.querySelector('.results #candidates'),null,'place catalogue is outside the roadbook');
+assert.equal(document.querySelectorAll('.journey-connection').length,2,'transport is readable between consecutive stops');
+assert.ok(document.querySelector('.day-overview').textContent.includes('开始'),'daily reading summary exists');
+assert.equal(document.querySelectorAll('.stop > div > .stop-controls').length,0,'per-stop controls are hidden under details');
+$('planner').dispatchEvent(new ui.window.Event('submit',{cancelable:true}));assert.equal($('preferences-panel').hasAttribute('open'),false,'generation collapses preferences and shows roadbook');
+click(document.querySelector('[data-adjust=budget]'));assert.equal($('adjustment-dialog').hasAttribute('open'),true);assert.equal($('adjust-budget').hidden,false);assert.equal($('adjust-places').hidden,true);click($('close-adjustment'));assert.equal($('adjustment-dialog').hasAttribute('open'),false);
 assert.equal(document.querySelectorAll('#route-map circle').length,3,'map points work without external SDK');
 click(document.querySelector('#route-map g'));assert.match($('map-detail').textContent,/测试/);
 const before=$('itinerary').textContent;
@@ -68,7 +77,20 @@ const restored=await boot();assert.equal(restored.document.querySelectorAll('.lo
 assert.match(restored.$('itinerary').textContent,/测试甲/);
 // Pages has local selection, map and preview, but does not expose backend requests.
 store.clear();const online=await boot(true);assert.equal(online.$('refresh-routes').disabled,true);assert.equal(online.document.querySelectorAll('#route-map circle').length,3);
+// Substitution suggestions are bounded and leave the rest of the roadbook intact.
+store.clear();const many=[...places,...Array.from({length:6},(_,i)=>fixture('alt-'+i,'替代地点'+i,120.13+i/100))];
+const optionsUI=await boot(false,many);const firstPlan=JSON.parse(store.get('moontrip.v1')).manual_stops;
+optionsUI.click(optionsUI.document.querySelector('[data-adjust=places]'));
+const replacements=optionsUI.document.querySelectorAll('.replacement-card');assert.equal(replacements.length,3,'only three feasible replacement choices shown');
+optionsUI.click(replacements[0].querySelector('button'));assert.equal(optionsUI.$('change-preview').hidden,false);assert.deepEqual(JSON.parse(store.get('moontrip.v1')).manual_stops,firstPlan,'preview does not mutate roadbook');
+optionsUI.click(optionsUI.$('accept-change'));const changedPlan=JSON.parse(store.get('moontrip.v1')).manual_stops;
+assert.equal(changedPlan.length,firstPlan.length);assert.notEqual(changedPlan[0].id,firstPlan[0].id);assert.deepEqual(changedPlan.slice(1).map(s=>[s.id,s.day]),firstPlan.slice(1).map(s=>[s.id,s.day]),'other stops and days preserved');
+assert.equal(optionsUI.$('adjustment-dialog').hasAttribute('open'),false,'accepted adjustment returns to roadbook');
+optionsUI.click(optionsUI.$('undo-change'));assert.deepEqual(JSON.parse(store.get('moontrip.v1')).manual_stops,firstPlan,'replacement undo restores schedule');
+optionsUI.click(optionsUI.document.querySelector('[data-adjust=pace]'));optionsUI.click(optionsUI.document.querySelector('[data-pace=late]'));assert.equal(optionsUI.$('change-preview').hidden,false,'pace change previews before apply');optionsUI.click(optionsUI.$('accept-change'));assert.equal(JSON.parse(store.get('moontrip.v1')).request.start,600,'later start applies consistently');optionsUI.click(optionsUI.$('undo-change'));assert.equal(JSON.parse(store.get('moontrip.v1')).request.start,540,'pace undo restores conditions');
+const savedPage=[];const originalBlobURL=URL.createObjectURL;URL.createObjectURL=blob=>{savedPage.push(blob);return originalBlobURL(blob);};
+optionsUI.click(optionsUI.$('save-roadbook'));assert.equal(savedPage.length,1,'main save button exports a roadbook');const offline=await savedPage[0].text();assert.match(offline,/旅行路书/);assert.match(offline,/journey-connection/);URL.createObjectURL=originalBlobURL;
 const history=historyStore(2);const value={n:[1]};history.push(value);value.n[0]=9;assert.deepEqual(history.pop(),{n:[1]},'undo snapshots are immutable');
 const expired={from_id:'a',to_id:'b',origin_location:places[0].location,destination_location:places[1].location,fetched_at:new Date(Date.now()-3600001).toISOString()};assert.equal(freshRoutes([expired],places).length,0,'expired route excluded');
 const coords=projectPoints([{longitude:120,latitude:30},{longitude:120,latitude:30}]);assert.equal(coords[0].x,300);assert.equal(coords[0].y,160);
-console.log('UI interaction checks passed: staged choices, assigned days, map, locks, per-leg preview/ignore/accept, undo, stale preview, reload and static mode. No visual-browser claim.');
+console.log('Roadbook-first UI checks passed: initial tools hidden, four on-demand panels, bounded replacement suggestions, pace preview/undo, offline save; staged choices, assigned days, map, locks, per-leg preview/ignore/accept, undo, stale preview, reload and static mode. No visual-browser claim.');

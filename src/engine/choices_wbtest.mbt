@@ -296,3 +296,134 @@ test "order suggestions require complete directional evidence and preserve costs
     Err(_) => abort("missing evidence failed")
   }
 }
+
+///|
+test "replacement offers at most three feasible places and keeps other days" {
+  let input = {
+    request: fixture_request(),
+    places: [
+      fixture_place("a", 10, 40),
+      fixture_place("b", 10, 40),
+      fixture_place("c", 10, 40),
+      fixture_place("d", 10, 40),
+      fixture_place("e", 10, 40),
+      fixture_place("f", 10, 40),
+    ],
+  }
+  let edits = [
+    { id: "a", day: 1, start: 540, },
+    { id: "b", day: 2, start: 540, },
+  ]
+  match
+    replacements(
+      input,
+      default_preferences(),
+      default_routing(),
+      default_meals(input.request),
+      edits,
+      empty_locks(),
+      "a",
+    ) {
+    Ok(items) => {
+      assert_eq(items.length(), 3)
+      for item in items {
+        assert_true(item.id != "a" && item.id != "b")
+        assert_eq(item.plan.days[1].stops[0].place.id, "b")
+        assert_true(item.request.must_visit.contains(item.id))
+        assert_eq(item.cost_delta, 0)
+      }
+    }
+    Err(_) => abort("replacement failed")
+  }
+}
+
+///|
+test "replacement respects budget diet and existing locks" {
+  let input = {
+    request: { ..fixture_request(), days: 1, budget: 20, },
+    places: [fixture_place("a", 10, 40), fixture_place("expensive", 30, 40)],
+  }
+  let edits = [{ id: "a", day: 1, start: 540, }]
+  match
+    replacements(
+      input,
+      default_preferences(),
+      default_routing(),
+      default_meals(input.request),
+      edits,
+      empty_locks(),
+      "a",
+    ) {
+    Ok(items) => assert_eq(items.length(), 0)
+    Err(_) => abort("budget substitution failed")
+  }
+  assert_true(
+    replacements(
+      input,
+      default_preferences(),
+      default_routing(),
+      default_meals(input.request),
+      edits,
+      { ..empty_locks(), times: edits, },
+      "a",
+    )
+    is Err(_),
+  )
+  assert_true(
+    replacements(
+      input,
+      default_preferences(),
+      default_routing(),
+      default_meals(input.request),
+      edits,
+      empty_locks(),
+      "missing",
+    )
+    is Err(_),
+  )
+}
+
+///|
+test "food replacement rejects a branch already present in the roadbook" {
+  let food = {
+    ..fixture_place("lunch", 10, 40),
+    kind: "food",
+    name: "青禾饭馆(湖滨店)",
+    open: 600,
+    close: 1320,
+  }
+  let dinner = { ..food, id: "dinner", name: "松月餐厅", }
+  let branch = { ..food, id: "branch", name: "青禾饭馆(城北店)", }
+  let alternative = { ..food, id: "alternative", name: "巷口食堂", }
+  let input = {
+    request: {
+      ..fixture_request(),
+      days: 1,
+      include_food: true,
+      end: 1320,
+      budget: 100,
+    },
+    places: [food, dinner, branch, alternative],
+  }
+  let edits = [
+    { id: "lunch", day: 1, start: 660, },
+    { id: "dinner", day: 1, start: 1020, },
+  ]
+  match
+    replacements(
+      input,
+      default_preferences(),
+      default_routing(),
+      { lunch: true, dinner: true, },
+      edits,
+      empty_locks(),
+      "dinner",
+    ) {
+    Ok(items) => {
+      assert_eq(items.length(), 1)
+      assert_eq(items[0].id, "alternative")
+      assert_eq(items[0].plan.days[0].stops[1].meal, "晚餐")
+    }
+    Err(_) => abort("food replacement failed")
+  }
+}

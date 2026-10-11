@@ -93,3 +93,37 @@ pub fn suggestions_json(text : String) -> String {
       ({ "ok": false, "errors": @json.to_json(errors) } : Json).stringify()
   }
 }
+
+///|
+priv struct ReplacementInput {
+  input : @engine.Input
+  preferences : @engine.Preferences
+  routing : @engine.Routing
+  meals : @engine.Meals
+  stops : Array[@engine.ManualStop]
+  locks : @engine.TripLocks
+  target_id : String
+} derive(@json.FromJson)
+
+///|
+pub fn replacements_json(text : String) -> String {
+  let c : ReplacementInput = @json.from_json(@json.parse(text)) catch {
+    _ =>
+      return ({ "ok": false, "errors": ["替换地点格式无效"] } : Json).stringify()
+  }
+  match
+    @engine.replacements(
+      c.input,
+      c.preferences,
+      c.routing,
+      c.meals,
+      c.stops,
+      c.locks,
+      c.target_id,
+    ) {
+    Ok(options) =>
+      ({ "ok": true, "options": @json.to_json(options) } : Json).stringify()
+    Err(errors) =>
+      ({ "ok": false, "errors": @json.to_json(errors) } : Json).stringify()
+  }
+}

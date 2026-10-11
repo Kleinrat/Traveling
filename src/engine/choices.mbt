@@ -454,3 +454,108 @@ pub fn suggest_trip(
   }
   Ok(suggestions)
 }
+
+///|
+pub(all) struct Replacement {
+  id : String
+  name : String
+  district : String
+  cost : Int
+  duration : Int
+  request : Request
+  plan : Plan
+  routing : Routing
+  cost_delta : Int
+  reasons : Array[String]
+} derive(ToJson)
+
+///|
+/// Offer a few feasible substitutions while retaining all other places and days.
+pub fn replacements(
+  input : Input,
+  prefs : Preferences,
+  routing : Routing,
+  meals : Meals,
+  edits : Array[ManualStop],
+  locks : TripLocks,
+  target_id : String,
+) -> Result[Array[Replacement], Array[String]] {
+  let original = match edit_trip(input, prefs, routing, meals, edits) {
+    Ok(p) => p
+    Err(e) => return Err(e)
+  }
+  let index = match edits.search_by(s => s.id == target_id) {
+    Some(i) => i
+    None => return Err(["请选择路书里的一站"])
+  }
+  if locks.places.any(s => s.id == target_id) ||
+    locks.times.any(s => s.id == target_id) ||
+    locks.legs.any(r => r.from_id == target_id || r.to_id == target_id) {
+    return Err(["这站已有锁定安排，请先解锁再替换"])
+  }
+  let old = match input.places.search_by(p => p.id == target_id) {
+    Some(i) => input.places[i]
+    None => return Err(["地点资料不存在"])
+  }
+  let candidates = input.places.filter(p => {
+    p.city == input.request.city &&
+    p.kind == old.kind &&
+    !edits.any(s => s.id == p.id) &&
+    exclusion_reason(p, input.request) is None
+  })
+  candidates.sort_by((a, b) => {
+    let (a_score, _) = score(a, input.request)
+    let (b_score, _) = score(b, input.request)
+    let a_near = if a.district == old.district { 15 } else { 0 }
+    let b_near = if b.district == old.district { 15 } else { 0 }
+    let delta = b_score + b_near - a_score - a_near
+    if delta == 0 {
+      a.cost - b.cost
+    } else {
+      delta
+    }
+  })
+  let results : Array[Replacement] = []
+  for p in candidates {
+    let request = {
+      ..input.request,
+      must_visit: input.request.must_visit.filter(id => id != target_id) +
+      [p.id],
+    }
+    let adjusted = edits.copy()
+    adjusted[index] = { ..adjusted[index], id: p.id, }
+    match
+      arrange_trip(
+        { ..input, request, },
+        prefs,
+        routing,
+        meals,
+        adjusted,
+        locks,
+      ) {
+      Err(_) => ()
+      Ok(plan) => {
+        let (_, reasons) = score(p, request)
+        if p.district == old.district {
+          reasons.push("与原地点同片区")
+        }
+        results.push({
+          id: p.id,
+          name: p.name,
+          district: p.district,
+          cost: p.cost,
+          duration: p.duration,
+          request,
+          plan,
+          routing,
+          cost_delta: plan.total_cost - original.total_cost,
+          reasons,
+        })
+      }
+    }
+    if results.length() == 3 {
+      break
+    }
+  }
+  Ok(results)
+}

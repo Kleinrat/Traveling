@@ -1,4 +1,4 @@
-import { plan_json, catalogue_json, plan_with_preferences_json, alternatives_with_preferences_json, edit_plan_json, reflow_plan_json, trip_cost_json, cities_json, pending_places_json, restaurants_similar, choose_plan_json, arrange_plan_json, suggestions_json } from './engine.js';
+import { plan_json, catalogue_json, plan_with_preferences_json, alternatives_with_preferences_json, edit_plan_json, reflow_plan_json, trip_cost_json, cities_json, pending_places_json, restaurants_similar, choose_plan_json, arrange_plan_json, suggestions_json, replacements_json } from './engine.js';
 import { emptyLocks, legKey, planStops, planLegs, freshRoutes, historyStore, projectPoints } from './journey.js';
 const $ = id => document.getElementById(id);
 const staticDemo = document.querySelector('meta[name="moontrip-mode"]')?.content === 'static';
@@ -15,6 +15,7 @@ let travelMode='custom', manualStops=[], tripLedger;
 let routeCache=[], routesBusy=false;
 let placeChoices={}, locks=emptyLocks(), routeSelections={}, preview, dragging, lastState;
 const history=historyStore();
+let replacementTarget, candidateLimit=6, adjustmentFocus;
 function meals(){return {lunch:$('include_food').checked,dinner:$('include_dinner').checked};}
 function validRoutes(){return freshRoutes(routeCache,places);}
 function routing(strict=false){const chosen=validRoutes().filter(r=>routeSelections[legKey(r.from_id,r.to_id)]===r.option_id);return {mode:chosen.length?'mixed':$('transport').value,strict,distance_limit:Math.round(Number($('distance-limit').value)*1000),routes:chosen};}
@@ -52,7 +53,7 @@ try{
 const e = (tag, text, cls) => { const node = document.createElement(tag); if(text !== undefined) node.textContent = text; if(cls) node.className = cls; return node; };
 const clock = n => `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;
 const minutes = s => { const [h,m] = s.split(':').map(Number); return h*60+m; };
-function feedback(text='') { $('feedback').hidden = !text; $('feedback').textContent = text; }
+function feedback(text='') {for(const id of ['feedback','sheet-feedback']){$(id).hidden=!text;$(id).textContent=text;}}
 for(const tag of tags){ const label=e('label'), input=e('input'); input.type='checkbox'; input.value=tag; input.checked=['自然','文化'].includes(tag); label.append(input,e('span',tag)); $('interests').append(label); }
 function request(){ return {city:$('city').value,days:Number($('days').value),budget:Number($('budget').value),start:minutes($('start').value),end:minutes($('end').value),interests:[...$('interests').querySelectorAll('input:checked')].map(i=>i.value),family:$('family').checked,rain:$('rain').checked,relaxed:$('relaxed').checked,must_visit:[...selected],avoid:[...avoided],priority:$('priority').value,include_food:$('include_food').checked||$('include_dinner').checked,diet:$('diet').value,max_visits:Number($('max_visits').value)}; }
 function setRequest(r){
@@ -75,29 +76,31 @@ function generate(keepManual=false){
 
 function render(){
   renderCandidates();renderAlternatives();
-  renderBudget();renderRouteChoices();renderMap();$('undo-change').disabled=!history.size;
+  renderBudget();renderRouteChoices();renderMap();renderReplacements();$('undo-change').disabled=!history.size;
+  $('roadbook-title').textContent=`${plannedRequest.city} · ${plannedRequest.days} 天路书`;$('preferences-short').textContent=`${plannedRequest.city} · ${plannedRequest.days} 天 · ¥${plannedRequest.budget} / 人`;
   const p=currentPlan, count=p.days.reduce((n,d)=>n+d.stops.filter(s=>s.place.kind==='sight').length,0);
   $('budget-detail').textContent=`景点 ¥${p.activity_cost} + 餐饮 ¥${p.food_cost} + 接驳 ¥${p.transfer_cost} / 人（均为当前资料估算）`;
   $('summary').replaceChildren();
   for(const [label,value,unit] of [['安排活动',count,'站'],['预计花费',p.total_cost,'元 / 人'],['预算余量',p.remaining_budget,'元 / 人']]){ const card=e('div',undefined,'metric'),strong=e('strong',String(value)); strong.append(e('span',unit)); card.append(e('small',label),strong); $('summary').append(card); }
   $('itinerary').replaceChildren();
   for(const day of p.days){
-    const section=e('div',undefined,'day'),head=e('div',undefined,'day-head');head.append(e('h3',`第 ${day.day} 天 · ${dayDate(day.day)} · ${plannedRequest.city}`),e('small',`活动、餐饮与接驳 ¥${day.cost} / 人 · 已查询路程 ${(day.stops.reduce((n,s)=>n+s.transfer_distance,0)/1000).toFixed(1)} 公里`));section.append(head);
+    const section=e('div',undefined,'day'),head=e('div',undefined,'day-head');head.append(e('h3',`第 ${day.day} 天 · ${dayDate(day.day)} · ${plannedRequest.city}`),e('small',`预计 ¥${day.cost} / 人`));section.append(head);if(day.stops.length){const sights=day.stops.filter(s=>s.place.kind==='sight').length,mealLabels=day.stops.filter(s=>s.meal).map(s=>s.meal);section.append(e('p',`${clock(day.stops[0].start)} 开始 · ${clock(day.stops.at(-1).end)} 结束 · ${sights} 个景点${mealLabels.length?' · '+mealLabels.join('、'):''}`,'day-overview'));}
     if(!day.stops.length)section.append(e('div','这一天还没有合适的安排。试着放宽条件，或导入更多景点。','empty'));
     for(const stop of day.stops){
       const row=e('article',undefined,'stop'),time=e('div',clock(stop.start),'time'); time.append(e('small',`至 ${clock(stop.end)}`));
-      const content=e('div'),title=e('h4',stop.place.name);title.append(e('span',stop.score===0?'手动安排':`${stop.score} 分`,'score'));
+      const content=e('div'),title=e('h4',stop.place.name.replace(/\s*·\s*公共步行区$/,''));
       if(stop.place.kind==='food')content.append(e('div',`${stop.meal||'餐饮'} · 人均消费估算`,'tag-food'));
-      content.append(title,e('div',`${stop.place.district} · 游览 ${stop.place.duration} 分钟 · ${stop.place.kind==='food'?'人均':'活动'} ¥${stop.place.cost} · ${stop.place.indoor?'室内':'户外'}`,'meta'));
-      if(stop.route_source!=='每日第一站未计接驳')content.append(e('div',`${stop.route_source} · ${stop.transfer_minutes} 分钟 / ¥${stop.transfer_cost}${stop.route_source==='高德路线规划'?' / '+(stop.transfer_distance/1000).toFixed(2)+' 公里':' / 距离未知'}；另预留休息时间`,'meta'));
-      content.append(e('div',stop.reasons.filter(t=>!t.startsWith('基础')).join(' · ')||'满足当前时间、预算与活动条件','reason'));
-      const details=e('details'),list=e('ul');details.append(e('summary','推荐理由与数据来源'));stop.reasons.forEach(reason=>list.append(e('li',reason)));list.append(e('li',`来源：${stop.place.source}`));details.append(list);content.append(details);
-      for(const url of sourceLinks(stop.place)){const link=e('a','查看来源 ↗','source-link');link.href=url;link.target='_blank';link.rel='noopener noreferrer';content.append(link);}
+      content.append(title,e('div',`${stop.place.kind==='food'?'用餐':'停留'} ${stop.place.duration} 分钟 · 约 ¥${stop.place.cost} / 人 · ${stop.place.district}`,'meta'));
+      const index=day.stops.indexOf(stop);
+      if(index>0){const prior=day.stops[index-1],previous=prior.place,route=routing().routes.find(r=>r.from_id===previous.id&&r.to_id===stop.place.id);const mode=route?(route.mode==='walking'?'步行':'公交 / 地铁'):'站间交通';const gap=Math.max(0,stop.start-prior.end-stop.transfer_minutes);const line=e('p',`建议 ${clock(stop.start-stop.transfer_minutes)} 转场 · ${mode}约 ${stop.transfer_minutes} 分钟 · 约 ¥${stop.transfer_cost} / 人${gap?' · '+gap+' 分钟空档':''}${stop.route_source==='高德路线规划'?'':' · 片区估算'}`,'journey-connection');section.append(line);}
+      const details=e('details'),list=e('ul');details.append(e('summary','地点详情'));stop.reasons.forEach(reason=>list.append(e('li',reason)));list.append(e('li',`来源：${stop.place.source}`));details.append(list);content.append(details);
+      for(const url of sourceLinks(stop.place)){const link=e('a','查看来源 ↗','source-link');link.href=url;link.target='_blank';link.rel='noopener noreferrer';details.append(link);}
       const controls=e('div',undefined,'stop-controls');
-      for(const [label,action] of [['移除',()=>removeStop(stop.place.id)],['↑',()=>moveStop(stop.place.id,-1)],['↓',()=>moveStop(stop.place.id,1)]]){const b=e('button',label);b.type='button';b.addEventListener('click',action);controls.append(b);}content.append(controls);addLocks(content,stop,day.day);row.draggable=true;row.dataset.stopId=stop.place.id;row.addEventListener('dragstart',ev=>{if(ev.target.closest('input,select,button,details')){ev.preventDefault();return;}dragging=stop.place.id;ev.dataTransfer.setData('text/plain',stop.place.id);});row.addEventListener('dragover',ev=>ev.preventDefault());row.addEventListener('drop',ev=>{ev.preventDefault();if(dragging)dropStop(dragging,stop.place.id);dragging=undefined;});
-      const editor=e('details',undefined,'stop-editor');editor.append(e('summary','调整日期和开始时间'));const fields=e('div',undefined,'fields'),dayLabel=e('label','日期'),daySelect=e('select'),timeLabel=e('label','开始时间'),timeInput=e('input');
-      for(let n=1;n<=plannedRequest.days;n++)daySelect.add(new Option(`第 ${n} 天 · ${dayDate(n)}`,String(n)));daySelect.value=String(day.day);timeInput.type='time';timeInput.value=clock(stop.start);dayLabel.append(daySelect);timeLabel.append(timeInput);fields.append(dayLabel,timeLabel);editor.append(fields,e('p','保留其他站的时间；冲突时不会覆盖当前行程。','hint'));const applyEdit=e('button','保存调整');applyEdit.type='button';applyEdit.addEventListener('click',()=>{const edits=schedule();const target=edits.find(s=>s.id===stop.place.id);target.day=Number(daySelect.value);target.start=minutes(timeInput.value);previewSchedule(edits,'调整日期和开始时间',routing(),true);});editor.append(applyEdit);content.append(editor);row.append(time,content);section.append(row);
+      for(const [label,action] of [['移除',()=>removeStop(stop.place.id)],['↑',()=>moveStop(stop.place.id,-1)],['↓',()=>moveStop(stop.place.id,1)]]){const b=e('button',label);b.type='button';b.addEventListener('click',action);controls.append(b);}row.draggable=true;row.dataset.stopId=stop.place.id;row.addEventListener('dragstart',ev=>{if(ev.target.closest('input,select,button,details')){ev.preventDefault();return;}dragging=stop.place.id;ev.dataTransfer.setData('text/plain',stop.place.id);});row.addEventListener('dragover',ev=>ev.preventDefault());row.addEventListener('drop',ev=>{ev.preventDefault();if(dragging)dropStop(dragging,stop.place.id);dragging=undefined;});
+      const editor=e('details',undefined,'stop-editor');editor.append(e('summary','调整这一站'));const fields=e('div',undefined,'fields'),dayLabel=e('label','日期'),daySelect=e('select'),timeLabel=e('label','开始时间'),timeInput=e('input');
+      for(let n=1;n<=plannedRequest.days;n++)daySelect.add(new Option(`第 ${n} 天 · ${dayDate(n)}`,String(n)));daySelect.value=String(day.day);timeInput.type='time';timeInput.value=clock(stop.start);dayLabel.append(daySelect);timeLabel.append(timeInput);fields.append(dayLabel,timeLabel);editor.append(fields,e('p','保留其他站的时间；冲突时不会覆盖当前行程。','hint'));const applyEdit=e('button','保存调整');applyEdit.type='button';applyEdit.addEventListener('click',()=>{const edits=schedule();const target=edits.find(s=>s.id===stop.place.id);target.day=Number(daySelect.value);target.start=minutes(timeInput.value);previewSchedule(edits,'调整日期和开始时间',routing(),true);});editor.append(applyEdit,controls);addLocks(editor,stop,day.day);details.append(editor);const replace=e('button','换一站','replace-stop');replace.type='button';replace.setAttribute('aria-label',`替换 ${stop.place.name}`);replace.addEventListener('click',()=>{replacementTarget=stop.place.id;openAdjustment('places');});details.append(replace);row.append(time,content);section.append(row);
     }
+    const missingMeals=p.warnings.filter(w=>w.startsWith(`第 ${day.day} 天未安排`));if(missingMeals.length)section.append(e('p',missingMeals.map(w=>w.split('：')[0]).join('；')+'，这部分餐费未计入，请自行补充。','day-caution'));
     $('itinerary').append(section);
   }
   $('exclusions').replaceChildren(...p.exclusions.map(x=>{const row=e('div',x.name,'exclusion');row.append(e('small',x.reason));return row;}));
@@ -108,8 +111,8 @@ function render(){
 }
 const presets={lazy:{days:2,start:600,end:1080,interests:['美食','自然'],relaxed:true,max_visits:2,include_food:true,transfer_limit:90,description:'10:00–18:00 · 每天最多 2 个景点 · 站间休息 45 分钟 · 美食和同片区优先'},intense:{days:2,start:420,end:1320,interests:['文化','历史','摄影'],relaxed:false,max_visits:6,include_food:true,transfer_limit:180,description:'07:00–22:00 · 每天最多 6 个景点 · 站间休息 5 分钟 · 衔接紧凑'},weekend:{days:2,start:540,end:1080,interests:['自然','文化'],relaxed:false,max_visits:3,include_food:true,transfer_limit:60,description:'09:00–18:00 · 2 天轻旅行 · 每天最多 3 个景点 · 接驳估算不超过 60 分钟'}};
 function renderMode(){document.querySelectorAll('[data-preset]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.preset===travelMode)));$('mode-description').textContent=presets[travelMode]?.description||'自定义节奏 · 可调整景点数量、作息和接驳上限。';}
-$('planner').addEventListener('submit',ev=>{ev.preventDefault();generate();});
-document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{const preset=presets[b.dataset.preset];travelMode=b.dataset.preset;setRequest({...request(),...preset});$('transfer-limit').value=preset.transfer_limit;$('include_food').checked=true;$('include_dinner').checked=true;$('distance-limit').value=travelMode==='weekend'?10:30;$('compact').checked=travelMode==='intense';renderMode();generate();}));
+$('planner').addEventListener('submit',ev=>{ev.preventDefault();if(generate())showRoadbook();});
+document.querySelectorAll('[data-preset]').forEach(b=>b.addEventListener('click',()=>{const preset=presets[b.dataset.preset];travelMode=b.dataset.preset;setRequest({...request(),...preset});$('transfer-limit').value=preset.transfer_limit;$('include_food').checked=true;$('include_dinner').checked=true;$('distance-limit').value=travelMode==='weekend'?10:30;$('compact').checked=travelMode==='intense';renderMode();feedback('节奏已选好，点击“生成我的路书”应用。');}));
 $('remove-demo').addEventListener('click',()=>{const demoIds=new Set(JSON.parse(catalogue_json()).map(p=>p.id));const real=places.filter(p=>!demoIds.has(p.id));if(!real.length){feedback('请先核对并加入至少一个真实地点。');return;}places=real;selected=[];avoided=[];placeChoices={};locks=emptyLocks();routeSelections={};if(!real.some(p=>p.city===$('city').value))$('city').value=real[0].city;generate();});
 $('reset').addEventListener('click',()=>{places=JSON.parse(catalogue_json());selected=[];avoided=[];placeChoices={};locks=emptyLocks();routeSelections={};generate();});
 $('import').addEventListener('change',async ev=>{
@@ -141,7 +144,7 @@ $('ask').addEventListener('click',async()=>{
     $('proposal-text').textContent=`${proposal.city} · ${proposal.days} 天 · 每人规划预算 ${proposal.budget} 元\n每天 ${clock(proposal.start)}–${clock(proposal.end)}\n兴趣：${proposal.interests.join('、')||'不限'}\n亲子 ${proposal.family?'是':'否'} / 雨天 ${proposal.rain?'是':'否'} / 慢游 ${proposal.relaxed?'是':'否'}\n每天最多 ${proposal.max_visits} 个景点 / 餐饮 ${proposal.include_food?'安排':'不安排'} / 饮食 ${proposal.diet}\n请核对：助手只处理上述条件。`;$('proposal').hidden=false;feedback();
   }catch(err){feedback(err.message);}finally{$('ask').disabled=false;}
 });
-$('apply').addEventListener('click',()=>{if(proposal){setRequest(proposal);$('proposal').hidden=true;generate();}});
+$('apply').addEventListener('click',()=>{if(proposal){setRequest(proposal);$('proposal').hidden=true;if(generate())showRoadbook();}});
 if(staticDemo){
   $('ai-status').textContent='在线演示 · 使用手动条件规划';
   $('ask').disabled=true;
@@ -152,7 +155,7 @@ if(staticDemo){
 }
 let restoredStops=[];
 try{const saved=JSON.parse(localStorage.getItem('moontrip.v1')||'null');if(saved){const check=JSON.parse(plan_json(JSON.stringify({request:saved.request,places:saved.places})));if(check.ok){places=saved.places;setRequest(saved.request);$('message').value=saved.message||'';if(saved.preferences)setPreferences(saved.preferences);if(saved.meals){$('include_food').checked=saved.meals.lunch;$('include_dinner').checked=saved.meals.dinner;}if(saved.routing){$('transport').value=saved.transport||(['walking','transit'].includes(saved.routing.mode)?saved.routing.mode:'transit');$('distance-limit').value=saved.routing.distance_limit/1000;}if(Array.isArray(saved.route_cache)){routeCache=saved.route_cache.map((r,i)=>({...r,option_id:r.option_id||'legacy-'+i}));routeSelections=saved.route_selections||Object.fromEntries(routeCache.filter(r=>r.mode===$('transport').value).map(r=>[legKey(r.from_id,r.to_id),r.option_id]));}placeChoices=saved.place_choices||Object.fromEntries([...selected.map(id=>[id,{state:'must',day:0}]),...avoided.map(id=>[id,{state:'avoid',day:0}])]);if(saved.locks)locks=saved.locks;if(saved.expenses)for(const [id,value] of Object.entries(saved.expenses))if(['people','roundtrip','trip_budget'].includes(id))$(id).value=value;if(saved.trip_start)$('trip-start').value=saved.trip_start;if(Array.isArray(saved.manual_stops))restoredStops=saved.manual_stops;}}}catch{}
-if(restoredStops.length){const result=JSON.parse(arrange_plan_json(JSON.stringify({input:{request:request(),places},preferences:preferences(),routing:routing(),meals:meals(),stops:restoredStops,locks,exact:true})));if(result.ok){currentPlan=result.plan;plannedRequest=request();manualStops=schedule();render();}else{locks=emptyLocks();generate();feedback('保存的安排暂不可恢复：'+result.errors.join('；'));}}else generate();renderMode();
+if(restoredStops.length){const result=JSON.parse(arrange_plan_json(JSON.stringify({input:{request:request(),places},preferences:preferences(),routing:routing(),meals:meals(),stops:restoredStops,locks,exact:true})));if(result.ok){currentPlan=result.plan;plannedRequest=request();manualStops=schedule();render();}else{locks=emptyLocks();generate();feedback('保存的安排暂不可恢复：'+result.errors.join('；'));}}else generate();renderMode();if(restoredStops.length)$('preferences-panel').removeAttribute('open');
 
 function schedule(){return currentPlan?planStops(currentPlan):[];}
 function applySchedule(edits){
@@ -172,10 +175,12 @@ function moveStop(id,delta){const edits=schedule(),index=edits.findIndex(s=>s.id
 function dropStop(from,to){const edits=schedule(),a=edits.findIndex(s=>s.id===from),b=edits.findIndex(s=>s.id===to);if(a===b||a<0||b<0)return;if(edits[a].day!==edits[b].day){feedback('拖动只调整当天顺序；跨天请使用日期选项。');return;}edits.splice(b,0,edits.splice(a,1)[0]);previewSchedule(edits,'拖动调整当天顺序');}
 function sourceLinks(place){return [...new Set([place.url,...(place.source.match(/https?:\/\/[^\s]+/g)||[])].filter(Boolean))];}
 function renderCandidates(){
+  const query=$('candidate-search').value.trim().toLowerCase();let count=0,total=0;
   $('candidates').replaceChildren();
   const restaurants=[];
   for(const p of places.filter(p=>p.city===request().city)){
     if(p.kind==='food'){if(restaurants.some(old=>restaurants_similar(p.city,p.name,old.city,old.name)))continue;restaurants.push(p);}
+    if(query&&!`${p.name} ${p.district}`.toLowerCase().includes(query))continue;total++;if(count++>=candidateLimit)continue;
     const card=e('div',undefined,'candidate');card.append(e('strong',p.name),e('p',`${p.kind==='food'?'餐厅':'景点'} · ${p.district} · ¥${p.cost}/人 · ${p.duration} 分钟`));
     const choice=placeChoices[p.id]||{state:'maybe',day:0},controls=e('div',undefined,'choices'),state=e('select'),day=e('select');
     for(const [value,label] of [['must','必去'],['maybe','备选'],['avoid','不去']])state.add(new Option(label,value));state.value=choice.state;state.setAttribute('aria-label',`${p.name} 选择`);
@@ -184,6 +189,7 @@ function renderCandidates(){
     state.addEventListener('change',update);day.addEventListener('change',update);controls.append(state,day);
     card.append(controls);for(const url of sourceLinks(p)){const link=e('a','来源 ↗','source-link');link.href=url;link.target='_blank';link.rel='noopener noreferrer';card.append(link);} $('candidates').append(card);
   }
+  $('more-candidates').hidden=total<=candidateLimit;if(!total)$('candidates').append(e('p','没有找到这个地点。','hint'));
 }
 function renderAlternatives(){
   const result={ok:true,alternatives:['balanced','budget','interest'].map((priority,i)=>{const r={...plannedRequest,priority};const checked=JSON.parse(choose_plan_json(JSON.stringify({input:{request:r,places},preferences:preferences(),routing:routing(),meals:meals(),choices:choices(),locks})));return checked.ok?{label:['均衡体验','预算优先','兴趣优先'][i],request:r,plan:checked.plan}:null;}).filter(Boolean)};$('alternatives').replaceChildren();if(!result.ok)return;
@@ -204,7 +210,7 @@ $('add-place').addEventListener('submit',ev=>{
   if(reviewPoi){pendingPlaces=pendingPlaces.filter(item=>item.id!==reviewPoi.id);reviewPoi=undefined;$("review-confirm-wrap").hidden=true;$("review-confirm").checked=false;savePending();renderPending();}
 if(![...$('city').options].some(o=>o.value===p.city))$('city').add(new Option(p.city,p.city));if(p.city===$('city').value&&p.kind==='food'){$('include_food').checked=true;$('include_dinner').checked=true;}generate();feedback('已加入候选列表，可勾选后安排进计划。');
 });
-$('planner').addEventListener('input',ev=>{if(['people','roundtrip','trip_budget','trip-start'].includes(ev.target.id)){renderBudget();saveTrip();return;}feedback('条件已修改，点击“生成我的行程”更新方案与预算。');});
+$('planner').addEventListener('input',ev=>{if(['people','roundtrip','trip_budget','trip-start'].includes(ev.target.id)){renderBudget();saveTrip();return;}feedback('条件已修改，点击“生成我的路书”更新方案与预算。');});
 for(const id of ['people','roundtrip','trip_budget'])$(id).addEventListener('change',()=>{renderBudget();saveTrip();});
 $('trip-start').addEventListener('change',()=>{if(currentPlan)render();saveTrip();});
 for(const id of ['prefer-indoor','prefer-outdoor'])$(id).addEventListener('change',()=>{if($(id).checked)$(id==='prefer-indoor'?'prefer-outdoor':'prefer-indoor').checked=false;});
@@ -216,7 +222,7 @@ $('city').addEventListener('change',()=>{selected=[];avoided=[];placeChoices={};
 $('export-html').addEventListener('click',()=>{
   if(!currentPlan)return;const page=document.implementation.createHTMLDocument(`${plannedRequest.city} · MoonTrip 离线路书`);
   const style=e('style','body{font:16px/1.8 system-ui;max-width:900px;margin:30px auto;padding:20px;color:#223b36}article{padding:20px;border:1px solid #ddd;border-radius:12px;margin:15px 0}small{color:#687b72}button,.stop-controls,.stop-editor{display:none}h1{font-size:32px}a{color:#285a47}');page.documentElement.lang='zh-CN';page.head.append(style);
-  page.body.append(e('h1',`${plannedRequest.city} · ${plannedRequest.days} 天旅行草案`),e('p',`预计每人活动和市内交通 ¥${currentPlan.total_cost}：景点 ¥${currentPlan.activity_cost} / 餐饮 ¥${currentPlan.food_cost} / 接驳 ¥${currentPlan.transfer_cost}`),$('trip-ledger').cloneNode(true),$('itinerary').cloneNode(true),e('h2','规划依据与边界'),$('warnings').cloneNode(true));
+  page.body.append(e('h1',`${plannedRequest.city} · ${plannedRequest.days} 天旅行路书`),e('p',`预计每人活动和市内交通 ¥${currentPlan.total_cost}：景点 ¥${currentPlan.activity_cost} / 餐饮 ¥${currentPlan.food_cost} / 接驳 ¥${currentPlan.transfer_cost}`),$('trip-ledger').cloneNode(true),$('itinerary').cloneNode(true),e('h2','规划依据与边界'),$('warnings').cloneNode(true));
   download('moontrip-roadbook.html','<!doctype html>'+page.documentElement.outerHTML,'text/html;charset=utf-8');
 });
 
@@ -373,11 +379,16 @@ function renderRouteChoices(){
   }
 }
 function showPreview(change){
+  if(!$('adjustment-dialog').hasAttribute('open'))openAdjustment('pace');
   preview={...change,identity:identity()};const box=$('change-preview');box.hidden=false;$('preview-title').textContent=change.label;
   const current=currentPlan,plan=change.plan;
   $('preview-detail').replaceChildren(e('p',change.reason||'请检查变动；确认后才会更新行程。'),e('p',`预计每人花费：¥${current.total_cost} → ¥${plan.total_cost}（${plan.total_cost-current.total_cost>=0?'+':''}${plan.total_cost-current.total_cost} 元）`));
   const old=schedule(),next=scheduleOf(plan);let changed=false;
-  for(const d of plan.days){const group=e('div',undefined,'preview-day');group.append(e('strong',`第 ${d.day} 天 · ${d.stops.map(s=>s.place.name).join(' → ')||'暂无安排'}`));for(const s of d.stops){const was=old.find(x=>x.id===s.place.id);if(!was||was.day!==d.day||was.start!==s.start){changed=true;group.append(e('p',`${s.place.name}：${was?'第 '+was.day+' 天 '+clock(was.start):'未安排'} → 第 ${d.day} 天 ${clock(s.start)}–${clock(s.end)}`));}}$('preview-detail').append(group);}
+  const full=e('details',undefined,'preview-schedule');full.append(e('summary','展开完整调整后路书'));
+  for(const d of plan.days){const group=e('div',undefined,'preview-day');group.append(e('strong',`第 ${d.day} 天`));for(const s of d.stops){const was=old.find(x=>x.id===s.place.id);if(!was||was.day!==d.day||was.start!==s.start)changed=true;group.append(e('p',`${clock(s.start)}–${clock(s.end)} ${s.place.name}`));}full.append(group);}
+  const changedStops=next.filter(s=>{const was=old.find(x=>x.id===s.id);return !was||was.day!==s.day||was.start!==s.start;});
+  if(changedStops.length)$('preview-detail').append(e('p',`${changedStops.length} 站的地点或时间将调整；详细安排可展开查看。`));
+  $('preview-detail').append(full);
   for(const removed of old.filter(s=>!next.some(n=>n.id===s.id))){changed=true;$('preview-detail').append(e('p',`移除：${places.find(p=>p.id===removed.id)?.name||removed.id}`));}
   for(const r of change.routing.routes){const was=routing().routes.find(x=>legKey(x.from_id,x.to_id)===legKey(r.from_id,r.to_id));if(!was||!sameRoute(was,r)){$('preview-detail').append(e('p',`前往 ${places.find(p=>p.id===r.to_id)?.name||r.to_id}：${routeLabel(r)}`));changed=true;}}
   if(!changed)$('preview-detail').append(e('p','地点、日期和时刻保持一致。'));
@@ -387,12 +398,12 @@ function showPreview(change){
 $('accept-change').addEventListener('click',()=>{
   if(!preview)return;if(identity()!==preview.identity){clearPreview();feedback('预览期间条件或行程已变化，请重新预览。');return;}
   const target=preview,newRequest=target.request||plannedRequest;
-  const result=JSON.parse(arrange_plan_json(JSON.stringify({...arrangePayload(scheduleOf(target.plan),target.routing),input:{request:newRequest,places},exact:true})));
+  const result=JSON.parse(arrange_plan_json(JSON.stringify({...arrangePayload(scheduleOf(target.plan),target.routing),input:{request:newRequest,places},preferences:target.preferences||preferences(),exact:true})));
   if(!result.ok){feedback(result.errors.join('；')+'。当前行程保留。');return;}
   if(target.routing.routes.some(r=>!validRoutes().some(x=>sameRoute(x,r)))){clearPreview();feedback('交通候选已过期，请重新查询并预览。');return;}
-  remember();currentPlan=result.plan;plannedRequest=newRequest;if(target.request)setRequest(target.request);if(target.choices)placeChoices=target.choices;syncChoices();
+  remember();currentPlan=result.plan;plannedRequest=newRequest;if(target.request)setRequest(target.request);if(target.choices)placeChoices=target.choices;if(target.preferences)setPreferences(target.preferences);syncChoices();
   routeSelections={};for(const r of target.routing.routes){const option=validRoutes().find(x=>sameRoute(x,r));if(option)routeSelections[legKey(r.from_id,r.to_id)]=option.option_id;}
-  manualStops=schedule();clearPreview();$('suggestions').replaceChildren();render();saveTrip();feedback('已应用你的选择，时间与预算已重算。可撤销。');
+  manualStops=schedule();clearPreview();$('suggestions').replaceChildren();render();saveTrip();closeAdjustment();showRoadbook();feedback('已更新路书，可撤销这次调整。');
 });
 $('dismiss-change').addEventListener('click',()=>{clearPreview();feedback('已忽略这项调整，行程保持原样。');});
 $('undo-change').addEventListener('click',()=>{
@@ -404,7 +415,7 @@ $('undo-change').addEventListener('click',()=>{
   if(!result.ok){history.push(old);feedback('当前无法恢复这次调整：'+result.errors.join('；')+'。路线可能已过期，请重新查询。');return;}
   lastState=undefined;places=old.places;routeCache=cached;const facts=p=>({cost:p.total_cost,stops:p.days.flatMap(d=>d.stops.map(s=>[d.day,s.place.id,s.start,s.end,s.transfer_minutes,s.transfer_cost,s.transfer_distance,s.route_source]))});currentPlan=JSON.stringify(facts(result.plan))===JSON.stringify(facts(old.plan))?old.plan:result.plan;plannedRequest=old.request;setRequest(old.request);setPreferences(old.preferences);placeChoices=old.choices;locks=old.locks;routeSelections=old.routeSelections;$('transport').value=old.transport;$('distance-limit').value=old.distance;$('include_food').checked=old.meals.lunch;$('include_dinner').checked=old.meals.dinner;syncChoices();manualStops=schedule();clearPreview();$('suggestions').replaceChildren();render();saveTrip();feedback('已撤销上一次调整，并校验当前有效路线与预算。');
 });
-$('apply-choices').addEventListener('click',()=>generate());
+$('apply-choices').addEventListener('click',()=>{if(generate()){closeAdjustment();showRoadbook();}});
 $('get-suggestions').addEventListener('click',async()=>{
   if(!sameConditions()){feedback('条件已修改，请先生成行程再获取建议。');return;}
   const baseline=identity();
@@ -445,3 +456,58 @@ function drawMap(){
   $('route-map').append(svg);if(points.length!==day.stops.length)$('map-detail').append(e('p','部分地点缺少坐标，图中省略对应点和连接。','hint'));
 }
 $('map-day').addEventListener('change',drawMap);
+
+
+// Roadbook first. Detailed tools appear only when explicitly requested.
+function showRoadbook(){
+  $('preferences-panel').removeAttribute('open');$('roadbook-title').focus?.({preventScroll:true});$('roadbook-title').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function openAdjustment(kind){
+  const labels={places:'换个地方',pace:'调整节奏',routes:'优化路线',budget:'看看预算'};
+  for(const name of Object.keys(labels))$('adjust-'+name).hidden=name!==kind;
+  $('adjustment-title').textContent=labels[kind];clearPreview();$('sheet-feedback').hidden=true;
+  if(kind==='places')renderReplacements();
+  const dialog=$('adjustment-dialog');if(!dialog.hasAttribute('open')){adjustmentFocus=document.activeElement;if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');document.body.classList.add('has-adjustment');}
+  dialog.scrollTop=0;
+}
+function closeAdjustment(){
+  const dialog=$('adjustment-dialog');if(dialog.hasAttribute('open')){if(typeof dialog.close==='function')dialog.close();else dialog.removeAttribute('open');}
+  document.body.classList.remove('has-adjustment');clearPreview();if(lastState&&JSON.stringify(placeChoices)!==JSON.stringify(lastState.choices)){placeChoices=structuredClone(lastState.choices);syncChoices();renderCandidates();feedback('已返回路书，未应用的地点选择已取消。');}adjustmentFocus?.focus?.();
+}
+for(const button of document.querySelectorAll('[data-adjust]'))button.addEventListener('click',()=>openAdjustment(button.dataset.adjust));
+$('close-adjustment').addEventListener('click',closeAdjustment);
+$('adjustment-dialog').addEventListener('close',()=>{document.body.classList.remove('has-adjustment');clearPreview();});
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&$('adjustment-dialog').hasAttribute('open')&&typeof $('adjustment-dialog').showModal!=='function')closeAdjustment();});
+$('replacement-stop').addEventListener('change',()=>{replacementTarget=$('replacement-stop').value;clearPreview();renderReplacements();});
+$('candidate-search').addEventListener('input',()=>{candidateLimit=6;renderCandidates();});
+$('more-candidates').addEventListener('click',()=>{candidateLimit+=6;renderCandidates();});
+function renderReplacements(){
+  const select=$('replacement-stop'),box=$('replacement-options');select.replaceChildren();box.replaceChildren();if(!currentPlan)return;
+  for(const d of currentPlan.days)for(const s of d.stops)select.add(new Option(`第 ${d.day} 天 · ${s.place.name}`,s.place.id));
+  if(!select.options.length){box.append(e('p','先生成一份有地点的路书，再选择替代方案。','hint'));return;}
+  if([...select.options].some(o=>o.value===replacementTarget))select.value=replacementTarget;replacementTarget=select.value;
+  if(!sameConditions()){box.append(e('p','偏好已修改，请先生成路书再替换地点。','hint'));return;}
+  const result=JSON.parse(replacements_json(JSON.stringify({...arrangePayload(),target_id:replacementTarget})));
+  if(!result.ok){box.append(e('p',result.errors.join('；'),'hint'));return;}
+  if(!result.options.length){box.append(e('p','暂无满足时间、预算和其他已选地点的替代方案。可展开下方自定义选择。','hint'));return;}
+  for(const option of result.options){
+    const card=e('article',undefined,'replacement-card'),description=e('div');description.append(e('strong',option.name),e('p',`${option.district} · ¥${option.cost} / 人 · ${option.duration} 分钟`,'meta'));
+    const delta=option.cost_delta;description.append(e('small',`路书总额${delta===0?'不变':delta>0?'增加 ¥'+delta+' / 人':'减少 ¥'+(-delta)+' / 人'}`));
+    const button=e('button','看看替换效果');button.type='button';button.addEventListener('click',()=>{
+      const old=placeChoices[replacementTarget],next={...placeChoices,[replacementTarget]:{state:'maybe',day:0},[option.id]:{state:'must',day:old?.day||0}};
+      showPreview({...option,label:`换成${option.name}`,choices:next,reason:'只替换这一站，保留其他地点和日期；时间与预算已重新校验。'});
+    });card.append(description,button);box.append(card);
+  }
+}
+for(const button of document.querySelectorAll('[data-pace]'))button.addEventListener('click',()=>{
+  if(!sameConditions()){feedback('偏好已修改，请先生成路书。');return;}
+  const r={...plannedRequest},p={...preferences()};let label;
+  if(button.dataset.pace==='relax'){r.max_visits=Math.max(1,r.max_visits-1);r.relaxed=true;p.mode='lazy';label='再轻松一点';}
+  else if(button.dataset.pace==='full'){r.max_visits=Math.min(8,r.max_visits+1);r.relaxed=false;p.mode='intense';label='多玩一点';}
+  else{r.start=Math.min(r.start+60,r.end-60);label='晚点出门';}
+  const result=JSON.parse(choose_plan_json(JSON.stringify({input:{request:r,places},preferences:p,routing:routing(),meals:meals(),choices:choices(),locks})));
+  if(!result.ok){feedback(result.errors.join('；')+'。当前路书保留。');return;}
+  showPreview({label,request:r,preferences:p,plan:result.plan,routing:routing(),reason:'先比较调整后的安排，满意再接受；已锁定地点和时刻会保留。'});
+});
+
+$('save-roadbook').addEventListener('click',()=>$('export-html').click());
