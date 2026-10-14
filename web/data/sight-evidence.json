@@ -1,0 +1,1074 @@
+{
+  "updated_at": "2026-10-14",
+  "note": "网页资料查找，非现场核验。official仅表示相应事实有官方来源，不表示价格、开放、余票永不变化。旧资料及商业交叉参考分开标记。",
+  "entries": [
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。",
+      "notes": "不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。",
+      "sources": [
+        {
+          "url": "https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html",
+          "title": "杭州市政府：西湖公共区域免费开放"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B05MLT",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B023B05MLT",
+      "name": "湖滨公园 · 公共步行区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:05.798761+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。",
+      "notes": "不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。",
+      "sources": [
+        {
+          "url": "https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html",
+          "title": "杭州市政府：西湖公共区域免费开放"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B0253E",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B023B0253E",
+      "name": "曲院风荷 · 公共步行区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:06.320120+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。",
+      "notes": "不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。",
+      "sources": [
+        {
+          "url": "https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html",
+          "title": "杭州市政府：西湖公共区域免费开放"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B023B2",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B023B023B2",
+      "name": "花港观鱼 · 公共步行区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:06.844135+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。",
+      "notes": "不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。",
+      "sources": [
+        {
+          "url": "https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html",
+          "title": "杭州市政府：西湖公共区域免费开放"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B0247C",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B023B0247C",
+      "name": "柳浪闻莺 · 公共步行区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:07.338768+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。",
+      "notes": "不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。",
+      "sources": [
+        {
+          "url": "https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html",
+          "title": "杭州市政府：西湖公共区域免费开放"
+        },
+        {
+          "url": "https://www.amap.com/place/B0MRMLW5RC",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B0MRMLW5RC",
+      "name": "断桥残雪 · 公共步行区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:08.366832+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。",
+      "notes": "不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。",
+      "sources": [
+        {
+          "url": "https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html",
+          "title": "杭州市政府：西湖公共区域免费开放"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B0AC72",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B023B0AC72",
+      "name": "苏堤 · 公共步行区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:08.877987+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。",
+      "notes": "不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。",
+      "sources": [
+        {
+          "url": "https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html",
+          "title": "杭州市政府：西湖公共区域免费开放"
+        },
+        {
+          "url": "https://www.amap.com/place/B0FFFTYEG4",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B0FFFTYEG4",
+      "name": "白堤 · 公共步行区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:09.404423+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。",
+      "notes": "不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。 春季花展有分时预约：2026年3月6日至4月12日公告不能当作全年规则，后续花展按新公告。",
+      "sources": [
+        {
+          "url": "https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html",
+          "title": "杭州市政府：西湖公共区域免费开放"
+        },
+        {
+          "url": "https://hzdaily.hangzhou.com.cn/hzrb/2026/03/06/article_detail_1_20260306A091.html",
+          "title": "杭州日报：2026太子湾花展预约说明"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B02074",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B023B02074",
+      "name": "太子湾公园 · 公共步行区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:09.939370+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "08:30–17:00",
+      "notes": "免费入园；依据2023年官方介绍，与高德来源快照一致；现场临时调整未实时核验。",
+      "sources": [
+        {
+          "url": "https://westlake.hangzhou.gov.cn/art/2023/5/17/art_1639430_59042393.html",
+          "title": "西湖景区管委会：江洋畈"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B14CFT",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B023B14CFT",
+      "name": "杭州西湖风景名胜区-江洋畈生态公园",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:18.468389+00:00",
+      "map_opening_hint": "周一至周日 08:30-17:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 40,
+      "fee_note": "普通成人门票参考；额外项目另计",
+      "opening_note": "3/16–4/30 08:00–19:00；5/1–10/31 08:00–20:00；11/1–3/15 08:00–17:30，提前半小时停止售票。",
+      "notes": "官网未能访问。季节时间以市文旅局旧资料和高德快照交叉参考；40元为本地宝与票务平台参考，保留待补充，不冒充本次官网核验。",
+      "sources": [
+        {
+          "url": "https://wgly.hangzhou.gov.cn/art/2022/12/1/art_1229696389_58943150.html",
+          "title": "杭州文旅局：雷峰塔"
+        },
+        {
+          "url": "https://m.hz.bendibao.com/tour/93197.shtm?src=amap",
+          "title": "杭州本地宝：2026雷峰塔攻略"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B09LKR",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "cross_reference",
+      "id": "amap-B023B09LKR",
+      "name": "雷峰塔景区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:10.424398+00:00",
+      "map_opening_hint": "03-16至04-30 周一至周日 08:00-19:00 最晚进入18:30；05-01至10-31 周一至周日 08:00-20:00 最晚进入19:30；11-01至03-15 周一至周日 08:00-17:30 最晚进入17:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "07:30开门；17:30停止入寺；18:00关门。",
+      "notes": "灵隐飞来峰实行实名分时预约，须按预约时段进入；2026-02起取消现场登记。路书不代表预约成功，也不查询余票。",
+      "sources": [
+        {
+          "url": "https://en.lingyinsi.org/detail_15105.html",
+          "title": "灵隐寺官网：2025-12-01起免费预约"
+        },
+        {
+          "url": "https://en.lingyinsi.org/detail_15142.html",
+          "title": "灵隐寺官网：2026-02起取消现场登记"
+        },
+        {
+          "url": "https://www.lingyinsi.com/detail_57_19476.html",
+          "title": "灵隐寺官网：对外开放时间"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B02842",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B023B02842",
+      "name": "灵隐寺",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:10.964462+00:00",
+      "map_opening_hint": "周一至周日 07:30-17:30 最晚进入17:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "景区07:30–17:30；闭园前30分钟停止核验。",
+      "notes": "与灵隐寺共用灵隐飞来峰预约，按预约时段入园；无需再按旧的双票制预算。2026-02起取消现场登记。路书不查询余票。",
+      "sources": [
+        {
+          "url": "https://en.lingyinsi.org/detail_15105.html",
+          "title": "灵隐寺官网：2025-12-01起免费预约"
+        },
+        {
+          "url": "https://en.lingyinsi.org/detail_15142.html",
+          "title": "灵隐寺官网：2026-02起取消现场登记"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B05MJE",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B023B05MJE",
+      "name": "飞来峰",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:11.488409+00:00",
+      "map_opening_hint": "周一至周日 07:30-17:30 最晚进入17:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 80,
+      "fee_note": "收费游览区门票参考；免费公共区域及另购船 / 车分开计算",
+      "opening_note": "高德快照含夏冬季、船票与车票不同截止时刻。",
+      "notes": "80元为普通门票交叉参考；福堤等免费区域与收费区不可混算，船和车另计。官网访问未取得可靠正文，暂不自动加入。",
+      "sources": [
+        {
+          "url": "https://m.ly.com/scenery/scenerydetail_10876.html?refid=18024458",
+          "title": "同程：西溪票务参考"
+        },
+        {
+          "url": "https://www.hzzx.gov.cn/cshz/content/2025-12/03/content_9136449.htm",
+          "title": "杭州发布转载：2026年公园卡使用范围"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B06P06",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "cross_reference",
+      "id": "amap-B023B06P06",
+      "name": "西溪国家湿地公园",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:12.055582+00:00",
+      "map_opening_hint": "10月8日至3月31日 周一至周日 08:00-17:30 门票售票时间:8:00-16:30,船票售票时间:8:00-16:15,观光车环线售票时间:8:00-16:00（节假日视乘车客流调整环线售票截止时间）,单程售票时间 8:00-17:20；4月1日至10月7日 周一至周日 07:30-18:30 门票售票时间:7:30-17:30,船票售票时间:7:30-16:45，观光车环线售票时间:7:30-17:00（节假日视乘车客流调整环线售票截止时间），单程售票时间 7:30-18:20；",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "周二至周日09:00–17:00，16:30停止入场；周一闭馆，节假日另有公告。",
+      "notes": "基本参观免费，特殊临展可能收费。当前规划引擎未校验闭馆日，保留待补充而不当作每天开放。",
+      "sources": [
+        {
+          "url": "https://www.zjmuseum.com.cn/cn/",
+          "title": "浙江省博物馆官网：免费范围和时间"
+        },
+        {
+          "url": "https://www.amap.com/place/B0I15SU50Z",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B0I15SU50Z",
+      "name": "浙江省博物馆(之江馆区)",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:14:09.241697+00:00",
+      "map_opening_hint": "周二至周日 09:00-17:00 最晚进入16:30；周一 全天不开放（法定节假日除外）",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": null,
+      "fee_note": "未确认对应游览范围的门票，不能填0",
+      "opening_note": "高德快照提供时段，尚未取得对应公共区域的当期官方时刻。",
+      "notes": "官方介绍能证明地点背景，不能据此推断所有项目免费。运河游船、馆内展览和公共步行区需分开界定；保留待补充。",
+      "sources": [
+        {
+          "url": "https://wgly.hangzhou.gov.cn/art/2023/11/27/art_1229752740_58950913.html",
+          "title": "政府：街区 / 运河介绍"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B07SJZ",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "unresolved",
+      "id": "amap-B023B07SJZ",
+      "name": "清河坊历史文化特色街区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:13.190472+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": null,
+      "fee_note": "未确认对应游览范围的门票，不能填0",
+      "opening_note": "高德快照提供时段，尚未取得对应公共区域的当期官方时刻。",
+      "notes": "官方介绍能证明地点背景，不能据此推断所有项目免费。运河游船、馆内展览和公共步行区需分开界定；保留待补充。",
+      "sources": [
+        {
+          "url": "https://www.hangzhou.gov.cn/art/2022/7/25/art_812262_59062069.html",
+          "title": "政府：街区 / 运河介绍"
+        },
+        {
+          "url": "https://www.amap.com/place/B0FFG97H9P",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "unresolved",
+      "id": "amap-B0FFG97H9P",
+      "name": "京杭大运河杭州景区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:14.150662+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": null,
+      "fee_note": "未确认对应游览范围的门票，不能填0",
+      "opening_note": "高德快照提供时段，尚未取得对应公共区域的当期官方时刻。",
+      "notes": "官方介绍能证明地点背景，不能据此推断所有项目免费。运河游船、馆内展览和公共步行区需分开界定；保留待补充。",
+      "sources": [
+        {
+          "url": "https://www.gongshu.gov.cn/art/2024/4/30/art_1229789753_59080391.html",
+          "title": "政府：街区 / 运河介绍"
+        },
+        {
+          "url": "https://www.amap.com/place/B0FFFFZRBD",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "unresolved",
+      "id": "amap-B0FFFFZRBD",
+      "name": "拱宸桥西历史文化街区",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:14.681079+00:00",
+      "map_opening_hint": "周一至周日 05:00-22:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 60,
+      "fee_note": "普通成人门票参考；额外项目另计",
+      "opening_note": "09:00–17:00，16:00停止入园。",
+      "notes": "按普通成人门票60元估算，不含另购20元观光车。杭州市民等优待资格另计；需在良渚古城官方渠道预约，路书不代表有余票。票价批复较早，保留来源年份。",
+      "sources": [
+        {
+          "url": "https://www.yuhang.gov.cn/art/2019/6/14/art_1229174965_949116.html",
+          "title": "余杭区政府：2019年票价批复"
+        },
+        {
+          "url": "https://www.lzmuseum.cn/ZuiXinGongGao/2023394132395.html",
+          "title": "良渚博物院：2023年公园参访时间"
+        },
+        {
+          "url": "https://m.ly.com/scenery_1/detail/?refid=18024458&sceneryId=673031",
+          "title": "同程：60元票价交叉参考"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B14O96",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B023B14O96",
+      "name": "良渚古城遗址公园",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:15.702731+00:00",
+      "map_opening_hint": "周一至周日 09:00-17:00 最晚进入16:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "周二至周日09:00–17:00，16:30停止入馆；周一闭馆，法定节假日除外。",
+      "notes": "个人参观无需提前预约，持有效证件；基本参观免费。当前规划引擎未校验闭馆日，保留待补充。",
+      "sources": [
+        {
+          "url": "https://www.chinasilkmuseum.com/cgjyy/info_6.aspx?itemid=31249",
+          "title": "中国丝绸博物馆：开放时间"
+        },
+        {
+          "url": "https://www.chinasilkmuseum.com/cgjyy/index_6.aspx",
+          "title": "中国丝绸博物馆：取消个人预约"
+        },
+        {
+          "url": "https://chinasilkmuseum.com/bwggk/index_3.aspx",
+          "title": "中国丝绸博物馆：免费开放介绍"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B09JLL",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B023B09JLL",
+      "name": "中国丝绸博物馆",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:16.185213+00:00",
+      "map_opening_hint": "全年 周二–周日 09:00–17:00开放 最晚进入16:30；全年 周一 全天不开放；清明节,劳动节,端午节,中秋节,国庆节 09:00–17:00开放 最晚进入16:30",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 10,
+      "fee_note": "普通成人门票参考；额外项目另计",
+      "opening_note": "按原高德快照参考；尚未取得当期官方日常开放时间。",
+      "notes": "收费景点，不统一填零元；票价为商业平台交叉参考，2026年公园卡或西湖日免票不等于普通游客全年免费，保留待补充。",
+      "sources": [
+        {
+          "url": "https://www.hzzx.gov.cn/cshz/content/2025-12/03/content_9136449.htm",
+          "title": "杭州发布转载：2026年公园卡规则"
+        },
+        {
+          "url": "https://you.ctrip.com/sight/hangzhou14/25434.html",
+          "title": "携程：普通门票参考"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B09LTB",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "cross_reference",
+      "id": "amap-B023B09LTB",
+      "name": "杭州植物园",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:17.297015+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00；售票时间:08:30-16:30",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 15,
+      "fee_note": "普通成人门票参考；额外项目另计",
+      "opening_note": "按原高德快照参考；尚未取得当期官方日常开放时间。",
+      "notes": "收费景点，不统一填零元；票价为商业平台交叉参考，2026年公园卡或西湖日免票不等于普通游客全年免费，保留待补充。",
+      "sources": [
+        {
+          "url": "https://www.hzzx.gov.cn/cshz/content/2025-12/03/content_9136449.htm",
+          "title": "杭州发布转载：2026年公园卡规则"
+        },
+        {
+          "url": "https://you.ctrip.com/sight/hangzhou14/2045.html",
+          "title": "携程：普通门票参考"
+        },
+        {
+          "url": "https://www.amap.com/place/B023B08Q06",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "cross_reference",
+      "id": "amap-B023B08Q06",
+      "name": "虎跑公园",
+      "city": "杭州",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T08:22:17.799284+00:00",
+      "map_opening_hint": "07:00-17:30,节假日10.1-10.7:7:00-18:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "原高德快照全天；未取得当前官方常规时间。",
+      "notes": "仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。",
+      "sources": [
+        {
+          "url": "https://m.cd.bendibao.com/tour/212760.shtm?src=amap",
+          "title": "成都本地宝：人民公园免费入园参考"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C7X8QA",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "cross_reference",
+      "id": "amap-B001C7X8QA",
+      "name": "人民公园",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:13.777374+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00；具体营业状态以当天开放情况为准",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "公共街区全天参考，商户各自营业。",
+      "notes": "仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。",
+      "sources": [
+        {
+          "url": "https://m.thepaper.cn/newsDetail_forward_3864205",
+          "title": "成都发布：2019年景点攻略"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C7YCM4",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B001C7YCM4",
+      "name": "宽窄巷子景区",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:15.997857+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "旧官方资料：夏季06:00–22:00、冬季07:00–21:00。",
+      "notes": "仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。",
+      "sources": [
+        {
+          "url": "https://m.thepaper.cn/newsDetail_forward_3864205",
+          "title": "成都发布：2019年景点攻略"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C7UM1C",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B001C7UM1C",
+      "name": "浣花溪公园",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:18.130133+00:00",
+      "map_opening_hint": "周一至周日 06:00-22:00 最晚进入22:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德快照09:00–18:00；特殊展览活动另计。",
+      "notes": "仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。",
+      "sources": [
+        {
+          "url": "https://m.thepaper.cn/newsDetail_forward_3864205",
+          "title": "成都发布：2019年景点攻略"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C06JG0",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B001C06JG0",
+      "name": "塔子山公园",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:20.292597+00:00",
+      "map_opening_hint": "周一至周日 09:00-18:00 最晚进入18:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "旧成都发布为09:00–17:00；高德快照08:00–17:00，16:30最晚进入；采用日间交集09:00–16:30。",
+      "notes": "仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。",
+      "sources": [
+        {
+          "url": "https://m.thepaper.cn/newsDetail_forward_3864205",
+          "title": "成都发布：2019年景点攻略"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C7WPBD",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B001C7WPBD",
+      "name": "文殊院",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:23.846044+00:00",
+      "map_opening_hint": "周一至周日 08:00-17:00 最晚进入16:30",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "旧官方资料08:00–17:00，高德快照至16:30。",
+      "notes": "仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。",
+      "sources": [
+        {
+          "url": "https://m.thepaper.cn/newsDetail_forward_3864205",
+          "title": "成都发布：2019年景点攻略"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C05E7V",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B001C05E7V",
+      "name": "昭觉寺",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:25.239366+00:00",
+      "map_opening_hint": "周一至周日 08:00-16:30",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 50,
+      "fee_note": "普通成人门票参考；额外项目另计",
+      "opening_note": "常规09:00–18:00，17:00停止入馆。",
+      "notes": "普通成人50元，官方实名预约；专题活动另行公告，讲解和额外消费不含。路书不会代预约。",
+      "sources": [
+        {
+          "url": "https://whpwm.cdwuhouci.cn/index",
+          "title": "武侯祠官方票务细则"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C07VJ2",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B001C07VJ2",
+      "name": "成都武侯祠博物馆",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:29.913336+00:00",
+      "map_opening_hint": "周一至周日 08:30-18:30 最晚进入17:30",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 50,
+      "fee_note": "普通成人门票参考；额外项目另计",
+      "opening_note": "常规09:00–18:00，17:00停止售票；节假日 / 暑期延时看公告。",
+      "notes": "成人50元，不含讲解等服务；按官方渠道预约购票，路书不保证余票。",
+      "sources": [
+        {
+          "url": "https://www.cddfct.cn/go-c18.htm",
+          "title": "杜甫草堂官网：开放时间"
+        },
+        {
+          "url": "https://www.cddfct.cn/go-c20.htm",
+          "title": "杜甫草堂官网：门票政策"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C06EMZ",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B001C06EMZ",
+      "name": "成都杜甫草堂博物馆",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:32.572488+00:00",
+      "map_opening_hint": "01/01-06/30 09:00–18:00开放 最晚售票17:00；09/01-12/31 09:00–18:00开放 最晚售票17:00；07/01-08/31 08:30–18:30开放 最晚售票17:30；劳动节 08:30–18:30开放 最晚售票17:30",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": null,
+      "fee_note": "闭馆期间不采用旧票价",
+      "opening_note": "2025-12-05至2027-04-30全馆暂时关闭。",
+      "notes": "官方闭馆公告优先于普通开放时间介绍；关闭期间不进入候选路书。重新开放按新公告。",
+      "sources": [
+        {
+          "url": "https://www.jinshasitemuseum.com/site-75/info/4720",
+          "title": "金沙官网：2025-11-07闭馆公告"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C7UBX5",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "closed",
+      "id": "amap-B001C7UBX5",
+      "name": "金沙遗址博物馆(暂停开放)",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:34.431133+00:00",
+      "map_opening_hint": "周二至周日:09:00-18:00(17:00停止售票入馆法定节假日和1、2、7、8月除外)",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "周二–周四及周日09:00–17:00，16:30停止入館；周五、周六09:00–20:30，20:00停止入馆；周一闭馆，节假日除外。",
+      "notes": "基本参观免费，部分特展收费。提前在官方公众号预约，当前规划引擎未支持闭馆日，保留待补充。",
+      "sources": [
+        {
+          "url": "https://www.cdmuseum.com/zhinan/index.html",
+          "title": "成都博物馆：参观指南"
+        },
+        {
+          "url": "https://www.cdmuseum.com/xinwen/202507/4050.html",
+          "title": "成都博物馆：官方预约公告"
+        },
+        {
+          "url": "https://www.cdmuseum.com/gonggao/202311/3376.html",
+          "title": "成都博物馆：免费门票与入馆规范"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C8SBG2",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B001C8SBG2",
+      "name": "成都博物馆",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:35.796706+00:00",
+      "map_opening_hint": "周二至周四,周日 09:00-17:00 最晚进入16:30,周五至周六 09:00-20:30 最晚进入20:00,周一 全天关闭(节假日除外)",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "旧省政府介绍周二–周日09:00–17:00；季节及节假日延时需看新公告。",
+      "notes": "基本参观免费；目前取得的日常时刻资料较旧，未用已结束的国庆延时公告替代日常时刻，保留待补充。",
+      "sources": [
+        {
+          "url": "https://www.scc.org.cn/centredetail.fds?id=309",
+          "title": "四川公共文化云：免费开放"
+        },
+        {
+          "url": "https://www.sc.gov.cn/10462/10778/10876/2013/10/24/10283067.shtml?cid=303",
+          "title": "四川省政府：2013年开放时间"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C7Y7I2",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B001C7Y7I2",
+      "name": "四川博物院",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:37.742750+00:00",
+      "map_opening_hint": "周一全天关闭(法定节假日除外),周二至周日:09:00-17:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 20,
+      "fee_note": "20元仅文物区参考，不能作为整个公园票价",
+      "opening_note": "高德快照文物区09:00–18:00，17:00最晚进入；开放区和文物区不同。",
+      "notes": "20元仅文物区交叉参考，不能整园统一收费或免费。官网本次须知未明确价格和普通时刻，保留待补充。",
+      "sources": [
+        {
+          "url": "https://www.wangjianglou.com/wnotice/202512/391.html",
+          "title": "望江楼官网：文物区须知"
+        },
+        {
+          "url": "https://you.ctrip.com/sight/chengdu104/4591.html",
+          "title": "携程：文物区与开放区参考"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C06R0O",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "cross_reference",
+      "id": "amap-B001C06R0O",
+      "name": "望江楼公园",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:42.897389+00:00",
+      "map_opening_hint": "周一至周日 09:00-18:00 最晚进入17:00；望江楼公园北门入口为文物保护区，将在18:00关闭。 南门、西门为园林开放区入口，将在21:00关闭。21:00后，市民游客可从公园西面小门进入园区。",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 10,
+      "fee_note": "普通成人门票参考；额外项目另计",
+      "opening_note": "旧成都发布08:00–18:00；高德快照08:00–17:20，17:00最晚进入。",
+      "notes": "门票10元有旧官方及商业平台线索；当前常规时刻有差异，保留待补充。",
+      "sources": [
+        {
+          "url": "https://m.thepaper.cn/newsDetail_forward_3864205",
+          "title": "成都发布：2019年青羊宫门票"
+        },
+        {
+          "url": "https://www.cityhui.com/shop/20147.html",
+          "title": "城市惠：门票与开放时刻参考"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C04CFE",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "cross_reference",
+      "id": "amap-B001C04CFE",
+      "name": "青羊宫",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:45.610391+00:00",
+      "map_opening_hint": "周一至周日 08:00-17:20 最晚进入17:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德来源快照全天，馆内展演和商户独立营业。",
+      "notes": "仅公共园区免票有交叉参考，场内展览和演出可能收费；未取得官方门票和日常时刻完整说明，保留待补充。",
+      "sources": [
+        {
+          "url": "https://you.ctrip.com/sight/chengdu104/1475942.html",
+          "title": "携程：公共园区免票参考"
+        },
+        {
+          "url": "https://www.sina.cn/media/1857743674",
+          "title": "东郊记忆官方微博转载：园区动态"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C8NUD2",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "cross_reference",
+      "id": "amap-B001C8NUD2",
+      "name": "东郊记忆",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:47.546628+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00，2026年2月15日至2026年2月23日正常营业",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 10,
+      "fee_note": "普通成人门票参考；额外项目另计",
+      "opening_note": "6/1–8/31 06:30–20:00；9/1–次年5/31 07:00–19:00。",
+      "notes": "普通成人10元。此次仅安排室外园区；科普馆与沙生植物馆09:00–17:00，科普馆周一例行闭馆，不默认包含。",
+      "sources": [
+        {
+          "url": "https://chengdubg.org.cn/list-74-1.html",
+          "title": "成都植物园官网：时间和门票"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C05SU4",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B001C05SU4",
+      "name": "成都植物园",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:49.890348+00:00",
+      "map_opening_hint": "周一至周日 06:30-20:00",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": null,
+      "fee_note": "暂未确认；不自动填0",
+      "opening_note": "高德快照全天，未取得当期官方门票 / 时刻说明。",
+      "notes": "仅确认成都公园地点背景，不能套用北京同名青龙湖的票价。保留待补充。",
+      "sources": [
+        {
+          "url": "https://m.thepaper.cn/newsDetail_forward_3864205",
+          "title": "成都发布：成都青龙湖介绍"
+        },
+        {
+          "url": "https://www.amap.com/place/B0FFG9I9IK",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "unresolved",
+      "id": "amap-B0FFG9I9IK",
+      "name": "青龙湖湿地公园",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:51.174664+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": null,
+      "fee_note": "游览范围未界定，不自动填0",
+      "opening_note": "公共通道与桥内餐厅应分开，未取得官方常规时刻。",
+      "notes": "公共外观游览和私人餐厅不可混作一个免费景点；继续保留待补充。",
+      "sources": [
+        {
+          "url": "https://you.ctrip.com/sight/chengdu104/1713571.html",
+          "title": "携程：公共通道与餐厅位置参考"
+        },
+        {
+          "url": "https://www.amap.com/place/B0FFLFG5K5",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "unresolved",
+      "id": "amap-B0FFLFG5K5",
+      "name": "安顺廊桥",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:54.311514+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "高德快照公共古镇全天；各场馆和商户单独营业。",
+      "notes": "成都本地官方媒体活动页列免费开放，但资料较旧；较远郊区还需核对交通，保留待补充。",
+      "sources": [
+        {
+          "url": "https://topvote.chengdu.cn/acts/2022_hxdnscd_zjhd/detail.php?tid=35464894",
+          "title": "成都全搜索 / 红星：2022黄龙溪免费开放"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C8MSP5",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official_historical",
+      "id": "amap-B001C8MSP5",
+      "name": "黄龙溪古镇",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:56.726117+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00",
+      "planning_status": "pending"
+    },
+    {
+      "fee_yuan": 0,
+      "fee_note": "仅普通游览，不含额外消费",
+      "opening_note": "官网称全年开放；高德快照街区全天、商户通常09:00–22:00。",
+      "notes": "公共街区免门票；餐饮、演出、活动和购物另计。夜游亮灯时间不作为08:00–17:00日间规划保证。",
+      "sources": [
+        {
+          "url": "https://www.cdjinli.com/tour/map/",
+          "title": "锦里官网：免费入街与全年开放"
+        },
+        {
+          "url": "https://www.amap.com/place/B0FFFD3P2C",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B0FFFD3P2C",
+      "name": "锦里古街",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:22:48.142384+00:00",
+      "map_opening_hint": "周一至周日 00:00-24:00；亮灯时间20:00，商户营业时间9:00～22:00（酒吧除外）",
+      "planning_status": "candidate"
+    },
+    {
+      "fee_yuan": 55,
+      "fee_note": "普通成人门票参考；额外项目另计",
+      "opening_note": "3–10月上午07:30–12:00、下午12:00–17:00入园，18:00清园；11–次年2月上午08:00–12:00、下午12:00–16:30入园，17:30清园。",
+      "notes": "普通成人55元。须按上 / 下午预约时段入园；路书不代表预约成功。保守规划08:00–16:30，观光车等另计，不保证熊猫活动状态。",
+      "sources": [
+        {
+          "url": "https://www.panda.org.cn/yd/service/ticket/",
+          "title": "熊猫基地官网：成人门票"
+        },
+        {
+          "url": "https://m.panda.org.cn/cn/service/opentime/",
+          "title": "熊猫基地官网：季节入园时间"
+        },
+        {
+          "url": "https://www.panda.org.cn/cn/service/",
+          "title": "熊猫基地官网：实名预约须知"
+        },
+        {
+          "url": "https://www.amap.com/place/B001C7WE5S",
+          "title": "高德：2026-10-11地点 / 时段来源快照"
+        }
+      ],
+      "status": "official",
+      "id": "amap-B001C7WE5S",
+      "name": "成都大熊猫繁育研究基地",
+      "city": "成都",
+      "checked_at": "2026-10-14",
+      "map_snapshot_at": "2026-10-11T09:20:27.961851+00:00",
+      "map_opening_hint": "03-16至10-31 周一至周日 07:30-12:00,12:00-17:00 最晚进入17:00；11-01至03-15 周一至周日 08:00-12:00,12:00-16:30 最晚进入16:30；上午场入园时间:当天开园时间-12:00，下午场入园时间:12:00-当天最晚入园时间",
+      "planning_status": "candidate"
+    }
+  ]
+}

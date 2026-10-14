@@ -7,7 +7,7 @@ const store=new Map();
 const fixture=(id,name,lon)=>({id,name,city:'杭州',district:'测试片区',tags:['文化'],cost:10,duration:40,open:480,close:1320,indoor:false,family:false,source:'交互测试合成资料',url:'https://example.org/'+id,kind:'sight',location:`${lon},30.25`});
 const places=[fixture('a','测试甲',120.10),fixture('b','测试乙',120.11),fixture('c','测试丙',120.12)];
 let requests=0;
-async function boot(staticMode=false,dataPlaces=places){
+async function boot(staticMode=false,dataPlaces=places,dataPending=[]){
   const {window,document}=parseHTML(template.replace('<head>',staticMode?'<head><meta name="moontrip-mode" content="static">':'<head>'));
   Object.defineProperty(window.HTMLInputElement.prototype,'checked',{get(){return this.hasAttribute('checked');},set(v){v?this.setAttribute('checked',''):this.removeAttribute('checked');},configurable:true});
   Object.defineProperty(window.HTMLSelectElement.prototype,'value',{get(){const o=this.querySelector('option[selected]')||this.querySelector('option');return o?(o.getAttribute('value')??o.textContent):'';},set(v){for(const o of this.querySelectorAll('option'))o.selected=(o.getAttribute('value')??o.textContent)===String(v);},configurable:true});
@@ -18,7 +18,8 @@ async function boot(staticMode=false,dataPlaces=places){
   globalThis.Option=function(text,value){const o=document.createElement('option');o.textContent=text;o.setAttribute('value',value??text);return o;};
   globalThis.document=document;globalThis.localStorage={getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v)};
   globalThis.fetch=async(url,options)=>{
-    if(url.includes('hangzhou.json'))return {ok:true,json:async()=>({city:'杭州',places:dataPlaces,pending:[]})};
+    if(url.includes('sight-evidence.json'))return {ok:true,json:async()=>({entries:[{id:'closed-sight',status:'closed',fee_yuan:null,fee_note:'闭馆不采用旧票价',opening_note:'官方公告暂时关闭',notes:'不加入候选',checked_at:'2026-10-14',sources:[{title:'官方公告',url:'https://example.org/notice'}]}]})};
+    if(url.includes('hangzhou.json'))return {ok:true,json:async()=>({city:'杭州',places:dataPlaces,pending:dataPending})};
     if(url.includes('chengdu.json'))return {ok:true,json:async()=>({city:'成都',places:[],pending:[]})};
     if(url==='/api/status')return {ok:true,json:async()=>({configured:false,maps_configured:true})};
     if(url==='/api/routes'){
@@ -115,6 +116,13 @@ assert.ok([...foodUI.document.querySelectorAll('.unused-place')].every(r=>r.data
 foodUI.click(foodUI.document.querySelector('.unused-place [data-action=add]'));assert.equal(foodUI.$('place-meal-label').hidden,false);assert.equal(foodUI.$('place-add-meal').options[0].disabled,true,'occupied lunch cannot be selected again');foodUI.$('place-add-meal').value='dinner';foodUI.change(foodUI.$('place-add-meal'));foodUI.click(foodUI.$('preview-place-change'));assert.equal(foodUI.$('change-preview').hidden,true,'dinner outside daily hours rejected');assert.match(foodUI.$('sheet-feedback').textContent,/时段|结束|时间/);
 foodUI.click(foodUI.$('close-adjustment'));foodUI.click(foodUI.document.querySelector('.unused-place [data-action=replace]'));assert.ok(foodUI.$('place-replace-target').options.every(o=>o.value.startsWith('food-')),'replace options only contain restaurants');foodUI.click(foodUI.$('preview-place-change'));assert.equal(foodUI.$('change-preview').hidden,false);foodUI.click(foodUI.$('accept-change'));const acceptedFood=JSON.parse(store.get('moontrip.v1')).manual_stops;
 const reloadFood=await boot(true,[...places,...foodPlaces]);assert.deepEqual(JSON.parse(store.get('moontrip.v1')).manual_stops,acceptedFood,'chosen replacement survives reload');assert.ok(reloadFood.document.querySelector('.unarranged-tabs'));
+// Researched closed sights stay informational; refreshed snapshots replace older
+// provider records but preserve explicitly user-written overrides.
+store.clear();const pending={id:'closed-sight',name:'闭馆场馆',city:'杭州',district:'测试片区',address:'测试地址',location:'120.1,30.2',kind:'sight',cost_hint:'',open_hint:'旧时段',fetched_at:'2026-10-11',url:'https://www.amap.com/place/test'};
+const sourcePlaces=places.map(p=>({...p,source:'公开来源快照',visit_notice:p.id==='a'?'需自行预约，路书不代表预约成功。':undefined}));
+const researchUI=await boot(true,sourcePlaces,[pending]);assert.match(researchUI.$('pending-places').textContent,/官方公告暂时关闭/);assert.equal(researchUI.$('pending-places').querySelector('button'),null,'closed researched venue has no add action');assert.ok(researchUI.document.querySelector('.visit-notice'),'reservation notice visible in roadbook');
+const stale=JSON.parse(store.get('moontrip.v1'));stale.places[0].cost=1;stale.places[1].source='用户核对：我自己的费用';stale.places[1].cost=12;store.set('moontrip.v1',JSON.stringify(stale));
+const refreshUI=await boot(true,sourcePlaces,[pending]);refreshUI.click(refreshUI.$('load-hangzhou'));await new Promise(r=>setTimeout(r,10));const refreshed=JSON.parse(store.get('moontrip.v1')).places;assert.equal(refreshed.find(p=>p.id==='a').cost,10,'explicit load refreshes old source record');assert.equal(refreshed.find(p=>p.id==='b').cost,12,'user override preserved');
 const history=historyStore(2);const value={n:[1]};history.push(value);value.n[0]=9;assert.deepEqual(history.pop(),{n:[1]},'undo snapshots are immutable');
 const expired={from_id:'a',to_id:'b',origin_location:places[0].location,destination_location:places[1].location,fetched_at:new Date(Date.now()-3600001).toISOString()};assert.equal(freshRoutes([expired],places).length,0,'expired route excluded');
 const coords=projectPoints([{longitude:120,latitude:30},{longitude:120,latitude:30}]);assert.equal(coords[0].x,300);assert.equal(coords[0].y,160);

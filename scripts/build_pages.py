@@ -17,7 +17,7 @@ app = DEST / "app.js"
 app_text = app.read_text(encoding="utf-8")
 app_text = app_text.replace("'./engine.js'", "'./engine.js?v=" + version(DEST / "engine.js") + "'")
 app_text = app_text.replace("'./journey.js'", "'./journey.js?v=" + version(DEST / "journey.js") + "'")
-for city in ('hangzhou','chengdu'):
+for city in ('hangzhou','chengdu','sight-evidence'):
     path = 'data/'+city+'.json'
     app_text = app_text.replace("'./"+path+"'", "'./"+path+"?v="+version(DEST / path)+"'")
 app.write_text(app_text, encoding="utf-8")

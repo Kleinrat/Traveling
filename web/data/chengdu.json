@@ -1,7 +1,7 @@
 {
   "city": "成都",
-  "updated_at": "2026-10-11T09:21:30.488471+00:00",
-  "note": "杭州、成都首版；关键词人工选取，不代表热度榜。费用和时段为来源线索，不是实时承诺；缺失资料、分时预约和季节时段保留待补充。",
+  "updated_at": "2026-10-14",
+  "note": "费用和时间公开来源整理于2026-10-14；08:00–17:00为日间规划窗口，与实际开放时段取交集。预约自行完成；每周闭馆、闭园或证据不足记录保留待补充。餐饮快照未修改。",
   "places": [
     {
       "id": "amap-B001C7X8QA",
@@ -18,12 +18,12 @@
       "keyword": "人民公园",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -32,8 +32,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料查询于 2026-10-11T09:20:13.777374+00:00；https://m.cd.bendibao.com/tour/212760.shtm?src=amap 2026年资料，免费入园；茶饮、游船和服务另计；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7X8QA",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：原高德快照全天；未取得当前官方常规时间。 规划时段为日间保守窗口，不是实际开闭园时刻。仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。\nhttps://m.cd.bendibao.com/tour/212760.shtm?src=amap\nhttps://www.amap.com/place/B001C7X8QA",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B001C7YCM4",
@@ -50,12 +50,12 @@
       "keyword": "宽窄巷子",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -65,8 +65,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料查询于 2026-10-11T09:20:15.997857+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7YCM4",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：公共街区全天参考，商户各自营业。 规划时段为日间保守窗口，不是实际开闭园时刻。仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。\nhttps://m.thepaper.cn/newsDetail_forward_3864205\nhttps://www.amap.com/place/B001C7YCM4",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B001C7UM1C",
@@ -83,12 +83,12 @@
       "keyword": "浣花溪公园",
       "cost": 0,
       "duration": 90,
-      "open": 360,
-      "close": 1320,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 360,
-          "close": 1320
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -97,8 +97,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料查询于 2026-10-11T09:20:18.130133+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7UM1C",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：旧官方资料：夏季06:00–22:00、冬季07:00–21:00。 规划时段为日间保守窗口，不是实际开闭园时刻。仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。\nhttps://m.thepaper.cn/newsDetail_forward_3864205\nhttps://www.amap.com/place/B001C7UM1C",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B001C06JG0",
@@ -116,11 +116,11 @@
       "cost": 0,
       "duration": 90,
       "open": 540,
-      "close": 1080,
+      "close": 1020,
       "windows": [
         {
           "open": 540,
-          "close": 1080
+          "close": 1020
         }
       ],
       "tags": [
@@ -129,8 +129,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料查询于 2026-10-11T09:20:20.292597+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C06JG0",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：高德快照09:00–18:00；特殊展览活动另计。 规划时段为日间保守窗口，不是实际开闭园时刻。仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。\nhttps://m.thepaper.cn/newsDetail_forward_3864205\nhttps://www.amap.com/place/B001C06JG0",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B001C7WPBD",
@@ -147,11 +147,11 @@
       "keyword": "文殊院",
       "cost": 0,
       "duration": 90,
-      "open": 480,
+      "open": 540,
       "close": 990,
       "windows": [
         {
-          "open": 480,
+          "open": 540,
           "close": 990
         }
       ],
@@ -162,8 +162,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料查询于 2026-10-11T09:20:23.846044+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7WPBD",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：旧成都发布09:00–17:00；高德快照08:00–17:00，16:30最晚进入；采用09:00–16:30交集。 规划时段为日间保守窗口，不是实际开闭园时刻。仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。\nhttps://m.thepaper.cn/newsDetail_forward_3864205\nhttps://www.amap.com/place/B001C7WPBD",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B001C05E7V",
@@ -195,8 +195,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料查询于 2026-10-11T09:20:25.239366+00:00；https://m.thepaper.cn/newsDetail_forward_3864205 成都发布2019年资料，仅公共游览区，旧资料出行前复核；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C05E7V",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：旧官方资料08:00–17:00，高德快照至16:30。 规划时段为日间保守窗口，不是实际开闭园时刻。仅普通游览免费；原来源较旧，不标记为当前现场核验。规划按08:00–17:00与原可用时段的交集，活动、服务及餐饮另计。\nhttps://m.thepaper.cn/newsDetail_forward_3864205\nhttps://www.amap.com/place/B001C05E7V",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B0FFGPRKKM",
@@ -488,9 +488,7 @@
       "family": false,
       "source": "资料查询于 2026-10-11T09:21:30.488358+00:00；高德人均消费线索（估算，非菜单报价）；地址、普通营业时段来自高德，停留时长为规划建议。费用不含店内额外消费；饮食和亲子条件未确认，闭馆日、排队与预约请另行复核。\nhttps://www.amap.com/place/B001C7WI33",
       "data_status": "来源资料估算，出行前核实"
-    }
-  ],
-  "pending": [
+    },
     {
       "id": "amap-B001C07VJ2",
       "name": "成都武侯祠博物馆",
@@ -503,7 +501,27 @@
       "open_hint": "周一至周日 08:30-18:30 最晚进入17:30",
       "url": "https://www.amap.com/place/B001C07VJ2",
       "fetched_at": "2026-10-11T09:20:29.913336+00:00",
-      "keyword": "武侯祠"
+      "keyword": "武侯祠",
+      "cost": 50,
+      "duration": 120,
+      "open": 540,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 540,
+          "close": 1020
+        }
+      ],
+      "tags": [
+        "文化",
+        "历史",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验",
+      "source": "资料查找日期 2026-10-14；费用：50元（普通成人门票参考；额外项目另计）。公开时间：常规09:00–18:00，17:00停止入馆。 规划时段为日间保守窗口，不是实际开闭园时刻。普通成人50元，官方实名预约；专题活动另行公告，讲解和额外消费不含。路书不会代预约。\nhttps://whpwm.cdwuhouci.cn/index\nhttps://www.amap.com/place/B001C07VJ2",
+      "visit_notice": "需自行按路书时间预约 / 购票，路书不代表有票或预约成功。"
     },
     {
       "id": "amap-B001C06EMZ",
@@ -517,8 +535,128 @@
       "open_hint": "01/01-06/30 09:00–18:00开放 最晚售票17:00；09/01-12/31 09:00–18:00开放 最晚售票17:00；07/01-08/31 08:30–18:30开放 最晚售票17:30；劳动节 08:30–18:30开放 最晚售票17:30",
       "url": "https://www.amap.com/place/B001C06EMZ",
       "fetched_at": "2026-10-11T09:20:32.572488+00:00",
-      "keyword": "杜甫草堂"
+      "keyword": "杜甫草堂",
+      "cost": 50,
+      "duration": 120,
+      "open": 540,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 540,
+          "close": 1020
+        }
+      ],
+      "tags": [
+        "文化",
+        "历史",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验",
+      "source": "资料查找日期 2026-10-14；费用：50元（普通成人门票参考；额外项目另计）。公开时间：常规09:00–18:00，17:00停止售票；节假日 / 暑期延时看公告。 规划时段为日间保守窗口，不是实际开闭园时刻。成人50元，不含讲解等服务；按官方渠道预约购票，路书不保证余票。\nhttps://www.cddfct.cn/go-c18.htm\nhttps://www.cddfct.cn/go-c20.htm\nhttps://www.amap.com/place/B001C06EMZ",
+      "visit_notice": "需自行按路书时间预约 / 购票，路书不代表有票或预约成功。"
     },
+    {
+      "id": "amap-B001C05SU4",
+      "name": "成都植物园",
+      "city": "成都",
+      "district": "金牛区",
+      "address": "蓉都大道天回路1116号",
+      "location": "104.128542,30.763468",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 06:30-20:00",
+      "url": "https://www.amap.com/place/B001C05SU4",
+      "fetched_at": "2026-10-11T09:20:49.890348+00:00",
+      "keyword": "成都植物园",
+      "cost": 10,
+      "duration": 120,
+      "open": 480,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1020
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验",
+      "source": "资料查找日期 2026-10-14；费用：10元（普通成人门票参考；额外项目另计）。公开时间：6/1–8/31 06:30–20:00；9/1–次年5/31 07:00–19:00。 规划时段为日间保守窗口，不是实际开闭园时刻。普通成人10元。此次仅安排室外园区；科普馆与沙生植物馆09:00–17:00，科普馆周一例行闭馆，不默认包含。\nhttps://chengdubg.org.cn/list-74-1.html\nhttps://www.amap.com/place/B001C05SU4"
+    },
+    {
+      "id": "amap-B0FFFD3P2C",
+      "name": "锦里古街",
+      "city": "成都",
+      "district": "武侯区",
+      "address": "武侯祠大街231号附1号",
+      "location": "104.049828,30.645994",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00；亮灯时间20:00，商户营业时间9:00～22:00（酒吧除外）",
+      "url": "https://www.amap.com/place/B0FFFD3P2C",
+      "fetched_at": "2026-10-11T09:22:48.142384+00:00",
+      "keyword": "锦里",
+      "cost": 0,
+      "duration": 90,
+      "open": 480,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1020
+        }
+      ],
+      "tags": [
+        "文化",
+        "历史",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验",
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：官网称全年开放；高德快照街区全天、商户通常09:00–22:00。 规划时段为日间保守窗口，不是实际开闭园时刻。公共街区免门票；餐饮、演出、活动和购物另计。夜游亮灯时间不作为08:00–17:00日间规划保证。\nhttps://www.cdjinli.com/tour/map/\nhttps://www.amap.com/place/B0FFFD3P2C"
+    },
+    {
+      "id": "amap-B001C7WE5S",
+      "name": "成都大熊猫繁育研究基地",
+      "city": "成都",
+      "district": "成华区",
+      "address": "熊猫大道1375号",
+      "location": "104.138176,30.740573",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "03-16至10-31 周一至周日 07:30-12:00,12:00-17:00 最晚进入17:00；11-01至03-15 周一至周日 08:00-12:00,12:00-16:30 最晚进入16:30；上午场入园时间:当天开园时间-12:00，下午场入园时间:12:00-当天最晚入园时间",
+      "url": "https://www.amap.com/place/B001C7WE5S",
+      "fetched_at": "2026-10-11T09:20:27.961851+00:00",
+      "keyword": "成都大熊猫繁育研究基地",
+      "cost": 55,
+      "duration": 180,
+      "open": 480,
+      "close": 990,
+      "windows": [
+        {
+          "open": 480,
+          "close": 990
+        }
+      ],
+      "tags": [
+        "自然",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验",
+      "source": "资料查找日期 2026-10-14；费用：55元（普通成人门票参考；额外项目另计）。公开时间：3–10月上午07:30–12:00、下午12:00–17:00入园，18:00清园；11–次年2月上午08:00–12:00、下午12:00–16:30入园，17:30清园。 规划时段为日间保守窗口，不是实际开闭园时刻。普通成人55元。须按上 / 下午预约时段入园；路书不代表预约成功。保守规划08:00–16:30，观光车等另计，不保证熊猫活动状态。\nhttps://www.panda.org.cn/yd/service/ticket/\nhttps://m.panda.org.cn/cn/service/opentime/\nhttps://www.panda.org.cn/cn/service/\nhttps://www.amap.com/place/B001C7WE5S",
+      "visit_notice": "需自行按路书时间预约 / 购票，路书不代表有票或预约成功。"
+    }
+  ],
+  "pending": [
     {
       "id": "amap-B001C7UBX5",
       "name": "金沙遗址博物馆(暂停开放)",
@@ -602,20 +740,6 @@
       "url": "https://www.amap.com/place/B001C8NUD2",
       "fetched_at": "2026-10-11T09:20:47.546628+00:00",
       "keyword": "东郊记忆"
-    },
-    {
-      "id": "amap-B001C05SU4",
-      "name": "成都植物园",
-      "city": "成都",
-      "district": "金牛区",
-      "address": "蓉都大道天回路1116号",
-      "location": "104.128542,30.763468",
-      "kind": "sight",
-      "cost_hint": "",
-      "open_hint": "周一至周日 06:30-20:00",
-      "url": "https://www.amap.com/place/B001C05SU4",
-      "fetched_at": "2026-10-11T09:20:49.890348+00:00",
-      "keyword": "成都植物园"
     },
     {
       "id": "amap-B0FFG9I9IK",
@@ -714,34 +838,6 @@
       "url": "https://www.amap.com/place/B001C7UMTU",
       "fetched_at": "2026-10-11T09:21:17.468848+00:00",
       "keyword": "夫妻肺片"
-    },
-    {
-      "id": "amap-B0FFFD3P2C",
-      "name": "锦里古街",
-      "city": "成都",
-      "district": "武侯区",
-      "address": "武侯祠大街231号附1号",
-      "location": "104.049828,30.645994",
-      "kind": "sight",
-      "cost_hint": "",
-      "open_hint": "周一至周日 00:00-24:00；亮灯时间20:00，商户营业时间9:00～22:00（酒吧除外）",
-      "url": "https://www.amap.com/place/B0FFFD3P2C",
-      "fetched_at": "2026-10-11T09:22:48.142384+00:00",
-      "keyword": "锦里"
-    },
-    {
-      "id": "amap-B001C7WE5S",
-      "name": "成都大熊猫繁育研究基地",
-      "city": "成都",
-      "district": "成华区",
-      "address": "熊猫大道1375号",
-      "location": "104.138176,30.740573",
-      "kind": "sight",
-      "cost_hint": "",
-      "open_hint": "03-16至10-31 周一至周日 07:30-12:00,12:00-17:00 最晚进入17:00；11-01至03-15 周一至周日 08:00-12:00,12:00-16:30 最晚进入16:30；上午场入园时间:当天开园时间-12:00，下午场入园时间:12:00-当天最晚入园时间",
-      "url": "https://www.amap.com/place/B001C7WE5S",
-      "fetched_at": "2026-10-11T09:20:27.961851+00:00",
-      "keyword": "成都大熊猫繁育研究基地"
     }
   ]
 }

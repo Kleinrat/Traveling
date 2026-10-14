@@ -8,6 +8,8 @@ const sourceSnapshots={};
 await Promise.all(Object.entries(snapshotPaths).map(async([city,url])=>{
   try{const response=await fetch(url,{signal:AbortSignal.timeout(10000)});if(!response.ok)throw Error();const data=await response.json();if(data.city===city&&Array.isArray(data.places)&&Array.isArray(data.pending))sourceSnapshots[city]=data;}catch{}
 }));
+const sightEvidence={};
+try{const response=await fetch('./data/sight-evidence.json',{signal:AbortSignal.timeout(10000)});if(response.ok){const data=await response.json();if(Array.isArray(data.entries))for(const item of data.entries)if(typeof item.id==='string')sightEvidence[item.id]=item;}}catch{}
 let places = Object.values(sourceSnapshots).flatMap(data=>data.places), currentPlan, plannedRequest, proposal, configured = false;
 if(!places.length)places=JSON.parse(catalogue_json());
 let selected=[], avoided=[];
@@ -92,9 +94,12 @@ function render(){
       const content=e('div'),title=e('h4',stop.place.name.replace(/\s*·\s*公共步行区$/,''));
       if(stop.place.kind==='food')content.append(e('div',`${stop.meal||'餐饮'} · 人均消费估算`,'tag-food'));
       content.append(title,e('div',`${stop.place.kind==='food'?'用餐':'停留'} ${stop.place.duration} 分钟 · 约 ¥${stop.place.cost} / 人 · ${stop.place.district}`,'meta'));
+      const record=places.find(p=>p.id===stop.place.id);if(record?.visit_notice)content.append(e('p',record.visit_notice,'visit-notice'));
       const index=day.stops.indexOf(stop);
       if(index>0){const prior=day.stops[index-1],previous=prior.place,route=routing().routes.find(r=>r.from_id===previous.id&&r.to_id===stop.place.id);const mode=route?(route.mode==='walking'?'步行':'公交 / 地铁'):'站间交通';const gap=Math.max(0,stop.start-prior.end-stop.transfer_minutes);const line=e('p',`建议 ${clock(stop.start-stop.transfer_minutes)} 转场 · ${mode}约 ${stop.transfer_minutes} 分钟 · 约 ¥${stop.transfer_cost} / 人${gap?' · '+gap+' 分钟空档':''}${stop.route_source==='高德路线规划'?'':' · 片区估算'}`,'journey-connection');section.append(line);}
-      const details=e('details'),list=e('ul');details.append(e('summary','地点详情'));stop.reasons.forEach(reason=>list.append(e('li',reason)));list.append(e('li',`来源：${stop.place.source}`));details.append(list);content.append(details);
+      const details=e('details'),list=e('ul');details.append(e('summary','地点详情'));stop.reasons.forEach(reason=>list.append(e('li',reason)));list.append(e('li',`来源：${stop.place.source}`));details.append(list);
+      if(stop.place.kind==='sight'){const ev=sightEvidence[stop.place.id];if(ev){list.append(e('li',`公开时段：${ev.opening_note}`));list.append(e('li',`网络资料查找：${ev.checked_at}；规划窗口 ${clock(stop.place.open)}–${clock(stop.place.close)}，不等同于实际营业时刻。`));}}
+      content.append(details);
       for(const url of sourceLinks(stop.place)){const link=e('a','查看来源 ↗','source-link');link.href=url;link.target='_blank';link.rel='noopener noreferrer';details.append(link);}
       const controls=e('div',undefined,'stop-controls');
       for(const [label,action] of [['移除',()=>removeStop(stop.place.id)],['↑',()=>moveStop(stop.place.id,-1)],['↓',()=>moveStop(stop.place.id,1)]]){const b=e('button',label);b.type='button';b.addEventListener('click',action);controls.append(b);}row.draggable=true;row.dataset.stopId=stop.place.id;row.addEventListener('dragstart',ev=>{if(ev.target.closest('input,select,button,details')){ev.preventDefault();return;}dragging=stop.place.id;ev.dataTransfer.setData('text/plain',stop.place.id);});row.addEventListener('dragover',ev=>ev.preventDefault());row.addEventListener('drop',ev=>{ev.preventDefault();if(dragging)dropStop(dragging,stop.place.id);dragging=undefined;});
@@ -249,6 +254,13 @@ function renderPending(){
   for(const p of visible){
     const card=e('article',undefined,'pending-card');card.append(e('h3',`${p.name} · ${p.city}`),e('p',`${p.kind==='food'?'餐厅':'景点'} · ${p.district} · ${p.address||'地址待核对'}`),e('p',`高德人均消费线索：${p.cost_hint||'未提供'}（不等于门票报价）；营业时间线索：${p.open_hint||'未提供'}`,'hint'),e('p',`查询日期：${new Date(p.fetched_at).toLocaleString("zh-CN",{timeZone:"Asia/Shanghai"})} · 待核对`,'hint'));
     const source=e('a','查看高德地点 ↗');source.href=p.url;source.target='_blank';source.rel='noopener noreferrer';card.append(source);
+    const ev=p.kind==='sight'?sightEvidence[p.id]:undefined;
+    if(ev){
+      card.append(e('p',`网络资料查找 ${ev.checked_at} · ${ev.fee_yuan===null?'门票未确认':`普通成人费用参考 ¥${ev.fee_yuan}`}。${ev.fee_note}`,'hint'));
+      const details=e('details',undefined,'sight-research');details.append(e('summary','查看已查到的费用与开放资料'),e('p',ev.opening_note),e('p',ev.notes));
+      for(const item of ev.sources||[])if(typeof item.url==='string'&&item.url.startsWith('https://')){const a=e('a',`${item.title} ↗`,'source-link');a.href=item.url;a.target='_blank';a.rel='noopener noreferrer';details.append(a);}
+      card.append(details,e('p',ev.status==='closed'?'官方公告暂时关闭，未加入规划候选。':'资料已整理；日期限制、范围或证据尚不完整，暂未自动加入规划。','hint'));$('pending-places').append(card);continue;
+    }
     const button=e('button','填写并核对');button.type='button';button.addEventListener('click',()=>{
       reviewPoi=p;document.querySelector('.add-place').open=true;
       for(const [id,value] of Object.entries({'place-kind':p.kind,'place-name':p.name,'place-city':p.city,'place-district':p.district,'place-cost':'','place-duration':p.kind==='food'?'60':'90','place-open':'','place-close':'','place-tags':p.kind==='food'?'美食':'','place-location':p.location,'place-urls':p.url,'place-note':`高德地点 ID：${p.id}；地址：${p.address}；坐标（GCJ-02）：${p.location}；查询时间：${p.fetched_at}。\n费用线索：${p.cost_hint||'未提供'}；时间线索：${p.open_hint||'未提供'}。\n请补充你的核对依据和推荐理由。`}))$(id).value=value;
@@ -299,12 +311,13 @@ for(const [city,id,prefix] of [['杭州','load-hangzhou','hz-'],['成都','load-
     let data=sourceSnapshots[city];
     if(!data){const response=await fetch(snapshotPaths[city],{signal:AbortSignal.timeout(10000)});if(!response.ok)throw Error(`${city}资料暂时无法读取`);data=await response.json();}
     if(data.city!==city||!Array.isArray(data.places)||data.places.some(p=>p.city!==city))throw Error('地点资料城市不匹配');
-    const next=places.filter(p=>!(p.city===city&&p.id.startsWith(prefix)));
+    const snapshotIds=new Set(data.places.map(p=>p.id));
+    const next=places.filter(p=>!(p.city===city&&(p.id.startsWith(prefix)||(snapshotIds.has(p.id)&&!/^用户核对|^用户整理/.test(p.source||'')))));
     for(const place of data.places)if(!next.some(old=>old.id===place.id))next.push(place);
     const check=JSON.parse(plan_json(JSON.stringify({request:{...request(),city,must_visit:[],avoid:[]},places:next})));
     if(!check.ok)throw Error(check.errors.join('；'));
     places=next;selected=[];avoided=[];placeChoices={};locks=emptyLocks();routeSelections={};$('city').value=city;$('review-city').value=city;$('place-city').value=city;
-    mergePending(data.pending);$('review-list').open=true;
+    pendingPlaces=pendingPlaces.filter(p=>!places.some(active=>active.id===p.id));mergePending(data.pending);$('review-list').open=true;
     generate();saveTrip();$('maps-progress').textContent=`已载入 ${data.places.length} 条${city}候选，另有 ${data.pending.length} 条待补充。来源日期 ${new Date(data.updated_at).toLocaleDateString('zh-CN')}。人均消费与游览时长均为估算；饮食、亲子、预约和临时闭园请核实。`;
   }catch(err){feedback(err.message);}
   finally{$(id).disabled=false;}

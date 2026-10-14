@@ -1,7 +1,7 @@
 {
   "city": "杭州",
-  "updated_at": "2026-10-11T08:22:26.244071+00:00",
-  "note": "人工选取查询关键词，不是热度排名；高德线索不等于经营者确认。来源缺失或复杂时段保留待补充。",
+  "updated_at": "2026-10-14",
+  "note": "费用和时间公开来源整理于2026-10-14；08:00–17:00为日间规划窗口，与实际开放时段取交集。预约自行完成；每周闭馆、闭园或证据不足记录保留待补充。餐饮快照未修改。",
   "places": [
     {
       "id": "amap-B023B05MLT",
@@ -18,12 +18,12 @@
       "keyword": "湖滨公园",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -32,8 +32,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料整理于 2026-10-11T08:22:05.798761+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B05MLT",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。 规划时段为日间保守窗口，不是实际开闭园时刻。不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。\nhttps://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html\nhttps://www.amap.com/place/B023B05MLT",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B023B0253E",
@@ -50,12 +50,12 @@
       "keyword": "曲院风荷",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -64,8 +64,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料整理于 2026-10-11T08:22:06.320120+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B0253E",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。 规划时段为日间保守窗口，不是实际开闭园时刻。不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。\nhttps://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html\nhttps://www.amap.com/place/B023B0253E",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B023B023B2",
@@ -82,12 +82,12 @@
       "keyword": "花港观鱼",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -96,8 +96,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料整理于 2026-10-11T08:22:06.844135+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B023B2",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。 规划时段为日间保守窗口，不是实际开闭园时刻。不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。\nhttps://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html\nhttps://www.amap.com/place/B023B023B2",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B023B0247C",
@@ -114,12 +114,12 @@
       "keyword": "柳浪闻莺",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -128,8 +128,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料整理于 2026-10-11T08:22:07.338768+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B0247C",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。 规划时段为日间保守窗口，不是实际开闭园时刻。不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。\nhttps://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html\nhttps://www.amap.com/place/B023B0247C",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B0MRMLW5RC",
@@ -146,12 +146,12 @@
       "keyword": "断桥残雪",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -160,8 +160,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料整理于 2026-10-11T08:22:08.366832+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0MRMLW5RC",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。 规划时段为日间保守窗口，不是实际开闭园时刻。不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。\nhttps://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html\nhttps://www.amap.com/place/B0MRMLW5RC",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B023B0AC72",
@@ -178,12 +178,12 @@
       "keyword": "苏堤",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -192,8 +192,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料整理于 2026-10-11T08:22:08.877987+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B0AC72",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。 规划时段为日间保守窗口，不是实际开闭园时刻。不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。\nhttps://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html\nhttps://www.amap.com/place/B023B0AC72",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B0FFFTYEG4",
@@ -210,12 +210,12 @@
       "keyword": "白堤",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -224,8 +224,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料整理于 2026-10-11T08:22:09.404423+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFFTYEG4",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。 规划时段为日间保守窗口，不是实际开闭园时刻。不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。\nhttps://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html\nhttps://www.amap.com/place/B0FFFTYEG4",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B023B02074",
@@ -242,12 +242,12 @@
       "keyword": "太子湾公园",
       "cost": 0,
       "duration": 90,
-      "open": 0,
-      "close": 1440,
+      "open": 480,
+      "close": 1020,
       "windows": [
         {
-          "open": 0,
-          "close": 1440
+          "open": 480,
+          "close": 1020
         }
       ],
       "tags": [
@@ -256,8 +256,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料整理于 2026-10-11T08:22:09.939370+00:00；https://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html 仅环湖公共步行区，不含游船、登塔、展览等付费项目；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B02074",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：高德来源快照标注全天；按08:00–17:00安排日间公共步行游览。 规划时段为日间保守窗口，不是实际开闭园时刻。不含游船、收费场馆、登塔与展览。政府资料发布于2024年，网页本次未成功完整加载，时间仍是2026-10-11高德线索。 春季花展有分时预约：2026年3月6日至4月12日公告不能当作全年规则，后续花展按新公告。\nhttps://www.hangzhou.gov.cn/art/2024/7/18/art_812262_59100193.html\nhttps://hzdaily.hangzhou.com.cn/hzrb/2026/03/06/article_detail_1_20260306A091.html\nhttps://www.amap.com/place/B023B02074",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B023B14CFT",
@@ -288,8 +288,8 @@
       ],
       "indoor": false,
       "family": false,
-      "source": "资料整理于 2026-10-11T08:22:18.468389+00:00；https://westlake.hangzhou.gov.cn/art/2023/5/17/art_1639430_59042393.html 页面发布于2023年，出行前复核；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B14CFT",
-      "data_status": "来源资料估算，出行前核实"
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：08:30–17:00 规划时段为日间保守窗口，不是实际开闭园时刻。免费入园；依据2023年官方介绍，与高德来源快照一致；现场临时调整未实时核验。\nhttps://westlake.hangzhou.gov.cn/art/2023/5/17/art_1639430_59042393.html\nhttps://www.amap.com/place/B023B14CFT",
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验"
     },
     {
       "id": "amap-B0FFFWQFZJ",
@@ -686,6 +686,108 @@
       "family": false,
       "source": "资料整理于 2026-10-11T08:22:26.243928+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B05MME",
       "data_status": "来源资料估算，出行前核实"
+    },
+    {
+      "id": "amap-B023B02842",
+      "name": "灵隐寺",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "法云弄1号",
+      "location": "120.101406,30.240826",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 07:30-17:30 最晚进入17:00",
+      "url": "https://www.amap.com/place/B023B02842",
+      "fetched_at": "2026-10-11T08:22:10.964462+00:00",
+      "keyword": "灵隐寺",
+      "cost": 0,
+      "duration": 90,
+      "open": 480,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1020
+        }
+      ],
+      "tags": [
+        "文化",
+        "历史",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验",
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：07:30开门；17:30停止入寺；18:00关门。 规划时段为日间保守窗口，不是实际开闭园时刻。灵隐飞来峰实行实名分时预约，须按预约时段进入；2026-02起取消现场登记。路书不代表预约成功，也不查询余票。\nhttps://en.lingyinsi.org/detail_15105.html\nhttps://en.lingyinsi.org/detail_15142.html\nhttps://www.lingyinsi.com/detail_57_19476.html\nhttps://www.amap.com/place/B023B02842",
+      "visit_notice": "需自行按路书时间预约 / 购票，路书不代表有票或预约成功。"
+    },
+    {
+      "id": "amap-B023B05MJE",
+      "name": "飞来峰",
+      "city": "杭州",
+      "district": "西湖区",
+      "address": "灵隐街道灵隐路法云弄1号",
+      "location": "120.101101,30.239119",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 07:30-17:30 最晚进入17:00",
+      "url": "https://www.amap.com/place/B023B05MJE",
+      "fetched_at": "2026-10-11T08:22:11.488409+00:00",
+      "keyword": "飞来峰",
+      "cost": 0,
+      "duration": 90,
+      "open": 480,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1020
+        }
+      ],
+      "tags": [
+        "文化",
+        "历史",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验",
+      "source": "资料查找日期 2026-10-14；费用：0元（仅普通游览，不含额外消费）。公开时间：景区07:30–17:30；闭园前30分钟停止核验。 规划时段为日间保守窗口，不是实际开闭园时刻。与灵隐寺共用灵隐飞来峰预约，按预约时段入园；无需再按旧的双票制预算。2026-02起取消现场登记。路书不查询余票。\nhttps://en.lingyinsi.org/detail_15105.html\nhttps://en.lingyinsi.org/detail_15142.html\nhttps://www.amap.com/place/B023B05MJE",
+      "visit_notice": "需自行按路书时间预约 / 购票，路书不代表有票或预约成功。"
+    },
+    {
+      "id": "amap-B023B14O96",
+      "name": "良渚古城遗址公园",
+      "city": "杭州",
+      "district": "余杭区",
+      "address": "瓶窑镇凤都路与104国道辅路交叉口西北200米",
+      "location": "119.991005,30.389549",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 09:00-17:00 最晚进入16:00",
+      "url": "https://www.amap.com/place/B023B14O96",
+      "fetched_at": "2026-10-11T08:22:15.702731+00:00",
+      "keyword": "良渚古城遗址公园",
+      "cost": 60,
+      "duration": 150,
+      "open": 540,
+      "close": 960,
+      "windows": [
+        {
+          "open": 540,
+          "close": 960
+        }
+      ],
+      "tags": [
+        "文化",
+        "历史",
+        "摄影"
+      ],
+      "indoor": false,
+      "family": false,
+      "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验",
+      "source": "资料查找日期 2026-10-14；费用：60元（普通成人门票参考；额外项目另计）。公开时间：09:00–17:00，16:00停止入园。 规划时段为日间保守窗口，不是实际开闭园时刻。按普通成人门票60元估算，不含另购20元观光车。杭州市民等优待资格另计；需在良渚古城官方渠道预约，路书不代表有余票。票价批复较早，保留来源年份。\nhttps://www.yuhang.gov.cn/art/2019/6/14/art_1229174965_949116.html\nhttps://www.lzmuseum.cn/ZuiXinGongGao/2023394132395.html\nhttps://m.ly.com/scenery_1/detail/?refid=18024458&sceneryId=673031\nhttps://www.amap.com/place/B023B14O96",
+      "visit_notice": "需自行按路书时间预约 / 购票，路书不代表有票或预约成功。"
     }
   ],
   "pending": [
@@ -702,34 +804,6 @@
       "url": "https://www.amap.com/place/B023B09LKR",
       "fetched_at": "2026-10-11T08:22:10.424398+00:00",
       "keyword": "雷峰塔景区"
-    },
-    {
-      "id": "amap-B023B02842",
-      "name": "灵隐寺",
-      "city": "杭州",
-      "district": "西湖区",
-      "address": "法云弄1号",
-      "location": "120.101406,30.240826",
-      "kind": "sight",
-      "cost_hint": "",
-      "open_hint": "周一至周日 07:30-17:30 最晚进入17:00",
-      "url": "https://www.amap.com/place/B023B02842",
-      "fetched_at": "2026-10-11T08:22:10.964462+00:00",
-      "keyword": "灵隐寺"
-    },
-    {
-      "id": "amap-B023B05MJE",
-      "name": "飞来峰",
-      "city": "杭州",
-      "district": "西湖区",
-      "address": "灵隐街道灵隐路法云弄1号",
-      "location": "120.101101,30.239119",
-      "kind": "sight",
-      "cost_hint": "",
-      "open_hint": "周一至周日 07:30-17:30 最晚进入17:00",
-      "url": "https://www.amap.com/place/B023B05MJE",
-      "fetched_at": "2026-10-11T08:22:11.488409+00:00",
-      "keyword": "飞来峰"
     },
     {
       "id": "amap-B023B06P06",
@@ -800,20 +874,6 @@
       "url": "https://www.amap.com/place/B0FFFFZRBD",
       "fetched_at": "2026-10-11T08:22:14.681079+00:00",
       "keyword": "桥西历史文化街区"
-    },
-    {
-      "id": "amap-B023B14O96",
-      "name": "良渚古城遗址公园",
-      "city": "杭州",
-      "district": "余杭区",
-      "address": "瓶窑镇凤都路与104国道辅路交叉口西北200米",
-      "location": "119.991005,30.389549",
-      "kind": "sight",
-      "cost_hint": "",
-      "open_hint": "周一至周日 09:00-17:00 最晚进入16:00",
-      "url": "https://www.amap.com/place/B023B14O96",
-      "fetched_at": "2026-10-11T08:22:15.702731+00:00",
-      "keyword": "良渚古城遗址公园"
     },
     {
       "id": "amap-B023B09JLL",
