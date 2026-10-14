@@ -138,7 +138,7 @@ priv struct PlaceChangeInput {
   locks : @engine.TripLocks
   place_id : String
   action : String
-  day : Int
+  day : Int32
   target_id : String
   after_id : String?
   meal : String

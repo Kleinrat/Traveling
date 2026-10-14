@@ -27,7 +27,7 @@ pub fn exclusion_reason(p : Place, r : Request) -> String? {
 
 ///|
 /// Duplicate interests do not increase the score.
-pub fn score(p : Place, r : Request) -> (Int, Array[String]) {
+pub fn score(p : Place, r : Request) -> (Int32, Array[String]) {
   let reasons : Array[String] = []
   let seen : Map[String, Bool] = Map([])
   let mut value = 10
@@ -65,7 +65,7 @@ pub fn score(p : Place, r : Request) -> (Int, Array[String]) {
 
 ///|
 /// Estimates, not map routing. Zero for the first stop of each day.
-pub fn transfer(previous : Place?, next : Place) -> (Int, Int) {
+pub fn transfer(previous : Place?, next : Place) -> (Int32, Int32) {
   match previous {
     None => (0, 0)
     Some(p) => if p.district == next.district { (15, 8) } else { (35, 15) }

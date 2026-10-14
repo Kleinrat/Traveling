@@ -10,7 +10,7 @@ pub fn change_place(
   locks : TripLocks,
   place_id : String,
   action : String,
-  day : Int,
+  day : Int32,
   target_id : String,
   after_id : String?,
   meal : String,
@@ -98,7 +98,7 @@ pub fn change_place(
       ])
     }
   }
-  let positions : Array[Int] = []
+  let positions : Array[Int32] = []
   if action == "replace" {
     positions.push(replacement_index)
   } else {

@@ -3,7 +3,7 @@ pub(all) struct Preferences {
   mode : String
   environment : String
   walking : Bool
-  transfer_limit : Int
+  transfer_limit : Int32
 } derive(ToJson, @json.FromJson)
 
 ///|
@@ -27,7 +27,7 @@ pub fn validate_preferences(p : Preferences) -> Array[String] {
 }
 
 ///|
-pub fn rest_minutes(r : Request, preferences : Preferences) -> Int {
+pub fn rest_minutes(r : Request, preferences : Preferences) -> Int32 {
   if r.relaxed || preferences.mode == "lazy" {
     45
   } else if preferences.mode == "intense" {
@@ -42,7 +42,7 @@ pub fn preference_score(
   p : Place,
   previous : Place?,
   preferences : Preferences,
-) -> (Int, Array[String]) {
+) -> (Int32, Array[String]) {
   let reasons = []
   let mut bonus = 0
   if preferences.mode == "lazy" && p.kind == "food" {
@@ -73,8 +73,8 @@ pub fn preference_score(
 ///|
 pub(all) struct ManualStop {
   id : String
-  day : Int
-  start : Int
+  day : Int32
+  start : Int32
 } derive(ToJson, @json.FromJson)
 
 ///|
@@ -271,16 +271,16 @@ pub fn edit_trip(
 
 ///|
 pub(all) struct TripExpenses {
-  people : Int
-  roundtrip : Int
-  trip_budget : Int
+  people : Int32
+  roundtrip : Int32
+  trip_budget : Int32
 } derive(ToJson, @json.FromJson)
 
 ///|
 pub fn trip_cost(
-  activity : Int,
-  food : Int,
-  transfer_cost : Int,
+  activity : Int32,
+  food : Int32,
+  transfer_cost : Int32,
   expenses : TripExpenses,
 ) -> Result[Json, Array[String]] {
   let e = expenses

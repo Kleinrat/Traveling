@@ -3,9 +3,9 @@ pub(all) struct Route {
   from_id : String
   to_id : String
   mode : String
-  minutes : Int
-  distance : Int
-  cost : Int
+  minutes : Int32
+  distance : Int32
+  cost : Int32
   source : String
   fetched_at : String
 } derive(ToJson, @json.FromJson)
@@ -14,7 +14,7 @@ pub(all) struct Route {
 pub(all) struct Routing {
   mode : String
   strict : Bool
-  distance_limit : Int
+  distance_limit : Int32
   routes : Array[Route]
 } derive(ToJson, @json.FromJson)
 
@@ -119,8 +119,8 @@ pub fn allowed_leg(
   route : Route,
   p : Preferences,
   routing : Routing,
-  minutes : Int,
-  distance : Int,
+  minutes : Int32,
+  distance : Int32,
 ) -> Bool {
   if minutes + route.minutes > p.transfer_limit ||
     distance + route.distance > routing.distance_limit {
@@ -138,12 +138,12 @@ pub fn allowed_leg(
 ///|
 pub fn meal_window(
   p : Place,
-  arrival : Int,
+  arrival : Int32,
   r : Request,
   meals : Meals,
   lunch_used : Bool,
   dinner_used : Bool,
-) -> (String, Int)? {
+) -> (String, Int32)? {
   for
     (label, enabled, used, open, close) in [
       ("午餐", meals.lunch, lunch_used, 660, 840),
@@ -275,7 +275,7 @@ pub fn reflow_trip(
 }
 
 ///|
-fn max_int(a : Int, b : Int) -> Int {
+fn max_int(a : Int32, b : Int32) -> Int32 {
   if a > b {
     a
   } else {
@@ -284,7 +284,7 @@ fn max_int(a : Int, b : Int) -> Int {
 }
 
 ///|
-fn min_int(a : Int, b : Int) -> Int {
+fn min_int(a : Int32, b : Int32) -> Int32 {
   if a < b {
     a
   } else {
@@ -293,8 +293,8 @@ fn min_int(a : Int, b : Int) -> Int {
 }
 
 ///|
-pub fn available_begin(p : Place, arrival : Int, end : Int) -> Int? {
-  let mut best : Int? = None
+pub fn available_begin(p : Place, arrival : Int32, end : Int32) -> Int32? {
+  let mut best : Int32? = None
   for window in p.windows.unwrap_or([{ open: p.open, close: p.close, }]) {
     let begin = max_int(arrival, window.open)
     if begin + p.duration <= min_int(end, window.close) {

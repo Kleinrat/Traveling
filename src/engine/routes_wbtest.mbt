@@ -3,9 +3,9 @@ fn route_fixture(
   a : String,
   b : String,
   mode : String,
-  minutes : Int,
-  distance : Int,
-  cost : Int,
+  minutes : Int32,
+  distance : Int32,
+  cost : Int32,
 ) -> Route {
   {
     from_id: a,

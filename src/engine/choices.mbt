@@ -2,7 +2,7 @@
 pub(all) struct PlaceChoice {
   id : String
   state : String
-  day : Int
+  day : Int32
 } derive(ToJson, @json.FromJson)
 
 ///|
@@ -267,12 +267,12 @@ pub(all) struct Suggestion {
   reason : String
   plan : Plan
   routing : Routing
-  cost_delta : Int
-  transfer_delta : Int
+  cost_delta : Int32
+  transfer_delta : Int32
 } derive(ToJson)
 
 ///|
-fn transfer_total(p : Plan) -> Int {
+fn transfer_total(p : Plan) -> Int32 {
   let mut total = 0
   for d in p.days {
     for s in d.stops {
@@ -460,12 +460,12 @@ pub(all) struct Replacement {
   id : String
   name : String
   district : String
-  cost : Int
-  duration : Int
+  cost : Int32
+  duration : Int32
   request : Request
   plan : Plan
   routing : Routing
-  cost_delta : Int
+  cost_delta : Int32
   reasons : Array[String]
 } derive(ToJson)
 

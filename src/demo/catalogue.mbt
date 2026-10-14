@@ -6,12 +6,12 @@ fn place(
   city : String,
   district : String,
   tags : Array[String],
-  cost : Int,
-  duration : Int,
+  cost : Int32,
+  duration : Int32,
   indoor : Bool,
   family : Bool,
-  open : Int,
-  close : Int,
+  open : Int32,
+  close : Int32,
 ) -> @engine.Place {
   {
     id,

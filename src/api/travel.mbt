@@ -93,9 +93,9 @@ pub fn edit_plan_json(text : String) -> String {
 
 ///|
 priv struct CostInput {
-  activity : Int
-  food : Int
-  transfer : Int
+  activity : Int32
+  food : Int32
+  transfer : Int32
   expenses : @engine.TripExpenses
 } derive(@json.FromJson)
 

@@ -67,10 +67,10 @@ pub(all) struct Place {
   city : String
   district : String
   tags : Array[String]
-  cost : Int
-  duration : Int
-  open : Int
-  close : Int
+  cost : Int32
+  duration : Int32
+  open : Int32
+  close : Int32
   indoor : Bool
   family : Bool
   source : String
@@ -83,10 +83,10 @@ pub(all) struct Place {
 /// Budget covers activities and estimated local transfers only.
 pub(all) struct Request {
   city : String
-  days : Int
-  budget : Int
-  start : Int
-  end : Int
+  days : Int32
+  budget : Int32
+  start : Int32
+  end : Int32
   interests : Array[String]
   family : Bool
   rain : Bool
@@ -96,7 +96,7 @@ pub(all) struct Request {
   priority : String
   include_food : Bool
   diet : String
-  max_visits : Int
+  max_visits : Int32
 } derive(Debug, ToJson, @json.FromJson)
 
 ///|
@@ -108,23 +108,23 @@ pub(all) struct Input {
 ///|
 pub(all) struct Stop {
   place : Place
-  start : Int
-  end : Int
-  transfer_minutes : Int
-  transfer_cost : Int
-  score : Int
+  start : Int32
+  end : Int32
+  transfer_minutes : Int32
+  transfer_cost : Int32
+  score : Int32
   meal : String
-  transfer_distance : Int
+  transfer_distance : Int32
   route_source : String
   reasons : Array[String]
 } derive(Debug, ToJson)
 
 ///|
 pub(all) struct Day {
-  day : Int
+  day : Int32
   stops : Array[Stop]
-  cost : Int
-  used_minutes : Int
+  cost : Int32
+  used_minutes : Int32
 } derive(Debug, ToJson)
 
 ///|
@@ -137,11 +137,11 @@ pub(all) struct Exclusion {
 ///|
 pub(all) struct Plan {
   days : Array[Day]
-  activity_cost : Int
-  food_cost : Int
-  transfer_cost : Int
-  total_cost : Int
-  remaining_budget : Int
+  activity_cost : Int32
+  food_cost : Int32
+  transfer_cost : Int32
+  total_cost : Int32
+  remaining_budget : Int32
   exclusions : Array[Exclusion]
   warnings : Array[String]
 } derive(Debug, ToJson)
@@ -241,6 +241,6 @@ pub fn validate(input : Input) -> Array[String] {
 
 ///|
 pub(all) struct OpenWindow {
-  open : Int
-  close : Int
+  open : Int32
+  close : Int32
 } derive(Debug, ToJson, @json.FromJson)

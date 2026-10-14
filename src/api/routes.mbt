@@ -42,9 +42,9 @@ priv struct ProviderRoute {
   from_id : String
   to_id : String
   mode : String
-  seconds : Int
-  distance : Int
-  cost : Int
+  seconds : Int32
+  distance : Int32
+  cost : Int32
   fetched_at : String
 } derive(@json.FromJson)
 
@@ -82,8 +82,8 @@ pub fn route_result_json(text : String) -> String {
 priv struct RouteOption {
   id : String
   route : @engine.Route
-  walking_distance : Int?
-  transfers : Int?
+  walking_distance : Int32?
+  transfers : Int32?
   summary : String
 } derive(ToJson, @json.FromJson)
 

@@ -20,7 +20,7 @@ fn fixture_request() -> Request {
 }
 
 ///|
-fn fixture_place(id : String, cost : Int, duration : Int) -> Place {
+fn fixture_place(id : String, cost : Int32, duration : Int32) -> Place {
   {
     id,
     name: id,

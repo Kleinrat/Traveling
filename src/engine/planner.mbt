@@ -301,12 +301,12 @@ fn has_meal_candidate(
   routing : Routing,
   label : String,
   previous : Place?,
-  cursor : Int,
-  total : Int,
+  cursor : Int32,
+  total : Int32,
   used : Map[String, Bool],
   restaurants : Array[Place],
-  transfer_total : Int,
-  distance_total : Int,
+  transfer_total : Int32,
+  distance_total : Int32,
 ) -> Bool {
   let meals = { lunch: label == "午餐", dinner: label == "晚餐", }
   for p in places {
