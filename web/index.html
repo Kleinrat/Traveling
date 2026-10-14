@@ -30,7 +30,7 @@
 <div id="itinerary"></div>
 <details id="roadbook-adjustments" class="panel roadbook-adjustments"><summary>想改一点？</summary><nav aria-label="路书调整" class="adjust-toolbar"><span>按需要调整，满意就保留当前路书。</span><div class="adjust-actions"><button type="button" data-adjust="places">换个地方</button><button type="button" data-adjust="pace">调整节奏</button><button type="button" data-adjust="routes">优化路线</button><button type="button" data-adjust="budget">看预算</button></div><button class="quiet-button" id="undo-change" type="button" disabled>撤销上次调整</button>
 </nav></details>
-<details id="map-panel" class="panel"><summary>查看当天路线简图</summary><label>查看日期<select id="map-day"></select></label><p class="hint">基于地点坐标的顺序示意图；直线连接不代表真实道路。景点为绿色，餐厅为暖色；点击编号查看详情。只展示当天站间地点，不含出发点和住宿。</p><div id="route-map"></div><div id="map-detail"></div>
+<details id="map-panel" class="panel"><summary>查看当天路线地图</summary><label>查看日期<select id="map-day"></select></label><p class="hint">真实地图显示地点位置；虚线只表示游览顺序，不代表导航路线。景点为绿色，餐厅为暖色；点击编号查看详情。只展示当天站间地点，不含出发点和住宿。</p><p id="map-status" class="hint" role="status"></p><div id="real-map" class="real-map" hidden aria-label="当天真实地图"></div><details class="map-fallback"><summary>查看备用顺序简图</summary><div id="route-map"></div></details><div id="map-detail"></div>
 </details>
 <details class="panel" id="unarranged-panel"><summary>看看未安排的地点 <span id="unarranged-count"></span></summary><p class="hint">喜欢哪个，就把它加入路书，或用它替换已有的一站。</p><div id="exclusions"></div>
 </details>

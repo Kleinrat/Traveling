@@ -37,6 +37,7 @@ jobs:
         run: |
           node scripts/smoke.mjs
           node scripts/check_cities.mjs
+          node scripts/test_map.mjs
           node scripts/check_sight_evidence.mjs
       - name: Browser interaction regression checks
         run: |

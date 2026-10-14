@@ -19,3 +19,5 @@
 .visit-notice{font-size:12px;color:#85572e;margin:6px 0}.sight-research{margin:12px 0}.sight-research p{font-size:13px}.sight-research .source-link{display:block;font-size:12px;overflow-wrap:anywhere}
 
 .add-dinner{font-size:13px;min-height:44px;margin:8px 0 14px;background:#edf1e6}
+
+.real-map{height:380px;width:100%;border:1px solid var(--line);border-radius:12px;isolation:isolate;background:#ecefe8}.real-map[hidden]{display:none}.route-marker{border-radius:50%;border:2px solid white;box-shadow:0 2px 6px #223b3666;text-align:center;color:white;font:700 14px/28px system-ui}.route-sight{background:#285a47}.route-food{background:#a26735}.map-fallback{margin-top:14px}.map-fallback summary{font-size:12px;cursor:pointer}.real-map .leaflet-control-attribution{font-size:10px;line-height:1.5;color:#333}.real-map .leaflet-control-attribution a{color:#176244}.real-map .leaflet-bar a{color:#223b36}.real-map .leaflet-overlay-pane svg{background:none;max-height:none;border-radius:0}@media(max-width:700px){.real-map{height:320px}}

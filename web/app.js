@@ -1,5 +1,6 @@
 import { plan_json, catalogue_json, plan_with_preferences_json, alternatives_with_preferences_json, edit_plan_json, reflow_plan_json, trip_cost_json, cities_json, pending_places_json, restaurants_similar, choose_plan_json, arrange_plan_json, suggestions_json, replacements_json, change_place_json, complete_dinners_json } from './engine.js';
 import { emptyLocks, legKey, planStops, planLegs, freshRoutes, historyStore, projectPoints } from './journey.js';
+import { mountMap } from './map.js';
 const $ = id => document.getElementById(id);
 const staticDemo = document.querySelector('meta[name="moontrip-mode"]')?.content === 'static';
 const tags = ['自然','文化','历史','美食','摄影','城市','海边','古镇','博物馆','亲子'];
@@ -17,6 +18,7 @@ let travelMode='custom', manualStops=[], tripLedger;
 let routeCache=[], routesBusy=false;
 let placeChoices={}, locks=emptyLocks(), routeSelections={}, preview, dragging, lastState;
 const history=historyStore();
+let activeMap;
 let replacementTarget, candidateLimit=6, adjustmentFocus, placeAction;
 let unarrangedKind="sight";const unarrangedLimits={sight:6,food:6};
 function meals(){return {lunch:$('include_food').checked,dinner:$('include_dinner').checked};}
@@ -460,16 +462,21 @@ $('get-suggestions').addEventListener('click',async()=>{
 function renderMap(){
   const daySelect=$('map-day'),old=daySelect.value;daySelect.replaceChildren();if(!currentPlan)return;for(const d of currentPlan.days)daySelect.add(new Option(`第 ${d.day} 天`,String(d.day)));if([...daySelect.options].some(o=>o.value===old))daySelect.value=old;drawMap();
 }
+function mapDetail(p){const s=p.stop;$('map-detail').replaceChildren(e('strong',`${p.index+1}. ${s.place.name}`),e('p',`${clock(s.start)}–${clock(s.end)} · ${s.place.district} · ¥${s.place.cost} / 人`));const record=places.find(x=>x.id===p.id);if(record?.address)$('map-detail').append(e('p',record.address));for(const url of sourceLinks(s.place)){const a=e('a','查看地点来源 ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer';$('map-detail').append(a);}}
 function drawMap(){
+  activeMap?.dispose();activeMap=undefined;$('real-map').hidden=true;$('map-status').textContent='展开后加载真实地图；也可查看下面的顺序简图。';
   const day=currentPlan?.days.find(d=>d.day===Number($('map-day').value));$('route-map').replaceChildren();$('map-detail').replaceChildren();if(!day)return;
   const points=day.stops.map((s,i)=>({...routePoint(places.find(p=>p.id===s.place.id)||s.place),id:s.place.id,index:i,stop:s})).filter(p=>Number.isFinite(p.longitude)&&Number.isFinite(p.latitude));
   if(!points.length){$('map-detail').append(e('p','这一天的地点尚无坐标；行程卡片仍可调整。','hint'));return;}
   const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 600 320');svg.setAttribute('aria-label','当天地点与顺序示意图');svg.setAttribute('role','img');const projected=projectPoints(points);
   for(let i=1;i<projected.length;i++){const a=projected[i-1],b=projected[i];if(b.index!==a.index+1)continue;const line=document.createElementNS(ns,'line');for(const [key,val] of Object.entries({x1:a.x,y1:a.y,x2:b.x,y2:b.y}))line.setAttribute(key,val);line.setAttribute('class','map-line');svg.append(line);}
-  for(const p of projected){const group=document.createElementNS(ns,'g'),circle=document.createElementNS(ns,'circle'),text=document.createElementNS(ns,'text'),title=document.createElementNS(ns,'title');circle.setAttribute('cx',p.x);circle.setAttribute('cy',p.y);circle.setAttribute('r','15');circle.setAttribute('class',p.stop.place.kind==='food'?'map-food':'map-sight');text.setAttribute('x',p.x);text.setAttribute('y',p.y+5);text.textContent=String(p.index+1);title.textContent=p.stop.place.name;group.append(circle,text,title);group.setAttribute('tabindex','0');group.setAttribute('role','button');group.setAttribute('aria-label',`${p.index+1} ${p.stop.place.name}`);function detail(){const s=p.stop;$('map-detail').replaceChildren(e('strong',`${p.index+1}. ${s.place.name}`),e('p',`${clock(s.start)}–${clock(s.end)} · ${s.place.district} · ¥${s.place.cost} / 人`));const record=places.find(x=>x.id===p.id);if(record?.address)$('map-detail').append(e('p',record.address));for(const url of sourceLinks(s.place)){const a=e('a','查看地点来源 ↗');a.href=url;a.target='_blank';a.rel='noopener noreferrer';$('map-detail').append(a);}}group.addEventListener('click',detail);group.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();detail();}});svg.append(group);}
-  $('route-map').append(svg);if(points.length!==day.stops.length)$('map-detail').append(e('p','部分地点缺少坐标，图中省略对应点和连接。','hint'));
+  for(const p of projected){const group=document.createElementNS(ns,'g'),circle=document.createElementNS(ns,'circle'),text=document.createElementNS(ns,'text'),title=document.createElementNS(ns,'title');circle.setAttribute('cx',p.x);circle.setAttribute('cy',p.y);circle.setAttribute('r','15');circle.setAttribute('class',p.stop.place.kind==='food'?'map-food':'map-sight');text.setAttribute('x',p.x);text.setAttribute('y',p.y+5);text.textContent=String(p.index+1);title.textContent=p.stop.place.name;group.append(circle,text,title);group.setAttribute('tabindex','0');group.setAttribute('role','button');group.setAttribute('aria-label',`${p.index+1} ${p.stop.place.name}`);function detail(){mapDetail(p);}group.addEventListener('click',detail);group.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();detail();}});svg.append(group);}
+  $('route-map').append(svg);
+  if($('map-panel').hasAttribute('open')){const container=$('real-map');container.hidden=false;activeMap=mountMap(container,points,mapDetail,state=>{$('map-status').textContent=state==='ready'?'可缩放地图，点击编号查看地点。虚线仅表示游览顺序。':state==='loading'?'正在加载地图底图…':'底图暂时加载失败，编号和顺序仍可查看；下方简图可以继续使用。';});}
+if(points.length!==day.stops.length)$('map-detail').append(e('p','部分地点缺少坐标，图中省略对应点和连接。','hint'));
 }
 $('map-day').addEventListener('change',drawMap);
+$('map-panel').addEventListener('toggle',drawMap);
 
 
 // Roadbook first. Detailed tools appear only when explicitly requested.
