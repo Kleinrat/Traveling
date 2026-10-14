@@ -171,3 +171,25 @@ pub fn change_place_json(text : String) -> String {
       ({ "ok": false, "errors": @json.to_json(errors) } : Json).stringify()
   }
 }
+
+///|
+pub fn complete_dinners_json(text : String) -> String {
+  let c : ArrangeInput = @json.from_json(@json.parse(text)) catch {
+    _ =>
+      return ({ "ok": false, "errors": ["晚餐补充格式无效"] } : Json).stringify()
+  }
+  match
+    @engine.complete_dinners(
+      c.input,
+      c.preferences,
+      c.routing,
+      c.meals,
+      c.stops,
+      c.locks,
+    ) {
+    Ok(change) =>
+      ({ "ok": true, "change": @json.to_json(change) } : Json).stringify()
+    Err(errors) =>
+      ({ "ok": false, "errors": @json.to_json(errors) } : Json).stringify()
+  }
+}

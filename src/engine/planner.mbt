@@ -26,6 +26,36 @@ pub fn plan_trip(
     return Err(errors)
   }
   let r = input.request
+  let reserve_meals = {
+    lunch: meals.lunch &&
+    input.places.any(p => {
+      p.kind == "food" &&
+      exclusion_reason(p, r) is None &&
+      meal_window(p, r.start, r, { lunch: true, dinner: false, }, false, false)
+      is Some(_)
+    }),
+    dinner: meals.dinner &&
+    input.places.any(p => {
+      p.kind == "food" &&
+      exclusion_reason(p, r) is None &&
+      meal_window(p, r.start, r, { lunch: false, dinner: true, }, false, false)
+      is Some(_)
+    }),
+  }
+  let meals_per_day = (if reserve_meals.lunch { 1 } else { 0 }) +
+    (if reserve_meals.dinner { 1 } else { 0 })
+  let reserve_budget = match
+    meal_reserve(
+      input.places,
+      r,
+      reserve_meals,
+      meals_per_day * r.days,
+      Map([]),
+      [],
+    ) {
+    Some(cost) => cost <= r.budget
+    None => false
+  }
   let used : Map[String, Bool] = Map([])
   let used_restaurants : Array[Place] = []
   let days : Array[Day] = []
@@ -34,6 +64,7 @@ pub fn plan_trip(
     let stops : Array[Stop] = []
     let mut cursor = r.start
     let mut previous : Place? = None
+    let mut last_sight : Place? = None
     let mut day_cost = 0
     let mut visits = 0
     let mut lunch_used = false
@@ -49,6 +80,10 @@ pub fn plan_trip(
       let mut best_meal = ""
       let mut best_distance = 0
       let mut best_source = ""
+      let dinner_anchor = match last_sight {
+        Some(p) => Some(p)
+        None => previous
+      }
       for p in input.places {
         if used.contains(p.id) || exclusion_reason(p, r) is Some(_) {
           continue
@@ -108,6 +143,32 @@ pub fn plan_trip(
         }
         if total + p.cost + fare > r.budget {
           continue
+        }
+        if reserve_budget && !r.must_visit.contains(p.id) {
+          let pending = meals_per_day * (r.days - day_number) +
+            (if reserve_meals.lunch && !lunch_used { 1 } else { 0 }) +
+            (if reserve_meals.dinner && !dinner_used { 1 } else { 0 }) -
+            (if meal != "" { 1 } else { 0 })
+          let selected_foods = if p.kind == "food" {
+            used_restaurants + [p]
+          } else {
+            used_restaurants
+          }
+          match
+            meal_reserve(
+              input.places,
+              r,
+              reserve_meals,
+              pending,
+              used,
+              selected_foods,
+            ) {
+            Some(cost) =>
+              if total + p.cost + fare + cost > r.budget {
+                continue
+              }
+            None => ()
+          }
         }
         // Avoid consuming the last feasible meal window with an optional sight.
         if p.kind == "sight" && !r.must_visit.contains(p.id) {
@@ -178,10 +239,13 @@ pub fn plan_trip(
         if meal_due {
           reasons.push("已接近\{meal}时段，优先安排用餐")
         }
+        if meal == "晚餐" {
+          reasons.push(dinner_location_reason(dinner_anchor, p))
+        }
         if nearby {
           reasons.push("与上一站同片区（+8）")
         }
-        let wins = value > best_score ||
+        let score_wins = value > best_score ||
           (
             value == best_score &&
             (match best {
@@ -189,6 +253,23 @@ pub fn plan_trip(
               None => true
             })
           )
+        let wins = if meal == "晚餐" && best_meal == "晚餐" && !chosen {
+          match best {
+            Some(old) =>
+              if r.must_visit.contains(old.id) {
+                false
+              } else {
+                let anchor = dinner_anchor
+                let distance = dinner_distance(anchor, p, routing)
+                let old_distance = dinner_distance(anchor, old, routing)
+                distance < old_distance ||
+                (distance == old_distance && score_wins)
+              }
+            None => true
+          }
+        } else {
+          score_wins
+        }
         if wins {
           best = Some(p)
           best_score = value
@@ -230,6 +311,9 @@ pub fn plan_trip(
               dinner_used = true
             }
             used_restaurants.push(p)
+          }
+          if p.kind == "sight" {
+            last_sight = Some(p)
           }
           previous = Some(p)
           used[p.id] = true

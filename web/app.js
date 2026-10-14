@@ -1,4 +1,4 @@
-import { plan_json, catalogue_json, plan_with_preferences_json, alternatives_with_preferences_json, edit_plan_json, reflow_plan_json, trip_cost_json, cities_json, pending_places_json, restaurants_similar, choose_plan_json, arrange_plan_json, suggestions_json, replacements_json, change_place_json } from './engine.js';
+import { plan_json, catalogue_json, plan_with_preferences_json, alternatives_with_preferences_json, edit_plan_json, reflow_plan_json, trip_cost_json, cities_json, pending_places_json, restaurants_similar, choose_plan_json, arrange_plan_json, suggestions_json, replacements_json, change_place_json, complete_dinners_json } from './engine.js';
 import { emptyLocks, legKey, planStops, planLegs, freshRoutes, historyStore, projectPoints } from './journey.js';
 const $ = id => document.getElementById(id);
 const staticDemo = document.querySelector('meta[name="moontrip-mode"]')?.content === 'static';
@@ -107,6 +107,7 @@ function render(){
       for(let n=1;n<=plannedRequest.days;n++)daySelect.add(new Option(`第 ${n} 天 · ${dayDate(n)}`,String(n)));daySelect.value=String(day.day);timeInput.type='time';timeInput.value=clock(stop.start);dayLabel.append(daySelect);timeLabel.append(timeInput);fields.append(dayLabel,timeLabel);editor.append(fields,e('p','保留其他站的时间；冲突时不会覆盖当前行程。','hint'));const applyEdit=e('button','保存调整');applyEdit.type='button';applyEdit.addEventListener('click',()=>{const edits=schedule();const target=edits.find(s=>s.id===stop.place.id);target.day=Number(daySelect.value);target.start=minutes(timeInput.value);previewSchedule(edits,'调整日期和开始时间',routing(),true);});editor.append(applyEdit,controls);addLocks(editor,stop,day.day);details.append(editor);const replace=e('button','换一站','replace-stop');replace.type='button';replace.setAttribute('aria-label',`替换 ${stop.place.name}`);replace.addEventListener('click',()=>{replacementTarget=stop.place.id;openAdjustment('places');});details.append(replace);row.append(time,content);section.append(row);
     }
     const missingMeals=p.warnings.filter(w=>w.startsWith(`第 ${day.day} 天未安排`));if(missingMeals.length)section.append(e('p',missingMeals.map(w=>w.split('：')[0]).join('；')+'，这部分餐费未计入，请自行补充。','day-caution'));
+    if(!day.stops.some(s=>s.meal==='晚餐')){const dinner=e('button','补上晚餐','add-dinner');dinner.type='button';dinner.setAttribute('aria-label',`为路书补上晚餐，第 ${day.day} 天尚未安排`);dinner.addEventListener('click',previewDinners);section.append(dinner);}
     $('itinerary').append(section);
   }
   renderUnarranged();
@@ -411,10 +412,10 @@ function showPreview(change){
 $('accept-change').addEventListener('click',()=>{
   if(!preview)return;if(identity()!==preview.identity){clearPreview();feedback('预览期间条件或行程已变化，请重新预览。');return;}
   const target=preview,newRequest=target.request||plannedRequest;
-  const result=JSON.parse(arrange_plan_json(JSON.stringify({...arrangePayload(scheduleOf(target.plan),target.routing),input:{request:newRequest,places},preferences:target.preferences||preferences(),exact:true})));
+  const result=JSON.parse(arrange_plan_json(JSON.stringify({...arrangePayload(scheduleOf(target.plan),target.routing),input:{request:newRequest,places},preferences:target.preferences||preferences(),meals:target.meals||meals(),exact:true})));
   if(!result.ok){feedback(result.errors.join('；')+'。当前行程保留。');return;}
   if(target.routing.routes.some(r=>!validRoutes().some(x=>sameRoute(x,r)))){clearPreview();feedback('交通候选已过期，请重新查询并预览。');return;}
-  remember();currentPlan=result.plan;plannedRequest=newRequest;if(target.request)setRequest(target.request);if(target.choices)placeChoices=target.choices;if(target.preferences)setPreferences(target.preferences);syncChoices();
+  remember();currentPlan=result.plan;plannedRequest=newRequest;if(target.request)setRequest(target.request);if(target.choices)placeChoices=target.choices;if(target.preferences)setPreferences(target.preferences);if(target.meals){$('include_food').checked=target.meals.lunch;$('include_dinner').checked=target.meals.dinner;}syncChoices();
   routeSelections={};for(const r of target.routing.routes){const option=validRoutes().find(x=>sameRoute(x,r));if(option)routeSelections[legKey(r.from_id,r.to_id)]=option.option_id;}
   manualStops=schedule();clearPreview();$('suggestions').replaceChildren();render();saveTrip();closeAdjustment();showRoadbook();feedback('已更新路书，可撤销这次调整。');
 });
@@ -587,3 +588,10 @@ $('preview-place-change').addEventListener('click',()=>{
   if(placeAction.action==='replace')next[target]={state:'maybe',day:0};
   showPreview({...change,label:`${placeAction.action==='replace'?'换成':'加入'}${change.name}`,choices:next,reason:placeAction.action==='replace'?'替换选中的一站，保留其他地点和日期；原餐次不变，后续时刻及预算已校验。':'加入选中的日期，保留原有地点和其他日期的时刻；后续安排及预算已校验。'});
 });
+
+function previewDinners(){
+  if(!sameConditions()){feedback('偏好已修改，请先生成路书，再补充晚餐。');return;}
+  openAdjustment('pace');const result=JSON.parse(complete_dinners_json(JSON.stringify(arrangePayload())));
+  if(!result.ok){feedback(result.errors.join('；'));return;}
+  showPreview({...result.change,meals:{...meals(),dinner:true},label:'补上晚餐',reason:'保留原有地点、日期和时刻。为缺晚餐的日期补充餐厅，优先参考最后景点附近的位置；结束时间不足时预留至20:00，预算、营业时间和餐厅去重仍需满足。'});
+}

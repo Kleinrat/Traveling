@@ -36,6 +36,7 @@ fn fixture_place(id : String, cost : Int32, duration : Int32) -> Place {
     source: "原创测试数据",
     url: "",
     kind: "sight",
+    location: None,
     windows: None,
   }
 }

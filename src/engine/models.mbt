@@ -76,6 +76,7 @@ pub(all) struct Place {
   source : String
   url : String
   kind : String
+  location : String?
   windows : Array[OpenWindow]?
 } derive(Debug, ToJson, @json.FromJson)
 

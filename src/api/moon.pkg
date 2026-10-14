@@ -15,6 +15,7 @@ options(
         "suggestions_json",
         "replacements_json",
         "change_place_json",
+        "complete_dinners_json",
         "plan_with_preferences_json",
         "alternatives_with_preferences_json",
         "edit_plan_json",
