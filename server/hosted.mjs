@@ -7,7 +7,7 @@ export function createHostedWorker(config=process.env,providerFetch=fetch){
     const next=queue.then(()=>fn(storage));queue=next.catch(()=>{});return next;
   }};
   const quota=new AiQuota({storage},{DAILY_LIMIT:config.DAILY_LIMIT||'30'});
-  const env={KIMI_API_KEY:config.KIMI_API_KEY,KIMI_MODEL:config.KIMI_MODEL||'kimi-k2.6',ALLOWED_ORIGIN:config.ALLOWED_ORIGIN||'https://kleinrat.github.io',AI_QUOTA:{idFromName:x=>x,get:()=>({fetch:(url,init)=>quota.fetch(new Request(url,init))})}};
+  const env={REPORT_ERROR:detail=>console.error('AI gateway failure',JSON.stringify(detail)),KIMI_API_KEY:config.KIMI_API_KEY,KIMI_MODEL:config.KIMI_MODEL||'kimi-k2.6',ALLOWED_ORIGIN:config.ALLOWED_ORIGIN||'https://kleinrat.github.io',AI_QUOTA:{idFromName:x=>x,get:()=>({fetch:(url,init)=>quota.fetch(new Request(url,init))})}};
   const worker=createWorker(providerFetch);
   return {async fetch(request){
     const allowed=env.ALLOWED_ORIGIN,origin=request.headers.get('Origin');

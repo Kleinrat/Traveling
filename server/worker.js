@@ -25,6 +25,7 @@ export function createWorker(providerFetch=fetch){return {async fetch(request,en
   try{checked=JSON.parse(validate_for_current(current,current));}catch{return error('当前条件无效',422,origin);}
   if(!checked.ok)return json(checked,422,origin);
   if(!['杭州','成都'].includes(checked.request.city))return error('公网版目前支持杭州和成都',422,origin);
+  let phase='quota';
   try{
     // One persistent counter across locations; Origin alone cannot stop API abuse.
     const ip=request.headers.get('CF-Connecting-IP')||'unknown';
@@ -33,11 +34,12 @@ export function createWorker(providerFetch=fetch){return {async fetch(request,en
     const gate=env.AI_QUOTA.get(env.AI_QUOTA.idFromName('global-budget'));
     const quota=await gate.fetch('https://quota.internal/check',{method:'POST',body:JSON.stringify({client})});
     if(!quota.ok)return error('体验请求较多或今日额度已用完，请稍后再试；仍可手动规划',429,origin);
+    phase='provider';
     const response=await providerFetch('https://api.moonshot.cn/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+env.KIMI_API_KEY},signal:AbortSignal.timeout(45000),body:JSON.stringify({model:env.KIMI_MODEL||'kimi-k2.6',messages:[{role:'system',content:assistant_system()},{role:'user',content:assistant_context(current,data.message.trim())}],thinking:{type:'disabled'},response_format:{type:'json_object'},max_tokens:2048})});
     if(!response.ok){await response.body?.cancel();const message=({401:'AI密钥无效或已过期',402:'AI服务余额不足',403:'AI服务访问被拒绝',429:'AI服务限流，请稍后重试'})[response.status]||'AI服务暂时不可用，请稍后重试';return error(message,502,origin);}
     let result;try{const raw=JSON.parse(await boundedText(response.body,MAX_REPLY)),content=raw.choices?.[0]?.message?.content;if(typeof content!=='string')throw Error();result=JSON.parse(validate_for_current(content,current));}catch{return error('助手返回内容暂时无法使用，请重试或手动调整',422,origin);}
     return json(result,result.ok?200:422,origin);
-  }catch(err){return error(err?.name==='TimeoutError'?'AI响应超时，请重试或手动调整':'AI连接暂时不可用，请稍后重试',err?.name==='TimeoutError'?504:502,origin);}
+  }catch(err){env.REPORT_ERROR?.({phase,name:String(err?.name||'Error'),code:String(err?.cause?.code||err?.code||'unknown')});return error(err?.name==='TimeoutError'?'AI响应超时，请重试或手动调整':'AI连接暂时不可用，请稍后重试',err?.name==='TimeoutError'?504:502,origin);}
 }};}
 export default createWorker();
 // SQLite-backed Durable Object. Stores only a salted client digest and counts,
