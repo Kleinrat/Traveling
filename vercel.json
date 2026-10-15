@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "echo 'No runtime dependencies'",
+  "buildCommand": "bash scripts/build_render.sh && mkdir -p public",
+  "outputDirectory": "public",
+  "regions": ["sin1"],
+  "functions": {"api/*.mjs": {"maxDuration": 60, "includeFiles": "web/engine.js"}}
+}

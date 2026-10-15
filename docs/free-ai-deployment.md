@@ -1,4 +1,18 @@
-# 免费托管 AI 后端（Render）
+# 免费托管 AI 后端
+
+## 首选：Vercel Hobby
+
+当前采用 Vercel Hobby 个人免费方案，GitHub Pages 保留现有网页。导入 `Kleinrat/Traveling` 的 main，Framework 选 Other，保留 `vercel.json` 中的构建配置。环境变量设置 `KIMI_API_KEY`（私有）、`KIMI_MODEL=kimi-k2.6`，允许来源默认为 `https://kleinrat.github.io`。
+
+发布后先实测 `/api/status` 和 `/api/assistant`，再将实际的 HTTPS 后端根地址填入 `web/runtime-config.json`。没有实际地址前保持空值，不声称公网 AI 已启用。
+
+Hobby 限个人、非商业使用，适合本项目的个人演示；超出额度通常暂停对应功能。免费托管不含 Kimi 调用费用。使用前确认账户为 Hobby，勿开通 Pro 试用。官方：[Hobby 方案](https://vercel.com/docs/plans/hobby)。
+
+AI 请求最大45秒，上层函数最多60秒；MoonBit 负责提示词和结果校验，用户确认后再生成路书。每个运行实例最多2个并发、共享3次/分钟和默认30次/天尝试。服务重启和多实例会分别计数，因此这些不是严格的全站次数或账单上限。来源检查不能防止伪造请求，应在 Kimi 账户控制余额/专用密钥额度。密钥不进入网页、仓库或模型错误信息。
+
+## 备选：Render Free
+
+实际操作中当前 Render 账户要求绑卡和1美元临时预授权；用户选择不绑卡，因此未完成 Render 部署。以下保留通用服务器配置供以后自托管使用，不作为当前上线状态。
 
 目标：GitHub Pages 继续托管公开网页；Render 的 Free Web Service 仅提供 `/api/status` 和 `/api/assistant`。规划、提示词契约和输出校验继续使用 MoonBit 编译产物。无需购买服务器或域名。
 
