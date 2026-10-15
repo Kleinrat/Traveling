@@ -161,7 +161,7 @@ async function configureAssistant(){
     try{const response=await fetch('./runtime-config.json',{signal:AbortSignal.timeout(8000)});if(response.ok){const config=await response.json();if(config.ai_backend){const url=new URL(config.ai_backend);if(url.protocol!=='https:'||url.username||url.password||url.search||url.hash||url.pathname!=='/')throw Error();apiBase=url.origin;}}}catch{}
     if(!apiBase){$('message').placeholder='在线演示请调整下方条件；AI 需求理解正在准备公网接入。';return;}
   }
-  $('ask').disabled=true;$('ai-status').textContent=apiBase?'正在唤醒免费 AI 服务，首次约需一分钟；可先手动规划':'正在连接 AI 服务';
+  $('ask').disabled=true;$('ai-status').textContent=apiBase?'正在连接 AI 服务，首次连接可能稍慢；可先手动规划':'正在连接 AI 服务';
   try{let data,lastError;
     for(let attempt=0;attempt<(apiBase?3:1);attempt++){
       try{const response=await fetch(apiBase+'/api/status',{signal:AbortSignal.timeout(apiBase?30000:10000)});if(!response.ok)throw Error();data=await response.json();break;}catch(error){lastError=error;if(attempt<2&&apiBase)await new Promise(resolve=>setTimeout(resolve,3000));}

@@ -6,3 +6,4 @@ bash /tmp/moontrip-install.sh
 export PATH="$HOME/.moon/bin:$PATH"
 sh scripts/build.sh
 node scripts/test_worker.mjs
+node scripts/test_hosted.mjs

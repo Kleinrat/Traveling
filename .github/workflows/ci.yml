@@ -40,6 +40,7 @@ jobs:
           node scripts/test_map.mjs
           node scripts/test_worker.mjs
           node scripts/test_public.mjs
+          node scripts/test_hosted.mjs
           node scripts/check_sight_evidence.mjs
       - name: Browser interaction regression checks
         run: |

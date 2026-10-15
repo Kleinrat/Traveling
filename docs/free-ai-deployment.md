@@ -2,7 +2,7 @@
 
 ## 当前部署：Vercel Hobby
 
-生产地址：https://moontrip-assistant.vercel.app。2026-10-15状态接口返回 configured=true、model=kimi-k2.6；真实请求成功将“十点出门，预算八百元”转换为 start=600、budget=800，经 MoonBit 校验返回。网页入口仍为 https://kleinrat.github.io/Traveling/ 。
+生产地址：https://moontrip-assistant.vercel.app。函数区域为Vercel默认区域iad1，使用IPv4 TLS连接及连接超时的一次重试。2026-10-15状态接口返回 configured=true、model=kimi-k2.6；真实请求成功将“十点出门，预算八百元”转换为 start=600、budget=800，经 MoonBit 校验返回。网页入口仍为 https://kleinrat.github.io/Traveling/ 。
 
 
 
