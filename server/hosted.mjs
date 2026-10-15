@@ -1,7 +1,6 @@
-import {setDefaultResultOrder} from 'node:dns';
-setDefaultResultOrder('ipv4first');
+import {kimiTransport} from './kimi-transport.mjs';
 import {createWorker,AiQuota} from './worker.js';
-export function createHostedWorker(config=process.env,providerFetch=fetch){
+export function createHostedWorker(config=process.env,providerFetch=kimiTransport){
   // Free hosting uses ephemeral instances. Counts reset on restart/cold start;
   // they limit a running instance, not the provider account's monetary balance.
   let saved,queue=Promise.resolve(),active=0;
@@ -14,7 +13,7 @@ export function createHostedWorker(config=process.env,providerFetch=fetch){
     try{return await providerFetch(url,options);}catch(error){
       // Retry only a failed TCP connection: no HTTP request was delivered.
       // Reuse the original deadline and never retry HTTP/provider errors.
-      if(error?.cause?.code!=='UND_ERR_CONNECT_TIMEOUT'||options.signal?.aborted)throw error;
+      if(!['UND_ERR_CONNECT_TIMEOUT','KIMI_CONNECT_TIMEOUT'].includes(error?.cause?.code||error?.code)||options.signal?.aborted)throw error;
       return providerFetch(url,options);
     }
   });
