@@ -1,3 +1,5 @@
+import {setDefaultResultOrder} from 'node:dns';
+setDefaultResultOrder('ipv4first');
 import {createWorker,AiQuota} from './worker.js';
 export function createHostedWorker(config=process.env,providerFetch=fetch){
   // Free hosting uses ephemeral instances. Counts reset on restart/cold start;
@@ -8,7 +10,14 @@ export function createHostedWorker(config=process.env,providerFetch=fetch){
   }};
   const quota=new AiQuota({storage},{DAILY_LIMIT:config.DAILY_LIMIT||'30'});
   const env={REPORT_ERROR:detail=>console.error('AI gateway failure',JSON.stringify(detail)),KIMI_API_KEY:config.KIMI_API_KEY,KIMI_MODEL:config.KIMI_MODEL||'kimi-k2.6',ALLOWED_ORIGIN:config.ALLOWED_ORIGIN||'https://kleinrat.github.io',AI_QUOTA:{idFromName:x=>x,get:()=>({fetch:(url,init)=>quota.fetch(new Request(url,init))})}};
-  const worker=createWorker(providerFetch);
+  const worker=createWorker(async(url,options)=>{
+    try{return await providerFetch(url,options);}catch(error){
+      // Retry only a failed TCP connection: no HTTP request was delivered.
+      // Reuse the original deadline and never retry HTTP/provider errors.
+      if(error?.cause?.code!=='UND_ERR_CONNECT_TIMEOUT'||options.signal?.aborted)throw error;
+      return providerFetch(url,options);
+    }
+  });
   return {async fetch(request){
     const allowed=env.ALLOWED_ORIGIN,origin=request.headers.get('Origin');
     if(active>=2)return Response.json({ok:false,errors:['助手正忙，请稍后再试']},{status:429,headers:{...(origin===allowed?{'Access-Control-Allow-Origin':allowed}:{}),'Cache-Control':'no-store','Vary':'Origin'}});
