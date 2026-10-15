@@ -1,6 +1,10 @@
 # 免费托管 AI 后端
 
-## 首选：Vercel Hobby
+## 当前部署：Vercel Hobby
+
+生产地址：https://moontrip-assistant.vercel.app。2026-10-15状态接口返回 configured=true、model=kimi-k2.6；真实请求成功将“十点出门，预算八百元”转换为 start=600、budget=800，经 MoonBit 校验返回。网页入口仍为 https://kleinrat.github.io/Traveling/ 。
+
+
 
 当前采用 Vercel Hobby 个人免费方案，GitHub Pages 保留现有网页。导入 `Kleinrat/Traveling` 的 main，Framework 选 Other，保留 `vercel.json` 中的构建配置。环境变量设置 `KIMI_API_KEY`（私有）、`KIMI_MODEL=kimi-k2.6`，允许来源默认为 `https://kleinrat.github.io`。
 

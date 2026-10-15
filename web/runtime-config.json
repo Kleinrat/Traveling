@@ -1,1 +1,3 @@
-{"ai_backend":""}
+{
+  "ai_backend": "https://moontrip-assistant.vercel.app"
+}

@@ -4,7 +4,7 @@
 
 选城市、旅行节奏和预算，先拿到一份按时间排列的路书；满意就保存，需要时再调整。景点、午晚餐、站间交通和费用列在同一条时间线上。推荐、时间约束、餐厅去重、调整校验和预算计算由 **MoonBit** 实现。
 
-[在线使用](https://kleinrat.github.io/Traveling/) · [稳定版本](https://github.com/Kleinrat/Traveling/releases/tag/v0.1.0) · [演示视频](https://github.com/Kleinrat/Traveling/releases/download/v0.1.0/moontrip-v0.1.0.mp4) · [测试记录](docs/testing-2026-10-14.md) · [运行检查](https://github.com/Kleinrat/Traveling/actions/workflows/ci.yml)
+[在线使用](https://kleinrat.github.io/Traveling/) · [稳定版本](https://github.com/Kleinrat/Traveling/releases/tag/v0.1.0) · [演示视频](https://github.com/Kleinrat/Traveling/releases/download/v0.1.0/moontrip-v0.1.0.mp4) · [测试记录](docs/testing-2026-10-15.md) · [运行检查](https://github.com/Kleinrat/Traveling/actions/workflows/ci.yml)
 
 ## 马上开始
 
@@ -25,7 +25,7 @@
 | 地点分类、加入 / 替换、日期与时刻调整、锁定、预览和撤销 | 支持 | 支持 |
 | 预算分项、人数与往返交通、离线HTML / Markdown / JSON导出 | 支持 | 支持 |
 | 每日真实地图、编号与地点详情、备用简图 | 联网显示 | 联网显示 |
-| AI提取需求，确认后生成 | 支持连接免费后端，部署后启用 | 配置AI后支持 |
+| AI提取需求，确认后生成 | 已接入 kimi-k2.6 | 配置AI后支持 |
 | 高德地点查询、真实步行 / 公交候选 | 未启用 | 配置高德后支持 |
 
 ### 三种旅行模式
@@ -92,7 +92,7 @@ PORT=8787
 
 ## 免费接入公网 AI
 
-已提供 Vercel Hobby 免费函数、MoonBit 构建流程及独立后端。创建服务后，将 Kimi 密钥保存到 Vercel 私有环境变量，再把真实后端地址写入网页配置。Kimi 调用额度单独计算；另保留 Render / 自托管运行入口。具体操作与免费限额见 [免费部署说明](docs/free-ai-deployment.md)。仅提交配置不代表已上线，实际部署需登录服务商账户并验证。
+已提供 Vercel Hobby 免费函数、MoonBit 构建流程及独立后端。创建服务后，将 Kimi 密钥保存到 Vercel 私有环境变量，再把真实后端地址写入网页配置。Kimi 调用额度单独计算；另保留 Render / 自托管运行入口。具体操作与免费限额见 [免费部署说明](docs/free-ai-deployment.md)。当前后端已部署至 Vercel Hobby，并于2026-10-15实际调用 kimi-k2.6 验证需求提取。免费托管有使用额度限制，账户密钥和模型余额会影响可用性。
 
 ## 验证与稳定版本
 
@@ -109,7 +109,7 @@ pnpm install --frozen-lockfile --ignore-scripts
 node scripts/test_ui.mjs
 ```
 
-回归基线：**70项MoonBit、23项Python测试**，两城六种模式组合、景点证据、地图适配与DOM交互检查。公网实际验收包括两城地图、日期切换、地点详情、替换预览 / 接受 / 撤销和390像素手机宽度显示。详见 [测试记录](docs/testing-2026-10-14.md)。
+回归基线：**70项MoonBit、23项Python测试**，两城六种模式组合、景点证据、地图适配与DOM交互检查。公网实际验收包括两城地图、日期切换、地点详情、替换预览 / 接受 / 撤销和390像素手机宽度显示。详见 [测试记录](docs/testing-2026-10-15.md)。
 
 `main`通过Actions自动构建、检查并部署；稳定版本在检查通过后单独创建标签和Release，附公开页面压缩包与演示视频。固定版本使用Release或标签，在线演示随main更新。[更新记录](CHANGELOG.md) · [发布说明](docs/releases/v0.1.0.md)
 
