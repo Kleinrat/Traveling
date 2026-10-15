@@ -78,6 +78,7 @@ pub(all) struct Place {
   kind : String
   location : String?
   windows : Array[OpenWindow]?
+  closed_weekdays : Array[Int32]?
 } derive(Debug, ToJson, @json.FromJson)
 
 ///|
@@ -98,6 +99,7 @@ pub(all) struct Request {
   include_food : Bool
   diet : String
   max_visits : Int32
+  start_weekday : Int32?
 } derive(Debug, ToJson, @json.FromJson)
 
 ///|
@@ -152,6 +154,9 @@ pub(all) struct Plan {
 pub fn validate(input : Input) -> Array[String] {
   let r = input.request
   let errors : Array[String] = []
+  if r.start_weekday is Some(day) && (day < 1 || day > 7) {
+    errors.push("出发星期必须为1–7")
+  }
   if r.city == "" {
     errors.push("城市不能为空")
   }
@@ -186,6 +191,10 @@ pub fn validate(input : Input) -> Array[String] {
     }
     if p.open < 0 || p.close > 1440 || p.open >= p.close {
       errors.push("景点开放时间无效: \{p.id}")
+    }
+    if p.closed_weekdays is Some(days) &&
+      (days.length() > 7 || days.any(d => d < 1 || d > 7)) {
+      errors.push("每周闭馆日无效: " + p.id)
     }
     for window in p.windows.unwrap_or([]) {
       if window.open < p.open ||

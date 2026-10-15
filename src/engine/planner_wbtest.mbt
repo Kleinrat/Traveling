@@ -16,6 +16,7 @@ fn fixture_request() -> Request {
     include_food: false,
     diet: "不限",
     max_visits: 4,
+    start_weekday: None,
   }
 }
 
@@ -38,6 +39,7 @@ fn fixture_place(id : String, cost : Int32, duration : Int32) -> Place {
     kind: "sight",
     location: None,
     windows: None,
+    closed_weekdays: None,
   }
 }
 
@@ -131,6 +133,7 @@ test "relaxed mode rejects long activities" {
       include_food: false,
       diet: "不限",
       max_visits: 4,
+      start_weekday: None,
     },
     places: [fixture_place("a", 0, 180)],
   })
@@ -328,6 +331,7 @@ test "daily visit cap leaves time for a meal" {
       ..fixture_request(),
       days: 1,
       max_visits: 1,
+      start_weekday: None,
       include_food: true,
     },
     places,

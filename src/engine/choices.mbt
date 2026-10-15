@@ -104,6 +104,11 @@ pub fn arrange_trip(
         Some(i) => input.places[i]
         None => return Err(["地点不存在：" + edit.id])
       }
+      if !available_on(place, input.request, day) {
+        return Err([
+          place.name + "：这一天为每周闭馆日，请换日期或地点",
+        ])
+      }
       let route = match route_transfer(previous, place, routing) {
         Some(r) => r
         None => return Err([place.name + "：该方向尚未查询路线"])

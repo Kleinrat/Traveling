@@ -3,7 +3,7 @@ import {readFileSync} from 'node:fs';
 import {plan_with_preferences_json} from '../web/engine.js';
 const evidence=JSON.parse(readFileSync(new URL('../web/data/sight-evidence.json',import.meta.url)));
 const cities=['hangzhou','chengdu'].map(name=>JSON.parse(readFileSync(new URL(`../web/data/${name}.json`,import.meta.url))));
-const all=cities.flatMap(c=>[...c.places,...c.pending]).filter(p=>p.kind==='sight');
+const all=cities.flatMap(c=>[...c.places,...c.pending,...(c.excluded||[])]).filter(p=>p.kind==='sight');
 assert.equal(evidence.entries.length,41);
 assert.equal(new Set(evidence.entries.map(e=>e.id)).size,41);
 assert.deepEqual(new Set(evidence.entries.map(e=>e.id)),new Set(all.map(p=>p.id)));
@@ -17,7 +17,15 @@ for(const [name,fee] of added){
   const stop=result.plan.days[0].stops[0];assert.equal(stop.place.id,place.id);assert.equal(result.plan.activity_cost,fee);assert(stop.start>=place.open&&stop.end<=place.close);
 }
 for(const data of cities){
-  assert(!data.places.some(p=>p.name.includes('金沙')||p.name.includes('博物馆(之江')||p.name==='中国丝绸博物馆'||p.name==='成都博物馆'||p.name==='四川博物院'),'closed or weekday-sensitive venues are not offered automatically');
+  assert.equal(data.pending.length,0,'published pending records have been processed');
+  assert(!data.places.some(p=>p.name.includes('金沙')),'renovation closure excluded');
+  for(const p of data.places.filter(p=>p.closed_weekdays?.length)) {
+    assert(p.closed_weekdays.includes(1),'museums have Monday closure');
+    const request={city:data.city,days:1,budget:1000,start:480,end:1080,interests:['文化'],family:false,rain:false,relaxed:false,must_visit:[p.id],avoid:[],priority:'balanced',include_food:false,diet:'不限',max_visits:3,start_weekday:1};
+    const run=r=>JSON.parse(plan_with_preferences_json(JSON.stringify({request:r,places:[p],preferences:{mode:'custom',environment:'any',walking:false,transfer_limit:180},meals:{lunch:false,dinner:false}})));
+    const monday=run(request);assert(!monday.ok||!monday.plan.days.some(d=>d.stops.length),'Monday closed');
+    const tuesday=run({...request,start_weekday:2});assert(tuesday.ok&&tuesday.plan.days[0].stops.length===1,'Tuesday visit possible');
+  }
   for(const e of evidence.entries.filter(e=>e.city===data.city)){
     assert(e.sources.length&&e.sources.every(s=>s.url.startsWith('https://')));
     if(e.status==='unresolved')assert.equal(e.fee_yuan,null,'unknown fee never becomes free');
@@ -25,4 +33,4 @@ for(const data of cities){
   }
 }
 assert.equal(evidence.entries.find(e=>e.name.includes('金沙')).status,'closed');
-console.log('Sight evidence checks passed: 41 records, eight forced visits with adult fees and valid windows; unknown fees, weekly closures and renovation closure kept out of automatic candidates.');
+console.log('Sight evidence passed: 41 source records, resolved pending lists, scoped fees/windows, museum weekday checks and excluded closure/ambiguous canal.');

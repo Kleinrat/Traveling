@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: moontrip-assistant
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: bash scripts/build_render.sh
+    startCommand: node server/public.mjs
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 22.16.0
+      - key: ALLOWED_ORIGIN
+        value: https://kleinrat.github.io
+      - key: KIMI_MODEL
+        value: kimi-k2.6
+      - key: DAILY_LIMIT
+        value: "30"
+      - key: KIMI_API_KEY
+        sync: false

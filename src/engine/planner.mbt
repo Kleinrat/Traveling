@@ -85,7 +85,9 @@ pub fn plan_trip(
         None => previous
       }
       for p in input.places {
-        if used.contains(p.id) || exclusion_reason(p, r) is Some(_) {
+        if used.contains(p.id) ||
+          exclusion_reason(p, r) is Some(_) ||
+          !available_on(p, r, day_number) {
           continue
         }
         if p.kind == "sight" && visits >= r.max_visits {
@@ -338,10 +340,14 @@ pub fn plan_trip(
   let exclusions : Array[Exclusion] = []
   for p in input.places {
     if !used.contains(p.id) {
-      let reason = match exclusion_reason(p, r) {
-        Some(reason) => reason
-        None =>
-          "在当前排序下无法满足预算、开放时间、餐饮时段或路线限制；可调整条件重试"
+      let reason = if !available_during_trip(p, r) {
+        "旅行日期遇每周闭馆日，或未提供出发日期，不能安排此馆"
+      } else {
+        match exclusion_reason(p, r) {
+          Some(reason) => reason
+          None =>
+            "在当前排序下无法满足预算、开放时间、餐饮时段或路线限制；可调整条件重试"
+        }
       }
       exclusions.push({ id: p.id, name: p.name, reason, })
     }

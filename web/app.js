@@ -16,6 +16,7 @@ if(!places.length)places=JSON.parse(catalogue_json());
 let selected=[], avoided=[];
 let travelMode='custom', manualStops=[], tripLedger;
 let routeCache=[], routesBusy=false;
+let apiBase='';
 let placeChoices={}, locks=emptyLocks(), routeSelections={}, preview, dragging, lastState;
 const history=historyStore();
 let activeMap;
@@ -60,7 +61,8 @@ const clock = n => `${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).p
 const minutes = s => { const [h,m] = s.split(':').map(Number); return h*60+m; };
 function feedback(text='') {for(const id of ['feedback','sheet-feedback']){$(id).hidden=!text;$(id).textContent=text;}}
 for(const tag of tags){ const label=e('label'), input=e('input'); input.type='checkbox'; input.value=tag; input.checked=['自然','文化'].includes(tag); label.append(input,e('span',tag)); $('interests').append(label); }
-function request(){ return {city:$('city').value,days:Number($('days').value),budget:Number($('budget').value),start:minutes($('start').value),end:minutes($('end').value),interests:[...$('interests').querySelectorAll('input:checked')].map(i=>i.value),family:$('family').checked,rain:$('rain').checked,relaxed:$('relaxed').checked,must_visit:[...selected],avoid:[...avoided],priority:$('priority').value,include_food:$('include_food').checked||$('include_dinner').checked,diet:$('diet').value,max_visits:Number($('max_visits').value)}; }
+function startWeekday(){const value=$('trip-start').value;if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return null;const day=new Date(value+'T12:00:00Z').getUTCDay();return Number.isFinite(day)?(day||7):null;}
+function request(){ return {start_weekday:startWeekday(),city:$('city').value,days:Number($('days').value),budget:Number($('budget').value),start:minutes($('start').value),end:minutes($('end').value),interests:[...$('interests').querySelectorAll('input:checked')].map(i=>i.value),family:$('family').checked,rain:$('rain').checked,relaxed:$('relaxed').checked,must_visit:[...selected],avoid:[...avoided],priority:$('priority').value,include_food:$('include_food').checked||$('include_dinner').checked,diet:$('diet').value,max_visits:Number($('max_visits').value)}; }
 function setRequest(r){
   r={must_visit:[],avoid:[],priority:"balanced",include_food:true,diet:"不限",max_visits:3,...r}; selected=[...r.must_visit];avoided=[...r.avoid];
   if(![...$('city').options].some(o=>o.value===r.city)) $('city').add(new Option(r.city,r.city));
@@ -146,23 +148,42 @@ $('export-md').addEventListener('click',()=>{
 });
 $('ask').addEventListener('click',async()=>{
   const message=$('message').value.trim();if(!message){feedback('先写下你想调整的旅行条件。');return;}
-  if(!configured){feedback('尚未配置 AI 服务。你可以使用三种示例，或直接调整条件生成行程。');return;}
+  if(!configured){await configureAssistant();return;}
   $('ask').disabled=true;$('proposal').hidden=true;proposal=undefined;feedback('助手正在整理条件…');
-  try{const response=await fetch('/api/assistant',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,current:request()})});const data=await response.json();if(!data.ok)throw Error(data.errors.join('；'));proposal=data.request;
+  try{const response=await fetch(apiBase+'/api/assistant',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,current:request()}),signal:AbortSignal.timeout(60000)});const data=await response.json();if(!data.ok)throw Error(data.errors.join('；'));proposal=data.request;
     $('proposal-text').textContent=`${proposal.city} · ${proposal.days} 天 · 每人规划预算 ${proposal.budget} 元\n每天 ${clock(proposal.start)}–${clock(proposal.end)}\n兴趣：${proposal.interests.join('、')||'不限'}\n亲子 ${proposal.family?'是':'否'} / 雨天 ${proposal.rain?'是':'否'} / 慢游 ${proposal.relaxed?'是':'否'}\n每天最多 ${proposal.max_visits} 个景点 / 餐饮 ${proposal.include_food?'安排':'不安排'} / 饮食 ${proposal.diet}\n请核对：助手只处理上述条件。`;$('proposal').hidden=false;feedback();
   }catch(err){feedback(err.message);}finally{$('ask').disabled=false;}
 });
 $('apply').addEventListener('click',()=>{if(proposal){setRequest(proposal);$('proposal').hidden=true;if(generate())showRoadbook();}});
-if(staticDemo){
-  $('ai-status').textContent='在线演示 · 使用手动条件规划';
-  $('ask').disabled=true;
-  $('ask').textContent='在线演示未启用 AI';
-  $('message').placeholder='在线演示请调整下方条件；AI 需求理解可在本地配置服务后使用。';
-}else{
-  fetch('/api/status').then(r=>r.json()).then(data=>{configured=data.configured;mapsConfigured=Boolean(data.maps_configured);updateMapsStatus();$('ai-status').textContent=configured?`${data.model} · 已配置`:'无密钥演示';}).catch(()=>{$('ai-status').textContent='AI 服务不可用';updateMapsStatus();});
+async function configureAssistant(){
+  if(staticDemo){
+    $('ai-status').textContent='在线演示 · 使用手动条件规划';$('ask').disabled=true;$('ask').textContent='在线演示未启用 AI';
+    try{const response=await fetch('./runtime-config.json',{signal:AbortSignal.timeout(8000)});if(response.ok){const config=await response.json();if(config.ai_backend){const url=new URL(config.ai_backend);if(url.protocol!=='https:'||url.username||url.password||url.search||url.hash||url.pathname!=='/')throw Error();apiBase=url.origin;}}}catch{}
+    if(!apiBase){$('message').placeholder='在线演示请调整下方条件；AI 需求理解正在准备公网接入。';return;}
+  }
+  $('ask').disabled=true;$('ai-status').textContent=apiBase?'正在唤醒免费 AI 服务，首次约需一分钟；可先手动规划':'正在连接 AI 服务';
+  try{let data,lastError;
+    for(let attempt=0;attempt<(apiBase?3:1);attempt++){
+      try{const response=await fetch(apiBase+'/api/status',{signal:AbortSignal.timeout(apiBase?30000:10000)});if(!response.ok)throw Error();data=await response.json();break;}catch(error){lastError=error;if(attempt<2&&apiBase)await new Promise(resolve=>setTimeout(resolve,3000));}
+    }
+    if(!data)throw lastError;configured=Boolean(data.configured);mapsConfigured=!staticDemo&&Boolean(data.maps_configured);updateMapsStatus();$('ai-status').textContent=configured?`${data.model} · 已连接`:'AI尚未配置，可手动规划';$('ask').disabled=!configured;$('ask').textContent='整理我的需求 →';if(configured)$('message').placeholder='例如：杭州玩两天，晚点出门，喜欢湖边散步和当地美食。';}
+  catch{configured=false;$('ai-status').textContent='AI服务未连接，可重试或手动规划';$('ask').textContent='重新连接 AI';$('ask').disabled=false;updateMapsStatus();}
 }
+configureAssistant();
+
 let restoredStops=[];
 try{const saved=JSON.parse(localStorage.getItem('moontrip.v1')||'null');if(saved){const check=JSON.parse(plan_json(JSON.stringify({request:saved.request,places:saved.places})));if(check.ok){places=saved.places;setRequest(saved.request);$('message').value=saved.message||'';if(saved.preferences)setPreferences(saved.preferences);if(saved.meals){$('include_food').checked=saved.meals.lunch;$('include_dinner').checked=saved.meals.dinner;}if(saved.routing){$('transport').value=saved.transport||(['walking','transit'].includes(saved.routing.mode)?saved.routing.mode:'transit');$('distance-limit').value=saved.routing.distance_limit/1000;}if(Array.isArray(saved.route_cache)){routeCache=saved.route_cache.map((r,i)=>({...r,option_id:r.option_id||'legacy-'+i}));routeSelections=saved.route_selections||Object.fromEntries(routeCache.filter(r=>r.mode===$('transport').value).map(r=>[legKey(r.from_id,r.to_id),r.option_id]));}placeChoices=saved.place_choices||Object.fromEntries([...selected.map(id=>[id,{state:'must',day:0}]),...avoided.map(id=>[id,{state:'avoid',day:0}])]);if(saved.locks)locks=saved.locks;if(saved.expenses)for(const [id,value] of Object.entries(saved.expenses))if(['people','roundtrip','trip_budget'].includes(id))$(id).value=value;if(saved.trip_start)$('trip-start').value=saved.trip_start;if(Array.isArray(saved.manual_stops))restoredStops=saved.manual_stops;}}}catch{}
+// Upgrade published source records and retire resolved pending rows, retaining
+// explicit user edits and unrelated custom candidates.
+const published=Object.values(sourceSnapshots).filter(d=>Array.isArray(d.reviewed_ids));
+if(published.length){
+  const canonical=published.flatMap(d=>d.places), retired=new Set(published.flatMap(d=>[...d.reviewed_ids,...d.places.map(p=>p.id)]));
+  places=places.filter(p=>!retired.has(p.id)||/^用户核对|^用户整理/.test(p.source||''));
+  for(const p of canonical)if(!places.some(old=>old.id===p.id))places.push(p);
+  pendingPlaces=pendingPlaces.filter(p=>!retired.has(p.id));savePending();
+  const excluded=published.flatMap(d=>d.excluded||[]);$('review-archive').hidden=!excluded.length;
+  for(const p of excluded){const row=e('p');row.append(e('strong',`${p.name} · ${p.city}`),e('br'),e('span',p.reason));$('review-archive-items').append(row);}
+}
 if(restoredStops.length){const result=JSON.parse(arrange_plan_json(JSON.stringify({input:{request:request(),places},preferences:preferences(),routing:routing(),meals:meals(),stops:restoredStops,locks,exact:true})));if(result.ok){currentPlan=result.plan;plannedRequest=request();manualStops=schedule();render();}else{locks=emptyLocks();generate();feedback('保存的安排暂不可恢复：'+result.errors.join('；'));}}else generate();renderMode();if(restoredStops.length)$('preferences-panel').removeAttribute('open');
 
 function schedule(){return currentPlan?planStops(currentPlan):[];}
@@ -321,7 +342,7 @@ for(const [city,id,prefix] of [['杭州','load-hangzhou','hz-'],['成都','load-
     if(!check.ok)throw Error(check.errors.join('；'));
     places=next;selected=[];avoided=[];placeChoices={};locks=emptyLocks();routeSelections={};$('city').value=city;$('review-city').value=city;$('place-city').value=city;
     pendingPlaces=pendingPlaces.filter(p=>!places.some(active=>active.id===p.id));mergePending(data.pending);$('review-list').open=true;
-    generate();saveTrip();$('maps-progress').textContent=`已载入 ${data.places.length} 条${city}候选，另有 ${data.pending.length} 条待补充。来源日期 ${new Date(data.updated_at).toLocaleDateString('zh-CN')}。人均消费与游览时长均为估算；饮食、亲子、预约和临时闭园请核实。`;
+    generate();saveTrip();$('maps-progress').textContent=`已载入 ${data.places.length} 条${city}候选，${data.pending.length?`另有 ${data.pending.length} 条待补充。`:`原有待核对资料已处理，${data.excluded?.length||0} 条已排除并保留原因。`}来源日期 ${new Date(data.updated_at).toLocaleDateString('zh-CN')}。人均消费与游览时长均为估算；饮食、亲子、预约和临时闭园请核实。`;
   }catch(err){feedback(err.message);}
   finally{$(id).disabled=false;}
 });

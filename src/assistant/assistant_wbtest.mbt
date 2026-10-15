@@ -21,6 +21,7 @@ test "reject out of range extracted fields" {
     include_food: false,
     diet: "不限",
     max_visits: 4,
+    start_weekday: None,
   }
   assert_true(
     @json.parse(validate_proposal(@json.to_json(request).stringify()))
@@ -46,6 +47,7 @@ test "accept complete valid extraction" {
     include_food: false,
     diet: "不限",
     max_visits: 4,
+    start_weekday: None,
   }
   assert_true(
     @json.parse(validate_proposal(@json.to_json(request).stringify()))
@@ -71,6 +73,7 @@ test "assistant cannot change chosen places" {
     include_food: true,
     diet: "不限",
     max_visits: 3,
+    start_weekday: None,
   }
   let changed = { ..original, must_visit: ["b"], }
   assert_true(

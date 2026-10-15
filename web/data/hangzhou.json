@@ -1,7 +1,7 @@
 {
   "city": "杭州",
-  "updated_at": "2026-10-14",
-  "note": "费用和时间公开来源整理于2026-10-14；08:00–17:00为日间规划窗口，与实际开放时段取交集。预约自行完成；每周闭馆、闭园或证据不足记录保留待补充。餐饮快照未修改。",
+  "updated_at": "2026-10-15",
+  "note": "原有待核对资料全部完成处理；已整理的费用与时间按来源注明，闭馆或地址范围含混记录单独排除；餐饮为高德人均消费估算，不是实时菜单报价。每周闭馆日已校验，节假日例外不自动放行。",
   "places": [
     {
       "id": "amap-B023B05MLT",
@@ -302,7 +302,7 @@
       "cost_hint": "53.00",
       "open_hint": "周一至周日 10:30-21:30",
       "url": "https://www.amap.com/place/B0FFFWQFZJ",
-      "fetched_at": "2026-10-11T08:22:19.045153+00:00",
+      "fetched_at": "2026-10-14T14:09:32.248370+00:00",
       "keyword": "外婆家",
       "cost": 53,
       "duration": 60,
@@ -318,9 +318,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:19.045153+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFFWQFZJ",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费53元为估算，不是实时菜单报价；营业线索：周一至周日 10:30-21:30；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0FFFWQFZJ",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B0FFI927N3",
@@ -333,7 +335,7 @@
       "cost_hint": "65.00",
       "open_hint": "周一至周日 10:30-14:30,16:00-21:00",
       "url": "https://www.amap.com/place/B0FFI927N3",
-      "fetched_at": "2026-10-11T08:22:19.603617+00:00",
+      "fetched_at": "2026-10-14T14:09:32.249383+00:00",
       "keyword": "新白鹿",
       "cost": 65,
       "duration": 60,
@@ -353,9 +355,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:19.603617+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFI927N3",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费65元为估算，不是实时菜单报价；营业线索：周一至周日 10:30-14:30,16:00-21:00；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0FFI927N3",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B023B17FPA",
@@ -368,7 +372,7 @@
       "cost_hint": "60.00",
       "open_hint": "周一至周日 11:00-21:00",
       "url": "https://www.amap.com/place/B023B17FPA",
-      "fetched_at": "2026-10-11T08:22:20.233161+00:00",
+      "fetched_at": "2026-10-14T14:09:32.238939+00:00",
       "keyword": "绿茶餐厅",
       "cost": 60,
       "duration": 60,
@@ -384,9 +388,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:20.233161+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B17FPA",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费60元为估算，不是实时菜单报价；营业线索：周一至周日 11:00-21:00；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B023B17FPA",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B0FFK21Q4T",
@@ -399,7 +405,7 @@
       "cost_hint": "28.00",
       "open_hint": "周一至周日 07:00-20:00",
       "url": "https://www.amap.com/place/B0FFK21Q4T",
-      "fetched_at": "2026-10-11T08:22:20.785748+00:00",
+      "fetched_at": "2026-10-15T08:25:37.378835+00:00",
       "keyword": "知味观",
       "cost": 28,
       "duration": 60,
@@ -415,9 +421,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:20.785748+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFK21Q4T",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费28元为估算，不是实时菜单报价；营业线索：周一至周日 07:00-20:00；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0FFK21Q4T",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B023B09325",
@@ -430,7 +438,7 @@
       "cost_hint": "155.00",
       "open_hint": "周一至周日 10:30-14:00,16:30-20:30",
       "url": "https://www.amap.com/place/B023B09325",
-      "fetched_at": "2026-10-11T08:22:21.280769+00:00",
+      "fetched_at": "2026-10-15T08:25:38.667595+00:00",
       "keyword": "楼外楼",
       "cost": 155,
       "duration": 60,
@@ -450,9 +458,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:21.280769+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B09325",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费155元为估算，不是实时菜单报价；营业线索：周一至周日 10:30-14:00,16:30-20:30；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B023B09325",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B0HGBSORPI",
@@ -465,7 +475,7 @@
       "cost_hint": "103.00",
       "open_hint": "周一至周日 10:30-23:30",
       "url": "https://www.amap.com/place/B0HGBSORPI",
-      "fetched_at": "2026-10-11T08:22:22.332813+00:00",
+      "fetched_at": "2026-10-15T08:25:39.945517+00:00",
       "keyword": "新周记",
       "cost": 103,
       "duration": 60,
@@ -481,9 +491,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:22.332813+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0HGBSORPI",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费103元为估算，不是实时菜单报价；营业线索：周一至周日 10:30-23:30；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0HGBSORPI",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B0G0AZTG34",
@@ -496,7 +508,7 @@
       "cost_hint": "79.00",
       "open_hint": "周一至周日 10:30-22:30",
       "url": "https://www.amap.com/place/B0G0AZTG34",
-      "fetched_at": "2026-10-11T08:22:22.838211+00:00",
+      "fetched_at": "2026-10-15T08:25:41.213526+00:00",
       "keyword": "四灶儿",
       "cost": 79,
       "duration": 60,
@@ -512,9 +524,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:22.838211+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0G0AZTG34",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费79元为估算，不是实时菜单报价；营业线索：周一至周日 10:30-22:30；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0G0AZTG34",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B0FFLIMLA8",
@@ -527,7 +541,7 @@
       "cost_hint": "106.00",
       "open_hint": "周一至周日 11:00-14:00,16:30-21:00",
       "url": "https://www.amap.com/place/B0FFLIMLA8",
-      "fetched_at": "2026-10-11T08:22:23.381088+00:00",
+      "fetched_at": "2026-10-15T08:25:42.510749+00:00",
       "keyword": "老头儿油爆虾",
       "cost": 106,
       "duration": 60,
@@ -547,9 +561,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:23.381088+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0FFLIMLA8",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费106元为估算，不是实时菜单报价；营业线索：周一至周日 11:00-14:00,16:30-21:00；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0FFLIMLA8",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B0L0RZ4SBC",
@@ -562,7 +578,7 @@
       "cost_hint": "82.00",
       "open_hint": "周一至周日 06:00-20:00",
       "url": "https://www.amap.com/place/B0L0RZ4SBC",
-      "fetched_at": "2026-10-11T08:22:23.915030+00:00",
+      "fetched_at": "2026-10-15T08:25:43.763857+00:00",
       "keyword": "弄堂里",
       "cost": 82,
       "duration": 60,
@@ -578,9 +594,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:23.915030+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0L0RZ4SBC",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费82元为估算，不是实时菜单报价；营业线索：周一至周日 06:00-20:00；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0L0RZ4SBC",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B0LBRHJA63",
@@ -593,7 +611,7 @@
       "cost_hint": "21.00",
       "open_hint": "周一至周日 00:00-24:00",
       "url": "https://www.amap.com/place/B0LBRHJA63",
-      "fetched_at": "2026-10-11T08:22:24.431017+00:00",
+      "fetched_at": "2026-10-15T08:25:45.038591+00:00",
       "keyword": "咬不得",
       "cost": 21,
       "duration": 60,
@@ -609,9 +627,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:24.431017+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0LBRHJA63",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费21元为估算，不是实时菜单报价；营业线索：周一至周日 00:00-24:00；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0LBRHJA63",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B0K1AGUNHP",
@@ -624,7 +644,7 @@
       "cost_hint": "87.00",
       "open_hint": "周一至周日 11:00-14:00,17:00-21:00",
       "url": "https://www.amap.com/place/B0K1AGUNHP",
-      "fetched_at": "2026-10-11T08:22:25.786777+00:00",
+      "fetched_at": "2026-10-15T08:25:46.300694+00:00",
       "keyword": "兰边碗",
       "cost": 87,
       "duration": 60,
@@ -644,9 +664,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:25.786777+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B0K1AGUNHP",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费87元为估算，不是实时菜单报价；营业线索：周一至周日 11:00-14:00,17:00-21:00；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0K1AGUNHP",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B023B05MME",
@@ -659,7 +681,7 @@
       "cost_hint": "46.00",
       "open_hint": "周一至周日 08:00-14:30,16:00-02:30",
       "url": "https://www.amap.com/place/B023B05MME",
-      "fetched_at": "2026-10-11T08:22:26.243928+00:00",
+      "fetched_at": "2026-10-15T08:25:47.590061+00:00",
       "keyword": "慧娟面馆",
       "cost": 46,
       "duration": 60,
@@ -683,9 +705,11 @@
         "美食"
       ],
       "indoor": true,
-      "family": false,
-      "source": "资料整理于 2026-10-11T08:22:26.243928+00:00；高德人均消费线索（估算，非菜单报价）；地址和时段来自高德。停留时长为规划建议，饮食和亲子条件未确认；营业异常、预约与排队请核实。\nhttps://www.amap.com/place/B023B05MME",
-      "data_status": "来源资料估算，出行前核实"
+      "family": true,
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费46元为估算，不是实时菜单报价；营业线索：周一至周日 08:00-14:30,16:00-02:30；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B023B05MME",
+      "data_status": "来源资料估算，出行前核实",
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot"
     },
     {
       "id": "amap-B023B02842",
@@ -788,9 +812,7 @@
       "data_status": "公开来源整理，参考费用，非实时余票 / 现场核验",
       "source": "资料查找日期 2026-10-14；费用：60元（普通成人门票参考；额外项目另计）。公开时间：09:00–17:00，16:00停止入园。 规划时段为日间保守窗口，不是实际开闭园时刻。按普通成人门票60元估算，不含另购20元观光车。杭州市民等优待资格另计；需在良渚古城官方渠道预约，路书不代表有余票。票价批复较早，保留来源年份。\nhttps://www.yuhang.gov.cn/art/2019/6/14/art_1229174965_949116.html\nhttps://www.lzmuseum.cn/ZuiXinGongGao/2023394132395.html\nhttps://m.ly.com/scenery_1/detail/?refid=18024458&sceneryId=673031\nhttps://www.amap.com/place/B023B14O96",
       "visit_notice": "需自行按路书时间预约 / 购票，路书不代表有票或预约成功。"
-    }
-  ],
-  "pending": [
+    },
     {
       "id": "amap-B023B09LKR",
       "name": "雷峰塔景区",
@@ -803,7 +825,26 @@
       "open_hint": "03-16至04-30 周一至周日 08:00-19:00 最晚进入18:30；05-01至10-31 周一至周日 08:00-20:00 最晚进入19:30；11-01至03-15 周一至周日 08:00-17:30 最晚进入17:00",
       "url": "https://www.amap.com/place/B023B09LKR",
       "fetched_at": "2026-10-11T08:22:10.424398+00:00",
-      "keyword": "雷峰塔景区"
+      "keyword": "雷峰塔景区",
+      "cost": 40,
+      "duration": 90,
+      "open": 480,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1020
+        }
+      ],
+      "indoor": false,
+      "family": true,
+      "tags": [
+        "自然",
+        "文化"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "cross_reference",
+      "source": "公开资料整理于2026-10-15（cross_reference）；普通成人门票参考；额外项目另计；3/16–4/30 08:00–19:00；5/1–10/31 08:00–20:00；11/1–3/15 08:00–17:30，提前半小时停止售票。；官网未能访问。季节时间以市文旅局旧资料和高德快照交叉参考；40元为本地宝与票务平台参考，已按来源范围整理，不冒充本次官网核验。；保守可安排窗口 08:00–17:00。 https://wgly.hangzhou.gov.cn/art/2022/12/1/art_1229696389_58943150.html https://m.hz.bendibao.com/tour/93197.shtm?src=amap https://www.amap.com/place/B023B09LKR https://hz.bendibao.com/tour/2019114/ly76611.shtm"
     },
     {
       "id": "amap-B023B06P06",
@@ -817,7 +858,26 @@
       "open_hint": "10月8日至3月31日 周一至周日 08:00-17:30 门票售票时间:8:00-16:30,船票售票时间:8:00-16:15,观光车环线售票时间:8:00-16:00（节假日视乘车客流调整环线售票截止时间）,单程售票时间 8:00-17:20；4月1日至10月7日 周一至周日 07:30-18:30 门票售票时间:7:30-17:30,船票售票时间:7:30-16:45，观光车环线售票时间:7:30-17:00（节假日视乘车客流调整环线售票截止时间），单程售票时间 7:30-18:20；",
       "url": "https://www.amap.com/place/B023B06P06",
       "fetched_at": "2026-10-11T08:22:12.055582+00:00",
-      "keyword": "西溪国家湿地公园"
+      "keyword": "西溪国家湿地公园",
+      "cost": 80,
+      "duration": 180,
+      "open": 480,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1020
+        }
+      ],
+      "indoor": false,
+      "family": true,
+      "tags": [
+        "自然",
+        "文化"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "cross_reference",
+      "source": "公开资料整理于2026-10-15（cross_reference）；收费游览区门票参考；免费公共区域及另购船 / 车分开计算；高德快照含夏冬季、船票与车票不同截止时刻。；80元为普通门票交叉参考；福堤等免费区域与收费区不可混算，船和车另计。官网访问未取得可靠正文，按商业交叉参考范围安排并保留来源级别。；保守可安排窗口 08:00–17:00。 https://m.ly.com/scenery/scenerydetail_10876.html?refid=18024458 https://www.hzzx.gov.cn/cshz/content/2025-12/03/content_9136449.htm https://www.amap.com/place/B023B06P06"
     },
     {
       "id": "amap-B0I15SU50Z",
@@ -831,11 +891,34 @@
       "open_hint": "周二至周日 09:00-17:00 最晚进入16:30；周一 全天不开放（法定节假日除外）",
       "fetched_at": "2026-10-11T08:14:09.241697+00:00",
       "url": "https://www.amap.com/place/B0I15SU50Z",
-      "keyword": "浙江省博物馆(之江馆区)"
+      "keyword": "浙江省博物馆(之江馆区)",
+      "cost": 0,
+      "duration": 120,
+      "open": 540,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 540,
+          "close": 1020
+        }
+      ],
+      "closed_weekdays": [
+        1
+      ],
+      "indoor": true,
+      "family": false,
+      "tags": [
+        "文化",
+        "历史",
+        "博物馆"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "official",
+      "source": "公开资料整理于2026-10-15（official）；仅普通游览，不含额外消费；周二至周日09:00–17:00，16:30停止入场；周一闭馆，节假日另有公告。；普通展免费；每周一保守排除，未自动套用节假日延期开闭馆。入馆方式和临展费用按官方公告。；保守可安排窗口 09:00–17:00。 https://www.zjmuseum.com.cn/cn/ https://www.amap.com/place/B0I15SU50Z"
     },
     {
       "id": "amap-B023B07SJZ",
-      "name": "清河坊历史文化特色街区",
+      "name": "清河坊 · 公共街区",
       "city": "杭州",
       "district": "上城区",
       "address": "河坊街180号",
@@ -845,25 +928,30 @@
       "open_hint": "周一至周日 00:00-24:00",
       "url": "https://www.amap.com/place/B023B07SJZ",
       "fetched_at": "2026-10-11T08:22:13.190472+00:00",
-      "keyword": "清河坊"
-    },
-    {
-      "id": "amap-B0FFG97H9P",
-      "name": "京杭大运河杭州景区",
-      "city": "杭州",
-      "district": "拱墅区",
-      "address": "环城北路226号武林门码头",
-      "location": "120.141908,30.302955",
-      "kind": "sight",
-      "cost_hint": "",
-      "open_hint": "周一至周日 00:00-24:00",
-      "url": "https://www.amap.com/place/B0FFG97H9P",
-      "fetched_at": "2026-10-11T08:22:14.150662+00:00",
-      "keyword": "京杭大运河杭州景区"
+      "keyword": "清河坊",
+      "cost": 0,
+      "duration": 90,
+      "open": 480,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1020
+        }
+      ],
+      "indoor": false,
+      "family": true,
+      "tags": [
+        "自然",
+        "城市"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "cross_reference",
+      "source": "公开资料整理于2026-10-15（cross_reference）；仅公共范围或河岸外观游览0元；不含场馆、游船、餐厅、展演或购物；高德快照提供时段，尚未取得对应公共区域的当期官方时刻。；明确只安排公共游览范围；时刻由高德来源快照与日间窗口取交集，商户和收费项目单独处理。；保守可安排窗口 08:00–17:00。 https://wgly.hangzhou.gov.cn/art/2023/11/27/art_1229752740_58950913.html https://www.amap.com/place/B023B07SJZ https://you.ctrip.com/sight/hangzhou14/135781.html"
     },
     {
       "id": "amap-B0FFFFZRBD",
-      "name": "拱宸桥西历史文化街区",
+      "name": "拱宸桥西 · 公共街区",
       "city": "杭州",
       "district": "拱墅区",
       "address": "桥西直街1号(拱宸桥西)",
@@ -873,7 +961,26 @@
       "open_hint": "周一至周日 05:00-22:00",
       "url": "https://www.amap.com/place/B0FFFFZRBD",
       "fetched_at": "2026-10-11T08:22:14.681079+00:00",
-      "keyword": "桥西历史文化街区"
+      "keyword": "桥西历史文化街区",
+      "cost": 0,
+      "duration": 90,
+      "open": 480,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1020
+        }
+      ],
+      "indoor": false,
+      "family": true,
+      "tags": [
+        "自然",
+        "城市"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "cross_reference",
+      "source": "公开资料整理于2026-10-15（cross_reference）；仅公共范围或河岸外观游览0元；不含场馆、游船、餐厅、展演或购物；高德快照提供时段，尚未取得对应公共区域的当期官方时刻。；明确只安排公共游览范围；时刻由高德来源快照与日间窗口取交集，商户和收费项目单独处理。；保守可安排窗口 08:00–17:00。 https://www.gongshu.gov.cn/art/2024/4/30/art_1229789753_59080391.html https://www.amap.com/place/B0FFFFZRBD https://www.journeytochina.org/zh/cities/hangzhou/attractions/hangzhou-grand-canal/"
     },
     {
       "id": "amap-B023B09JLL",
@@ -887,7 +994,30 @@
       "open_hint": "全年 周二–周日 09:00–17:00开放 最晚进入16:30；全年 周一 全天不开放；清明节,劳动节,端午节,中秋节,国庆节 09:00–17:00开放 最晚进入16:30",
       "url": "https://www.amap.com/place/B023B09JLL",
       "fetched_at": "2026-10-11T08:22:16.185213+00:00",
-      "keyword": "中国丝绸博物馆"
+      "keyword": "中国丝绸博物馆",
+      "cost": 0,
+      "duration": 120,
+      "open": 540,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 540,
+          "close": 1020
+        }
+      ],
+      "closed_weekdays": [
+        1
+      ],
+      "indoor": true,
+      "family": false,
+      "tags": [
+        "文化",
+        "历史",
+        "博物馆"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "official",
+      "source": "公开资料整理于2026-10-15（official）；仅普通游览，不含额外消费；周二至周日09:00–17:00，16:30停止入馆；周一闭馆，法定节假日除外。；普通展免费；每周一保守排除，未自动套用节假日延期开闭馆。入馆方式和临展费用按官方公告。；保守可安排窗口 09:00–17:00。 https://www.chinasilkmuseum.com/cgjyy/info_6.aspx?itemid=31249 https://www.chinasilkmuseum.com/cgjyy/index_6.aspx https://chinasilkmuseum.com/bwggk/index_3.aspx https://www.amap.com/place/B023B09JLL"
     },
     {
       "id": "amap-B023B09LTB",
@@ -901,7 +1031,26 @@
       "open_hint": "周一至周日 00:00-24:00；售票时间:08:30-16:30",
       "url": "https://www.amap.com/place/B023B09LTB",
       "fetched_at": "2026-10-11T08:22:17.297015+00:00",
-      "keyword": "杭州植物园"
+      "keyword": "杭州植物园",
+      "cost": 10,
+      "duration": 120,
+      "open": 510,
+      "close": 990,
+      "windows": [
+        {
+          "open": 510,
+          "close": 990
+        }
+      ],
+      "indoor": false,
+      "family": true,
+      "tags": [
+        "自然",
+        "文化"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "cross_reference",
+      "source": "公开资料整理于2026-10-15（cross_reference）；普通成人门票参考；额外项目另计；按原高德快照参考；尚未取得当期官方日常开放时间。；收费景点，不统一填零元；票价为商业平台交叉参考，2026年公园卡或西湖日免票不等于普通游客全年免费，已按来源范围整理。；保守可安排窗口 08:30–16:30。 https://www.hzzx.gov.cn/cshz/content/2025-12/03/content_9136449.htm https://you.ctrip.com/sight/hangzhou14/25434.html https://www.amap.com/place/B023B09LTB"
     },
     {
       "id": "amap-B023B08Q06",
@@ -915,7 +1064,26 @@
       "open_hint": "07:00-17:30,节假日10.1-10.7:7:00-18:00",
       "url": "https://www.amap.com/place/B023B08Q06",
       "fetched_at": "2026-10-11T08:22:17.799284+00:00",
-      "keyword": "虎跑公园"
+      "keyword": "虎跑公园",
+      "cost": 15,
+      "duration": 120,
+      "open": 480,
+      "close": 1020,
+      "windows": [
+        {
+          "open": 480,
+          "close": 1020
+        }
+      ],
+      "indoor": false,
+      "family": true,
+      "tags": [
+        "自然",
+        "文化"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "cross_reference",
+      "source": "公开资料整理于2026-10-15（cross_reference）；普通成人门票参考；额外项目另计；按原高德快照参考；尚未取得当期官方日常开放时间。；收费景点，不统一填零元；票价为商业平台交叉参考，2026年公园卡或西湖日免票不等于普通游客全年免费，已按来源范围整理。；保守可安排窗口 08:00–17:00。 https://www.hzzx.gov.cn/cshz/content/2025-12/03/content_9136449.htm https://you.ctrip.com/sight/hangzhou14/2045.html https://www.amap.com/place/B023B08Q06"
     },
     {
       "id": "amap-B023B08YIW",
@@ -928,8 +1096,30 @@
       "cost_hint": "59.00",
       "open_hint": "周一至周五 07:00-13:30,17:00-21:00；周六至周日 07:00-14:00,17:00-21:00",
       "url": "https://www.amap.com/place/B023B08YIW",
-      "fetched_at": "2026-10-11T08:22:21.788414+00:00",
-      "keyword": "奎元馆"
+      "fetched_at": "2026-10-14T14:09:33.049244+00:00",
+      "keyword": "奎元馆",
+      "cost": 59,
+      "open": 420,
+      "close": 1260,
+      "windows": [
+        {
+          "open": 420,
+          "close": 810
+        },
+        {
+          "open": 1020,
+          "close": 1260
+        }
+      ],
+      "duration": 60,
+      "indoor": true,
+      "family": true,
+      "tags": [
+        "美食"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot",
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费59元为估算，不是实时菜单报价；营业线索：周一至周五 07:00-13:30,17:00-21:00；周六至周日 07:00-14:00,17:00-21:00；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B023B08YIW"
     },
     {
       "id": "amap-B0FFF2T4DK",
@@ -942,8 +1132,62 @@
       "cost_hint": "120.00",
       "open_hint": "11:00-14:00；17:00-21:00 最晚点餐 20:30-21:00",
       "url": "https://www.amap.com/place/B0FFF2T4DK",
-      "fetched_at": "2026-10-11T08:22:24.947936+00:00",
-      "keyword": "藏鲜工坊"
+      "fetched_at": "2026-10-14T14:09:33.056101+00:00",
+      "keyword": "藏鲜工坊",
+      "cost": 120,
+      "open": 660,
+      "close": 1230,
+      "windows": [
+        {
+          "open": 660,
+          "close": 840
+        },
+        {
+          "open": 1020,
+          "close": 1230
+        }
+      ],
+      "duration": 60,
+      "indoor": true,
+      "family": true,
+      "tags": [
+        "美食"
+      ],
+      "reviewed_at": "2026-10-15",
+      "review_status": "provider_snapshot",
+      "source": "高德餐厅公开资料重新查询于2026-10-15；人均消费120元为估算，不是实时菜单报价；营业线索：11:00-14:00；17:00-21:00 最晚点餐 20:30-21:00；按工作日、周末及所列节假日的保守共同窗口安排，不跨营业间歇；饮食和排队需向门店确认。 https://www.amap.com/place/B0FFF2T4DK"
+    }
+  ],
+  "pending": [],
+  "reviewed_ids": [
+    "amap-B023B09LKR",
+    "amap-B023B06P06",
+    "amap-B0I15SU50Z",
+    "amap-B023B07SJZ",
+    "amap-B0FFG97H9P",
+    "amap-B0FFFFZRBD",
+    "amap-B023B09JLL",
+    "amap-B023B09LTB",
+    "amap-B023B08Q06",
+    "amap-B023B08YIW",
+    "amap-B0FFF2T4DK"
+  ],
+  "excluded": [
+    {
+      "id": "amap-B0FFG97H9P",
+      "name": "京杭大运河杭州景区",
+      "city": "杭州",
+      "district": "拱墅区",
+      "address": "环城北路226号武林门码头",
+      "location": "120.141908,30.302955",
+      "kind": "sight",
+      "cost_hint": "",
+      "open_hint": "周一至周日 00:00-24:00",
+      "url": "https://www.amap.com/place/B0FFG97H9P",
+      "fetched_at": "2026-10-11T08:22:14.150662+00:00",
+      "keyword": "京杭大运河杭州景区",
+      "reviewed_at": "2026-10-15",
+      "reason": "原始POI地址为武林门码头而坐标在运河北段，游船与步行范围不一致，排除该含混记录；桥西公共街区已另列候选"
     }
   ]
 }

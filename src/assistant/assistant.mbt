@@ -55,5 +55,7 @@ pub fn validate_for_current(text : String, current : String) -> String {
         ],
       } : Json).stringify()
   }
-  validate_proposal(text)
+  validate_proposal(
+    @json.to_json({ ..proposed, start_weekday: original.start_weekday, }).stringify(),
+  )
 }

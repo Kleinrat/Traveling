@@ -30,6 +30,7 @@ fn place(
     kind: "sight",
     location: None,
     windows: None,
+    closed_weekdays: None,
   }
 }
 
@@ -375,6 +376,7 @@ pub fn sample() -> @engine.Input {
       include_food: false,
       diet: "不限",
       max_visits: 4,
+      start_weekday: None,
     },
     places: catalogue(),
   }

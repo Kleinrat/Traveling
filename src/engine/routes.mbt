@@ -222,6 +222,11 @@ pub fn reflow_trip(
         Some(index) => input.places[index]
         None => return Err(["地点不存在"])
       }
+      if !available_on(place, input.request, day) {
+        return Err([
+          place.name + "：这一天为每周闭馆日，请换日期或地点",
+        ])
+      }
       let route = match route_transfer(previous, place, routing) {
         Some(route) => route
         None => return Err([place.name + "：尚未查询路线"])

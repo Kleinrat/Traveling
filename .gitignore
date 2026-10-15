@@ -10,3 +10,7 @@ __pycache__/
 *.pyc
 work/
 node_modules/
+
+.wrangler/
+.dev.vars
+.dev.vars.*

@@ -1,0 +1,517 @@
+{
+  "checked_at": "2026-10-15",
+  "note": "高德公开来源重新查询；估算而非餐厅当天报价。6家复杂时段使用所有已知规则的保守共同窗口。",
+  "entries": [
+    {
+      "id": "amap-B0FFFWQFZJ",
+      "name": "外婆家(杭州西湖银泰店)",
+      "city": "杭州",
+      "cost": 53,
+      "open_hint": "周一至周日 10:30-21:30",
+      "windows": [
+        {
+          "open": 630,
+          "close": 1290
+        }
+      ],
+      "fetched_at": "2026-10-14T14:09:32.248370+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0FFFWQFZJ",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0FFI927N3",
+      "name": "新白鹿(杭州湖滨in77店)",
+      "city": "杭州",
+      "cost": 65,
+      "open_hint": "周一至周日 10:30-14:30,16:00-21:00",
+      "windows": [
+        {
+          "open": 630,
+          "close": 870
+        },
+        {
+          "open": 960,
+          "close": 1260
+        }
+      ],
+      "fetched_at": "2026-10-14T14:09:32.249383+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0FFI927N3",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B023B17FPA",
+      "name": "绿茶餐厅(西湖银泰店)",
+      "city": "杭州",
+      "cost": 60,
+      "open_hint": "周一至周日 11:00-21:00",
+      "windows": [
+        {
+          "open": 660,
+          "close": 1260
+        }
+      ],
+      "fetched_at": "2026-10-14T14:09:32.238939+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B023B17FPA",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0FFK21Q4T",
+      "name": "知味观(青年路店)",
+      "city": "杭州",
+      "cost": 28,
+      "open_hint": "周一至周日 07:00-20:00",
+      "windows": [
+        {
+          "open": 420,
+          "close": 1200
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:37.378835+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0FFK21Q4T",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B023B09325",
+      "name": "楼外楼(杭州西湖风景名胜区店)",
+      "city": "杭州",
+      "cost": 155,
+      "open_hint": "周一至周日 10:30-14:00,16:30-20:30",
+      "windows": [
+        {
+          "open": 630,
+          "close": 840
+        },
+        {
+          "open": 990,
+          "close": 1230
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:38.667595+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B023B09325",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0HGBSORPI",
+      "name": "新周记·巷子里的江南味(平海路店)",
+      "city": "杭州",
+      "cost": 103,
+      "open_hint": "周一至周日 10:30-23:30",
+      "windows": [
+        {
+          "open": 630,
+          "close": 1410
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:39.945517+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0HGBSORPI",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0G0AZTG34",
+      "name": "四灶儿·地道杭帮菜(西湖景区·吴山广场店)",
+      "city": "杭州",
+      "cost": 79,
+      "open_hint": "周一至周日 10:30-22:30",
+      "windows": [
+        {
+          "open": 630,
+          "close": 1350
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:41.213526+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0G0AZTG34",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0FFLIMLA8",
+      "name": "老头儿油爆虾(杭州湖滨in77D区店)",
+      "city": "杭州",
+      "cost": 106,
+      "open_hint": "周一至周日 11:00-14:00,16:30-21:00",
+      "windows": [
+        {
+          "open": 660,
+          "close": 840
+        },
+        {
+          "open": 990,
+          "close": 1260
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:42.510749+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0FFLIMLA8",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0L0RZ4SBC",
+      "name": "弄堂里(建国北路店)",
+      "city": "杭州",
+      "cost": 82,
+      "open_hint": "周一至周日 06:00-20:00",
+      "windows": [
+        {
+          "open": 360,
+          "close": 1200
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:43.763857+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0L0RZ4SBC",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0LBRHJA63",
+      "name": "咬不得高祖生煎(滨悦城店)",
+      "city": "杭州",
+      "cost": 21,
+      "open_hint": "周一至周日 00:00-24:00",
+      "windows": [
+        {
+          "open": 0,
+          "close": 1440
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:45.038591+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0LBRHJA63",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0K1AGUNHP",
+      "name": "兰边碗(日信国际商业中心店)",
+      "city": "杭州",
+      "cost": 87,
+      "open_hint": "周一至周日 11:00-14:00,17:00-21:00",
+      "windows": [
+        {
+          "open": 660,
+          "close": 840
+        },
+        {
+          "open": 1020,
+          "close": 1260
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:46.300694+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0K1AGUNHP",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B023B05MME",
+      "name": "慧娟面馆(望江路店)",
+      "city": "杭州",
+      "cost": 46,
+      "open_hint": "周一至周日 08:00-14:30,16:00-02:30",
+      "windows": [
+        {
+          "open": 0,
+          "close": 150
+        },
+        {
+          "open": 480,
+          "close": 870
+        },
+        {
+          "open": 960,
+          "close": 1440
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:47.590061+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B023B05MME",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B023B08YIW",
+      "name": "奎元馆(解放路店)",
+      "city": "杭州",
+      "cost": 59,
+      "open_hint": "周一至周五 07:00-13:30,17:00-21:00；周六至周日 07:00-14:00,17:00-21:00",
+      "windows": [
+        {
+          "open": 420,
+          "close": 810
+        },
+        {
+          "open": 1020,
+          "close": 1260
+        }
+      ],
+      "fetched_at": "2026-10-14T14:09:33.049244+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B023B08YIW",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0FFF2T4DK",
+      "name": "藏鲜工坊(朝晖店)",
+      "city": "杭州",
+      "cost": 120,
+      "open_hint": "11:00-14:00；17:00-21:00 最晚点餐 20:30-21:00",
+      "windows": [
+        {
+          "open": 660,
+          "close": 840
+        },
+        {
+          "open": 1020,
+          "close": 1230
+        }
+      ],
+      "fetched_at": "2026-10-14T14:09:33.056101+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0FFF2T4DK",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0FFGPRKKM",
+      "name": "马旺子·川小馆(成都太古里店)",
+      "city": "成都",
+      "cost": 133,
+      "open_hint": "周一至周日 11:00-14:00,17:00-20:30",
+      "windows": [
+        {
+          "open": 660,
+          "close": 840
+        },
+        {
+          "open": 1020,
+          "close": 1230
+        }
+      ],
+      "fetched_at": "2026-10-14T14:09:33.066974+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0FFGPRKKM",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B001C8O7L7",
+      "name": "明婷饭店",
+      "city": "成都",
+      "cost": 72,
+      "open_hint": "周一至周日 11:00-21:00",
+      "windows": [
+        {
+          "open": 660,
+          "close": 1260
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:48.859428+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B001C8O7L7",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B001C7UMYH",
+      "name": "龙抄手(总店)",
+      "city": "成都",
+      "cost": 33,
+      "open_hint": "周一至周日 09:00-21:30",
+      "windows": [
+        {
+          "open": 540,
+          "close": 1290
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:50.140903+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B001C7UMYH",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B001C8O6WT",
+      "name": "钟水饺(人民公园店)",
+      "city": "成都",
+      "cost": 40,
+      "open_hint": "周一至周日 08:00-20:00",
+      "windows": [
+        {
+          "open": 480,
+          "close": 1200
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:51.418777+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B001C8O6WT",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B001C8N6VD",
+      "name": "he's何师烧烤(春熙店)",
+      "city": "成都",
+      "cost": 80,
+      "open_hint": "周一至周日 17:00-03:00",
+      "windows": [
+        {
+          "open": 0,
+          "close": 180
+        },
+        {
+          "open": 1020,
+          "close": 1440
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:52.687915+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B001C8N6VD",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0FFGEW4S8",
+      "name": "小龙坎火锅(盐市口店)",
+      "city": "成都",
+      "cost": 91,
+      "open_hint": "周一至周日 11:00-23:00",
+      "windows": [
+        {
+          "open": 660,
+          "close": 1380
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:53.955580+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0FFGEW4S8",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B001C8ROQL",
+      "name": "蜀九香火锅(江汉店)",
+      "city": "成都",
+      "cost": 86,
+      "open_hint": "周一至周日 11:00-23:30",
+      "windows": [
+        {
+          "open": 660,
+          "close": 1410
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:55.263981+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B001C8ROQL",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0G2X9OGNV",
+      "name": "玉林串串香(春熙店)",
+      "city": "成都",
+      "cost": 75,
+      "open_hint": "周一至周日 11:00-01:00",
+      "windows": [
+        {
+          "open": 0,
+          "close": 60
+        },
+        {
+          "open": 660,
+          "close": 1440
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:56.534032+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0G2X9OGNV",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B001C7WI33",
+      "name": "皇城老妈火锅(琴台店)",
+      "city": "成都",
+      "cost": 140,
+      "open_hint": "周一至周日 11:00-22:00",
+      "windows": [
+        {
+          "open": 660,
+          "close": 1320
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:57.824180+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B001C7WI33",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0FFLBBUPJ",
+      "name": "陈麻婆豆腐(总店)",
+      "city": "成都",
+      "cost": 63,
+      "open_hint": "11:00-14:30；17:00-21:00,2026年春节期间 11:00-14:30；17:00-21:00",
+      "windows": [
+        {
+          "open": 660,
+          "close": 870
+        },
+        {
+          "open": 1020,
+          "close": 1260
+        }
+      ],
+      "fetched_at": "2026-10-15T08:25:59.099265+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0FFLBBUPJ",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0LBC7EL03",
+      "name": "陶德砂锅(盐市口店)",
+      "city": "成都",
+      "cost": 56,
+      "open_hint": "周二至周日 10:30-22:00；周一 10:30-21:30",
+      "windows": [
+        {
+          "open": 630,
+          "close": 1290
+        }
+      ],
+      "fetched_at": "2026-10-15T08:26:00.368663+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0LBC7EL03",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B0FFFALD4F",
+      "name": "盘飧市",
+      "city": "成都",
+      "cost": 63,
+      "open_hint": "周一至周日 11:00-14:30,17:00-21:30 2026-05-01至2026-05-05 周一至周日 11:00-15:00,17:00-21:30",
+      "windows": [
+        {
+          "open": 660,
+          "close": 870
+        },
+        {
+          "open": 1020,
+          "close": 1290
+        }
+      ],
+      "fetched_at": "2026-10-15T08:26:01.655649+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B0FFFALD4F",
+      "review_status": "provider_snapshot"
+    },
+    {
+      "id": "amap-B001C7UMTU",
+      "name": "夫妻肺片",
+      "city": "成都",
+      "cost": 58,
+      "open_hint": "周一至周日 07:00-21:30 10-01至10-07 周一至周日 09:30-21:30",
+      "windows": [
+        {
+          "open": 570,
+          "close": 1290
+        }
+      ],
+      "fetched_at": "2026-10-14T14:09:34.008268+00:00",
+      "reviewed_at": "2026-10-15",
+      "url": "https://www.amap.com/place/B001C7UMTU",
+      "review_status": "provider_snapshot"
+    }
+  ]
+}

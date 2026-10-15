@@ -154,6 +154,11 @@ pub fn edit_trip(
       if exclusion_reason(p, r) is Some(reason) {
         return Err([p.name + "：" + reason])
       }
+      if !available_on(p, r, day) {
+        return Err([
+          p.name + "：这一天为每周闭馆日，请换日期或地点",
+        ])
+      }
       let route = match route_transfer(previous, p, routing) {
         Some(route) => route
         None => return Err([p.name + "：此路段尚未查询路线"])
