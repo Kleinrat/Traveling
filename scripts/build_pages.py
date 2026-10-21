@@ -6,8 +6,12 @@ import hashlib
 ROOT = Path(__file__).resolve().parent.parent
 DEST = ROOT / "_site"
 DEST.mkdir(exist_ok=True)
-for name in ("index.html", "style.css", "app.js", "journey.js", "map.js", "engine.js", "runtime-config.json"):
+for name in ("index.html", "demo.html", "style.css", "app.js", "journey.js", "map.js", "engine.js", "runtime-config.json"):
     shutil.copyfile(ROOT / "web" / name, DEST / name)
+# Explicit media allowlist keeps private capture material out of Pages.
+(DEST / "media").mkdir(exist_ok=True)
+for name in ("moontrip-demo-2026-10-21.mp4", "moontrip-demo-2026-10-21.jpg"):
+    shutil.copyfile(ROOT / "web" / "media" / name, DEST / "media" / name)
 shutil.copytree(ROOT / "web" / "data", DEST / "data", dirs_exist_ok=True)
 shutil.copytree(ROOT / "web" / "vendor", DEST / "vendor", dirs_exist_ok=True)
 def version(path):
